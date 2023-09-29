@@ -1,9 +1,7 @@
-"use client";
 import RelatedSections from "@components/cards/RelatedSections";
 import RelatedWoks from "@components/cards/RelatedWoks";
 import FindYourAnswer from "@components/cards/FindYourAnswer";
 import RelatedPosts from "@components/cards/RelatedPosts";
-
 
 
 export default function RootLayout({ children }) {

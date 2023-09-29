@@ -1,4 +1,5 @@
-import React, {useState} from 'react'
+"use client"
+import React, { useState } from 'react'
 
 function Rating() {
 const [rate, setRate] = useState({ star1: true, star2: true, star3:true,star4:true,star5:true,});

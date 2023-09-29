@@ -1,15 +1,11 @@
-"use client";
-import { useEffect, useState, useMemo } from "react";
-import { useStore } from "@context/store";
+import { useStore } from "@context/serverStore";
 import Link from "next/link";
 import Image from "next/image";
+import SlicerDoctor from "@components/slicerDoctor";
 
-function Doctors() {
-  const { fetchDoctors, doctors } = useStore();
-  const [slicer, setSlicer] = useState(null);
- useEffect(() => {
-   fetchDoctors()
- }, []);
+async function Doctors() {
+  const { fetchDoctors } = useStore.getState();
+  const doctors = await fetchDoctors();
   return (
     <div className='flex flex-col gap-4'>
       {doctors.map((item, index) => (
@@ -23,7 +19,6 @@ function Doctors() {
               <Link
                 className='mb-1 grow shrink basis-[70%] min-w-[280px] flex gap-4'
                 id={item?._id}
-                // onClick={(e) => useStore.setState({ selectedDoctor: item })}
                 href={`/doctors/profile/${item?._id}`}>
                 <div id={item?._id}>
                   <Image
@@ -131,7 +126,6 @@ function Doctors() {
                    </button>
                  </Link> */}
               <Link
-                // onClick={useStore.setState({ selectedDoctor: item })}
                 href={`/doctors/profile/${item?._id}`}
                 className=''>
                 <button
@@ -162,30 +156,7 @@ function Doctors() {
                   />
                 </Link>
               ))}
-              <div id='works' className='flex flex-wrap gap-2'>
-                {item?.services
-                  .slice(0, item?._id == slicer ? item?.services.length : 5)
-                  .map((service, index) => (
-                    <Link key={index} href='#'>
-                      <button
-                        key={index}
-                        className='p-1 px-2 bg-slate-200 text-sm rounded-[163px] text-gray-900 dark:text-gray-300 dark:bg-slate-700 hover:bg-slate-400 font-medium'>
-                        <p>{service.text}</p>
-                      </button>
-                    </Link>
-                  ))}
-                {item?.services?.length > 5 && item?._id != slicer && (
-                  <button
-                    className='text-sm text-sky-600 text-left p-2'
-                    id={item?._id}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setSlicer(e.target.getAttribute("id"));
-                    }}>
-                    عرض المزيد ⋙
-                  </button>
-                )}
-              </div>
+              <SlicerDoctor item={item} />
             </div>
           </div>
         </div>

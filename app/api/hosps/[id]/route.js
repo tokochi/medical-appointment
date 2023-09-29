@@ -1,5 +1,5 @@
 import { connectToDB } from '@utils/database';
-import Doctor from '@models/doctor';
+import Hosp from '@models/hosp';
 import bcrypt from 'bcrypt'
 
 // ****** Get One Data *********
@@ -9,7 +9,7 @@ export async function GET(req, { params }) {
         if (!params?.id) {
             return new Response('Missing ID parameter', { status: 400 }); // Bad Request
         }
-        const response = await Doctor.findOne({ _id: params?.id });
+        const response = await Hosp.findOne({ _id: params?.id });
         if (response) {
             return new Response(JSON.stringify(response), { status: 200 }); // OK
         } else {
@@ -30,7 +30,7 @@ export async function PUT(req, { params }) {
         if (!data) {
             return new Response('Empty request body', { status: 400 }); // Bad Request
         }
-        const response = await Doctor.updateOne({ _id: data?._id }, { $set: data })
+        const response = await Hosp.updateOne({ _id: data?._id }, { $set: data })
         if (response.acknowledged === true) {
             return new Response('User updated successfully', { status: 200 }); // OK
         } else {
@@ -48,7 +48,7 @@ export async function DELETE(req, { params }) {
         if (!params?.id) {
             return new Response('Missing ID parameter', { status: 400 }); // Bad Request
         }
-        const response = await Doctor.deleteOne({ _id: params?.id })
+        const response = await Hosp.deleteOne({ _id: params?.id })
         if (response.acknowledged===true) {
             return new Response('User updated successfully', { status: 200 }); // OK
         } else {

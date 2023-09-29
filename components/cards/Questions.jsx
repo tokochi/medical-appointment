@@ -1,13 +1,11 @@
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useStore } from "@context/store";
+import { useStore } from "@context/serverStore";
 import DoctorQuestion from "./DoctorQuestion";
-function Questions() {
-  const { fetchQuestions, questions } = useStore();
-  useEffect(() => {
-    fetchQuestions();
-  }, []);
+
+async function Questions() {
+  const { fetchQuestions } = useStore.getState();
+  const questions = await fetchQuestions();
   return (
     <div className='flex flex-col gap-4'>
       {questions.map((question, index) => (
@@ -18,7 +16,6 @@ function Questions() {
             <div className='mb-1 grow shrink basis-[70%] min-w-[280px] flex gap-4'>
               <div id='title' className='flex flex-col'>
                 <Link
-                  // onClick={(e) => { }}
                   href={`/questions/show-response/${question._id}`}>
                   <h1 className='font-bold text-clamp-xl text-sky-500'>{question?.title}</h1>
                 </Link>
@@ -31,7 +28,6 @@ function Questions() {
             <div className='flex flex-wrap gap-2'>
               <DoctorQuestion doctor={question?.doctor} />
               <Link
-                onClick={(e) => {}}
                 href={`/questions/show-response/${question._id}`}
                 className=''>
                 <button

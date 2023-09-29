@@ -1,4 +1,3 @@
-"use client";
 import Questions from "@components/cards/Questions";
 
 function page() {

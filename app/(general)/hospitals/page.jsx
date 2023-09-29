@@ -1,4 +1,3 @@
-"use client";
 import Hosp from "@components/cards/Hosp";
 import Provinces from "@components/cards/Provinces";
 import SearchHospInPage from "@components/forms/searchs/SearchHospInPage";

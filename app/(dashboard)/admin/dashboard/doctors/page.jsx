@@ -7,7 +7,6 @@ import DoctorsTable from "@components/table/DoctorsTable";
 function page() {
 
   const { currentAdmin } = useStore();
-  console.log("🚀 ~ currentAdmin:", currentAdmin)
   return (
     <div className="">
      <DoctorsTable/>

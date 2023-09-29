@@ -1,13 +1,10 @@
-"use client";
 import Doctors from "@components/cards/Doctors";
 import Provinces from "@components/cards/Provinces";
 import RelatedPosts from "@components/cards/RelatedPosts";
 import RelatedSections from "@components/cards/RelatedSections";
 import SearchDoctInPage from "@components/forms/searchs/SearchDoctInPage";
-import { useSession } from "next-auth/react";
 function page() {
-  const { data: session, status } = useSession();
-  console.log("🚀 ~ session:", session);
+
   return (
     <div className='bg-sky-50 dark:bg-primary'>
       <h1 id='title' className='font-bold text-clamp-2xl mx-2 p-2'>

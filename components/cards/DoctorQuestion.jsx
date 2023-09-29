@@ -1,8 +1,7 @@
-import React from 'react'
-import { useStore } from "@context/store";
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+
+
 function DoctorQuestion({ doctor }) {
   return (
     <div>

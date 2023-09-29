@@ -45,5 +45,5 @@ const doctorSchema = new Schema({
     },
     date: { type: Date, default: Date.now },
 })
-const Doctor = models.doctor || model("doctor", doctorSchema);
+const Doctor = models?.doctor || model("doctor", doctorSchema);
 export default Doctor;

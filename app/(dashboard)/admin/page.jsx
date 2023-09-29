@@ -10,9 +10,7 @@ import { useRouter } from "next/navigation";
 function page() {
   const { currentAdmin, fetchAdmin, isLoading } = useStore();
   const router = useRouter();
-  const { data: session, status } = useSession();
-  console.log("🚀 ~ session:", session);
-  
+
   useEffect(() => {
     !session?.isAdmin && router.push("/admin");
   }, [session]);

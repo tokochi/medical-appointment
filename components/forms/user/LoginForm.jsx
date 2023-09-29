@@ -1,6 +1,7 @@
-import { signIn, useSession } from "next-auth/react";
-import { useState, useEffect } from "react";
-import { CheckboxInput, DropInput, IconInput, SelectInput, TextInput } from "@components/inputs";
+'use client'
+import { signIn } from "next-auth/react";
+import { useState } from "react";
+import { TextInput } from "@components/inputs";
 import Image from "next/image";
 import toast from "react-hot-toast"
 import { useRouter } from "next/navigation";
@@ -17,7 +18,7 @@ function LoginForm() {
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await signIn('credentials', { ...userInfo, redirect: false })
+        const response = await signIn("user-login", { ...userInfo, redirect: false });
         if (response?.ok && !response?.error) {
             toast.success("تم تسجيل دخول المستخدم بنجاح");
             setUserInfo({ email: '', password: ''})

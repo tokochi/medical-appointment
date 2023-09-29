@@ -28,10 +28,4 @@ function Doctors() {
 }
 
 export default Doctors;
-// async function Doctors() {
-//   const res = await fetch("http://localhost:3000/api/doctors");
-//   const data = await res.json()
-//   console.log("🚀 ~ data:", data)
-//   return <div>{JSON.stringify(data)}</div>;
-// }
-// export default Doctors;
+

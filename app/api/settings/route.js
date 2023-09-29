@@ -20,18 +20,31 @@ export async function GET(req) {
 }
 // ****** ADD New User *********
 export async function POST(req) {
-    await connectToDB();
     const data = await req.json()
-    const userExists = await User.findOne({ email: data?.email });
-    if (userExists) { return new Response(JSON.stringify("User already exist"), { status: 500 }); }
+
+}
+
+// ****** Update *********
+export async function PUT(req) {
+    await connectToDB();
+    const data = await req.JSON()
     try {
-        const hashedPassword = await bcrypt.hash(data?.password, 10);
-        const user = new User({ ...data, password: hashedPassword });
-        await user.save();
-        return new Response(JSON.stringify(user), { status: 201 })
+        const response = await User.updateOne({ _id: data?._id }, { $set: data })
+        return new Response(JSON.stringify(response), { status: 200 });
     } catch (error) {
-        return new Response(JSON.stringify("failed to insert user to DB",error), { status: 500 });
+        return new Response(JSON.stringify(error), { status: 500 });
     }
 }
 
+// ****** Delete *********
+export async function DELETE(req) {
+    await connectToDB();
+    const data = await req.JSON()
+    try {
+        const response = await User.deleteOne({ _id: data?._id })
+        return new Response(JSON.stringify(response), { status: 200 });
+    } catch (error) {
+        return new Response(JSON.stringify(error), { status: 500 });
+    }
+}
 

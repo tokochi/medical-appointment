@@ -17012,6 +17012,7 @@ export const labDefault = {
 export const userDefault = {
   avatar: ["/images/user-logo.png"],
   email: "",
+  password: "",
   name: "",
   gender: { value: "female", text: "إمرأة" },
   address: {

@@ -1,4 +1,3 @@
-"use client";
 import Labs from "@components/cards/Labs";
 import Provinces from "@components/cards/Provinces";
 import SearchLabsInPage from "@components/forms/searchs/SearchLabsInPage";

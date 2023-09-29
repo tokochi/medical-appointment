@@ -5,10 +5,8 @@ import Link from "next/link";
 import Sidebar from "./Sidebar";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
-function Header() {
-  const { data: session, status } = useSession();
+function Header({ session }) {
   const isSidebarOpen = useStore((state) => state.sidebarOpen);
-  const setDark = useStore((state) => state.setDark);
   function toggleSidebar() {
     useStore.setState({ sidebarOpen: !useStore.getState().sidebarOpen });
   }
@@ -17,8 +15,8 @@ function Header() {
       if (typeof window !== "undefined") {
         const value = JSON.parse(localStorage?.getItem("theme"));
         localStorage?.setItem("theme", JSON.stringify(!value));
-     useStore.setState({ dark: !value });
-     useStore.setState({ syncfussionThem: !value });
+        document.documentElement.classList?.toggle("dark");
+        useStore.setState({ darkTheme: !value });
       }
     } catch (error) {
       console.log("error localStorage");

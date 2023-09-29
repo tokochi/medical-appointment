@@ -1,16 +1,11 @@
-"use client";
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useStore } from "@context/store";
+import { useStore } from "@context/serverStore";
 import Rating from "@components/Rating";
-import { usePathname } from "next/navigation";
-function page() {
-  const path = usePathname().replace("/questions/show-response/", "");
-  const { fetchQuestion, selectedQuestion } = useStore();
-  useEffect(() => {
-    fetchQuestion(path);
-  }, []);
+
+async function page({params}) {
+  const { fetchQuestion } = useStore.getState();
+  const selectedQuestion = await fetchQuestion(params?.id);
   return (
     <div className='grow shrink basis-[50%] min-w-[280px]'>
       <div id='question-card' className='p-2 my-2'>

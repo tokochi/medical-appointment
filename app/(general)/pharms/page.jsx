@@ -1,4 +1,3 @@
-"use client";
 import Pharms from "@components/cards/Pharms";
 import Provinces from "@components/cards/Provinces";
 import SearchPharmInPage from "@components/forms/searchs/SearchPharmInPage";

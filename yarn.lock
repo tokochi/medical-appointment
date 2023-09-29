@@ -1900,6 +1900,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/cookie@npm:^0.4.1":
+  version: 0.4.1
+  resolution: "@types/cookie@npm:0.4.1"
+  checksum: 3275534ed69a76c68eb1a77d547d75f99fedc80befb75a3d1d03662fb08d697e6f8b1274e12af1a74c6896071b11510631ba891f64d30c78528d0ec45a9c1a18
+  languageName: node
+  linkType: hard
+
 "@types/lodash@npm:4.14.159":
   version: 4.14.159
   resolution: "@types/lodash@npm:4.14.159"
@@ -1918,6 +1925,13 @@ __metadata:
   version: 18.11.11
   resolution: "@types/node@npm:18.11.11"
   checksum: c4b1176a8f1714a3ee3fc2a5e1d568b0cd50209000282db5c68154b3c975952928dbb834ef3a0ce55bd7b345ae29f2cbf4a34635a070294d135a24254231386a
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^16.10.2":
+  version: 16.18.54
+  resolution: "@types/node@npm:16.18.54"
+  checksum: 208e8fc64f605e9cd55ab5e620a0fd019d8fe5629e3e3c5de869a149b731ab0fac5720c516dccc0ecc834ac27df754723dfe6554551663f016ba5096ea8851df
   languageName: node
   linkType: hard
 
@@ -2122,6 +2136,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"bcryptjs-react@npm:^2.4.6":
+  version: 2.4.6
+  resolution: "bcryptjs-react@npm:2.4.6"
+  bin:
+    bcrypt: bin/bcrypt
+  checksum: f3bd3c662b6f86411455570b9ded6db41b5b737891384346585769b201363ef5954ffb09383230a9445060b6fe8369250b3c89f37e4c9a9e8a43561e32cba14e
+  languageName: node
+  linkType: hard
+
+"bcryptjs@npm:^2.4.3":
+  version: 2.4.3
+  resolution: "bcryptjs@npm:2.4.3"
+  checksum: 0e80ed852a41f5dfb1853f53ee14a7390b0ef263ce05dba6e2ef3cd919dfad025a7c21ebcfe5bc7fa04b100990edf90c7a877ff7fe623d3e479753253131b629
+  languageName: node
+  linkType: hard
+
 "binary-extensions@npm:^2.0.0":
   version: 2.2.0
   resolution: "binary-extensions@npm:2.2.0"
@@ -2260,7 +2290,10 @@ __metadata:
     "@syncfusion/ej2-react-navigations": ^23.1.36
     autoprefixer: 10.4.15
     bcrypt: ^5.1.1
+    bcryptjs: ^2.4.3
+    bcryptjs-react: ^2.4.6
     cldr-data: ^36.0.1
+    cookies-next: ^4.0.0
     firebase: ^10.3.1
     keen-slider: ^6.8.6
     leaflet: 1.9.4
@@ -2268,6 +2301,7 @@ __metadata:
     mongoose: ^7.5.0
     next: ^13.5.2
     next-auth: ^4.23.1
+    next-themes: ^0.2.1
     postcss: 8.4.28
     react: ^18.2.0
     react-dom: ^18.2.0
@@ -2419,10 +2453,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cookie@npm:^0.4.0":
+  version: 0.4.2
+  resolution: "cookie@npm:0.4.2"
+  checksum: a00833c998bedf8e787b4c342defe5fa419abd96b32f4464f718b91022586b8f1bafbddd499288e75c037642493c83083da426c6a9080d309e3bd90fd11baa9b
+  languageName: node
+  linkType: hard
+
 "cookie@npm:^0.5.0":
   version: 0.5.0
   resolution: "cookie@npm:0.5.0"
   checksum: 1f4bd2ca5765f8c9689a7e8954183f5332139eb72b6ff783d8947032ec1fdf43109852c178e21a953a30c0dd42257828185be01b49d1eb1a67fd054ca588a180
+  languageName: node
+  linkType: hard
+
+"cookies-next@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "cookies-next@npm:4.0.0"
+  dependencies:
+    "@types/cookie": ^0.4.1
+    "@types/node": ^16.10.2
+    cookie: ^0.4.0
+  checksum: d9ee812bcac2c96e7004704d3bfaf1214c293d3c1155093915c180cc1479fb8e1c78e3486c55b6c0323137b6ec31fb6e19b92a03403538efe961383d80c51a81
   languageName: node
   linkType: hard
 
@@ -3564,6 +3616,17 @@ __metadata:
     nodemailer:
       optional: true
   checksum: 995114797c257ccf71a82d19fb6316fb7709b552aaaf66444591c505a4b8e00b0cae3f4db4316b63a8cc439076044cc391ab171c4f6ee2e086709c5b3bbfed24
+  languageName: node
+  linkType: hard
+
+"next-themes@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "next-themes@npm:0.2.1"
+  peerDependencies:
+    next: "*"
+    react: "*"
+    react-dom: "*"
+  checksum: ebc248b956138e73436c4ed0a0f0a877a0a48a33156db577029b8b8469e48b5c777d61abf2baeb75953378febea74e067a4869ff90b4a3e94fce123289b862ba
   languageName: node
   linkType: hard
 

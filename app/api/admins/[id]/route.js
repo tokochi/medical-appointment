@@ -1,16 +1,12 @@
 import { connectToDB } from '@utils/database';
 import Admin from '@models/admin';
-import bcrypt from 'bcrypt'
 
-// ****** Get All Data *********
-export async function GET(req,{params,query}) {
+// ****** Get one Data *********
+export async function GET(req,{params}) {
     await connectToDB();
     try {
         if (!params?.id) {
             return new Response('Missing ID parameter', { status: 400 }); // Bad Request
-        }
-        if (!data) {
-            return new Response('Empty request body', { status: 400 }); // Bad Request
         }
         const response = await Admin.findOne({ email: params?.id });
         if (response.ok) {
@@ -45,15 +41,12 @@ export async function PUT(req, { params }) {
 }
 
 // ****** Delete *********
-export async function DELETE(req) {
+export async function DELETE(req, { params }) {
     await connectToDB();
     const data = await req.JSON()
     try {
         if (!params?.id) {
             return new Response('Missing ID parameter', { status: 400 }); // Bad Request
-        }
-        if (!data) {
-            return new Response('Empty request body', { status: 400 }); // Bad Request
         }
         const response = await Admin.deleteOne({ _id: data?._id })
         if (response.ok) {

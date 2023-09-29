@@ -30,8 +30,8 @@ function SignupAdmin() {
         />
         <TextInput
           type='phone'
-          name='phone'
-          value={adminInfo?.phone}
+          name='phone.mobile'
+          value={adminInfo?.phone?.mobile}
           onChange={(e) => handleInputChange(e, "adminInfo")}
           placeholder='الهاتف المحمول'
           label='الهاتف المحمول'

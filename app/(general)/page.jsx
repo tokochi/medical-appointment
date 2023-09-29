@@ -4,10 +4,7 @@ import SectionWhyUs from "@components/SectionWhyUs";
 import SectionWorks from "@components/SectionWorks";
 import SectionBlog from "@components/SectionBlog";
 
-export const Metadata = {
-  title: "صحتي تاجي",
-  description: "الشبكة الطبية المهنية الأولى",
-};
+
 export default function Home() {
 
   return (

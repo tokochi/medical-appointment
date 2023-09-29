@@ -1,9 +1,8 @@
-import React from "react";
-import { useStore } from "@context/store";
+import { useStore } from "@context/serverStore";
 import Link from "next/link";
 import Image from "next/image";
 function RelatedWoks() {
-  const { relatedWorks } = useStore();
+  const { relatedWorks } = useStore.getState();
   return (
     <div>
       <h1 id='title' className='font-bold text-xl mx-2 p-2'>

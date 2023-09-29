@@ -1,3 +1,4 @@
+"use client"
 import { DropInput, IconInput, SelectInput, TextInput, TextareaInput } from "@components/inputs";
 import Image from "next/image";
 import { useStore } from "@context/store";

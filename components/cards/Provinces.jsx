@@ -1,8 +1,7 @@
-"use client";
-import { useStore } from "@context/store";
+import { useStore } from "@context/serverStore";
 
 function Provinces() {
-  const wilaya = useStore((state) => state.wilaya);
+  const { wilaya } = useStore.getState();
   return (
     <div className='flex flex-wrap gap-2'>
       {wilaya.slice(0, 10).map((region, index) => (

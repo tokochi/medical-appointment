@@ -1,19 +1,17 @@
 import { create } from "zustand";
 import { v4 } from "uuid";
 import { wilaya, daira, commune, userDefault, doctorDefault, pharmDefault, hospDefault, labDefault, relatedWorks, medicalSpecialties, specialities, titles, labs, pharms, hosp, visitArg, worksPharms, worksLabs, searchTabs, questions, specilatiyHosp, sectionWork } from "@utils/data.js";
-let Doctor, Post, Admin, Pharm, Lab, Hosp, Question, connectToDB, bcrypt;
-if (typeof window === 'undefined') {
-  // Server-side import
-  Doctor = require("@models/doctor");
-  Post = require("@models/post");
-  Admin = require("@models/admin");
-  Pharm = require("@models/pharm");
-  Lab = require("@models/lab");
-  Hosp = require("@models/hosp");
-  Question = require("@models/question");
-  connectToDB = require('@utils/database').connectToDB;
-  bcrypt = require('bcrypt');
-}
+import { connectToDB } from '@utils/database';
+import Admin from '@models/admin';
+import Post from '@models/post';
+import Doctor from '@models/doctor';
+import Hosp from '@models/hosp';
+import Lab from '@models/lab';
+import Pharm from '@models/pharm';
+import Question from '@models/question';
+import bcrypt from 'bcrypt'
+import User from '@models/user';
+import { headers } from "next/headers";
 export const useStore = create((set, get) => ({
   //************** General *************/
   darkTheme: true,
@@ -502,21 +500,6 @@ export const useStore = create((set, get) => ({
   hospitals: [],
   posts: [],
   question: [],
-  fetchTheme: async () => {
-    const theme = localStorage.getItem('theme')
-    const response = await fetch("/api/theme", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(theme),
-    });
-    if (response.ok) {
-      console.log('sending theme succes:', response);
-    } else {
-      console.error('error sending theme:');
-    }
-  },
   fetchData: async (url, keyValue) => {
     try {
       if (url) {
@@ -534,32 +517,37 @@ export const useStore = create((set, get) => ({
     }
   },
   fetchAdmins: async () => {
+    await connectToDB();
     try {
-      set({ isLoading: true });
-      const usersResponse = await fetch('/api/admins');
-      const usersData = await usersResponse.json();
-      set({ admins: usersData });
-      set({ isLoading: false });
+      const response = await Admin.find();
+      set({ admins: response });
+      return response
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   },
   fetchAdmin: async (id) => {
+
+    await connectToDB();
     try {
-      set({ isLoading: true });
-      const usersResponse = await fetch(`/api/admins?id=${id}`);
-      const usersData = await usersResponse.json();
-      set({ currentAdmin: usersData });
-      set({ isLoading: false });
+      if (id) {
+        const response = await Admin.findOne({ _id: id });
+        set({ selectedAdmin: response });
+        return response
+      }
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   },
   fetchDoctor: async (id) => {
+
+    await connectToDB();
     try {
-      const usersResponse = await fetch(`/api/doctors/${id}`);
-      return await usersResponse.json();
-      // set({ currentDoctor: usersData });
+      if (id) {
+        const response = await Doctor.findOne({ _id: id });
+        set({ selectedDoctor: response });
+        return response
+      }
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -568,32 +556,33 @@ export const useStore = create((set, get) => ({
     await connectToDB();
     try {
       if (id) {
-        const response = await Post.findOne({ _id:id });
+        const response = await Post.findOne({ _id: id });
         set({ selectedPost: response });
         return response
+      }
+    } catch (error) {
+      console.error('Error fetching data:');
+    }
+  },
+  fetchQuestion: async (id) => {
+    await connectToDB();
+    try {
+      if (id) {
+        const question = await Question.findOne({ _id: id });
+        const doctorData = await Doctor.findOne({ _id: question.doctorID });
+        set({ selectedQuestion: { ...question, doctor: doctorData } });
+        return { ...question._doc, doctor: doctorData }
       }
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   },
-  fetchQuestion: async (id) => {
-    try {
-      const questionResponse = await fetch(`/api/questions/${id}`);
-      const questionData = await questionResponse.json();
-      const doctorResponse = await fetch(`/api/doctors/${questionData.doctorID}`);
-      const doctorData = await doctorResponse.json();
-      set({ selectedQuestion: { ...questionData, doctor: doctorData } });
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  },
   fetchUsers: async () => {
+    await connectToDB();
     try {
-      set({ isLoading: true });
-      const usersResponse = await fetch('/api/users');
-      const usersData = await usersResponse.json();
-      set({ users: usersData });
-      set({ isLoading: false });
+      const response = await User.find();
+      set({ users: response });
+      return response
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -611,9 +600,16 @@ export const useStore = create((set, get) => ({
   fetchQuestions: async () => {
     await connectToDB();
     try {
-      const response = await Doctor.find();
-      set({ doctors: response });
-      return response
+      const response = await Question.find();
+      // Fetch doctors for each question concurrently using Promise.all
+      const doctorPromises = response.map(async (question) => {
+        const doctorData = await Doctor.findOne({ _id: question?.doctorID });
+        return { ...question._doc, doctor: doctorData }
+      });
+      // Wait for all doctor fetches to complete
+      const questionsWithDoctors = await Promise.all(doctorPromises);
+      set({ questions: questionsWithDoctors });
+      return questionsWithDoctors
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -621,7 +617,7 @@ export const useStore = create((set, get) => ({
   fetchPosts: async () => {
     await connectToDB();
     try {
-      const response = await Doctor.find();
+      const response = await Post.find();
       set({ doctors: response });
       return response
     } catch (error) {
@@ -629,34 +625,31 @@ export const useStore = create((set, get) => ({
     }
   },
   fetchPharms: async () => {
+    await connectToDB();
     try {
-      set({ isLoading: true });
-      const usersResponse = await fetch('/api/pharms');
-      const usersData = await usersResponse.json();
-      set({ pharms: usersData });
-      set({ isLoading: false });
+      const response = await Pharm.find();
+      set({ pharms: response });
+      return response
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   },
   fetchLabs: async () => {
+    await connectToDB();
     try {
-      set({ isLoading: true });
-      const usersResponse = await fetch('/api/labs');
-      const usersData = await usersResponse.json();
-      set({ labs: usersData });
-      set({ isLoading: false });
+      const response = await Lab.find();
+      set({ labs: response });
+      return response
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   },
   fetchHosps: async () => {
+    await connectToDB();
     try {
-      set({ isLoading: true });
-      const usersResponse = await fetch('/api/hosps');
-      const usersData = await usersResponse.json();
-      set({ hosps: usersData });
-      set({ isLoading: false });
+      const response = await Hosp.find();
+      set({ hosps: response });
+      return response
     } catch (error) {
       console.error('Error fetching data:', error);
     }

@@ -1,10 +1,10 @@
-import React from 'react'
+"use client"
 import Link from "next/link";
 import Image from "next/image";
 import { useStore } from "@context/store";
-import AskQuestion from '../forms/question/AskQuestion';
+import AskQuestion from "../forms/question/AskQuestion";
+
 function FindYourAnswer() {
-  const { modal } = useStore();
   return (
     <div className='card p-4 flex flex-col gap-4'>
       <h1 className='font-bold text-2xl text-center text-sky-500'>
@@ -21,7 +21,7 @@ function FindYourAnswer() {
                 isOpen: true,
                 title: "سؤالي الطبي",
                 content: "",
-                children: <AskQuestion/>,
+                children: <AskQuestion />,
               },
             })
           }
@@ -41,4 +41,4 @@ function FindYourAnswer() {
   );
 }
 
-export default FindYourAnswer
+export default FindYourAnswer;
