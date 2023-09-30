@@ -1,30 +1,29 @@
-"use client";
-import Modal from "@components/Modal";
 import HeadTitle from "@components/cards/HeadTitle";
-import Footer from "@components/dashboard/Footer";
 import Header from "@components/dashboard/Header";
 import Sidebar from "@components/dashboard/Sidebar";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useEffect} from "react";
-export default function RootLayout({ children }) {
+import { useStore } from "@context/serverStore";
+import { redirect } from "next/navigation";
 
+export default function RootLayout({ children }) {
+  const {  session } = useStore.getState();
+  if (!session?.isAdmin) {
+    redirect("/admin");
+  }
   return (
-      <div className="flex h-screen">
-        <div className="flex h-screen">
+    <div className="flex h-screen overflow-y-auto">
+      <div className="flex h-screen overflow-y-auto">
           <Sidebar />
         </div>
-        <div className="flex flex-col flex-1 overflow-hidden">
+      <div className="flex flex-col flex-1 overflow-y-auto">
           <div className="">
             <Header />
           </div>
           <div className="">
             <HeadTitle />
         </div>
-          <div className="flex-1  overflow-y-auto">
+        <div className="flex-1  ">
             {children}
           </div>
-          <Modal />
           {/* <div className="">
             <Footer />
           </div> */}

@@ -1,13 +1,17 @@
-"use client";
-import React, { useState } from "react";
-import { useStore } from "@context/store";
+import StoreInit from "@components/StoreInit";
+import PharmsTable from "@components/table/PharmsTable";
+import { useStore } from "@context/serverStore";
 
 
-function page() {
-  const { currentAdmin } = useStore();
+async function page() {
+  const { fetchPharms } = useStore.getState();
+    const data = {
+      pharms: JSON.stringify(await fetchPharms()),
+    };
   return (
-    <div className="">
-     
+    <div className=''>
+      <StoreInit {...data} />
+      <PharmsTable />
     </div>
   );
 }

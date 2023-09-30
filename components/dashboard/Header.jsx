@@ -1,21 +1,14 @@
-"use client";
-import { useStore } from "@context/store";
-import Image from "next/image";
+import { useStore } from "@context/serverStore";
 import SearchInput from "@components/inputs/SearchInput";
 
 function Header() {
-  const { currentAdmin } = useStore();
-  const isSidebarOpen = useStore((state) => state.sidebarOpen);
-
-  function toggleSidebar() {
-    useStore.setState({ sidebarOpen: !useStore.getState().sidebarOpen });
-  }
+  const { session } = useStore.getState();
   return (
     <div className=' transition-colors duration-300'>
       <div className='container flex items-center gap-2 justify-between  w-full py-2  px-4'>
         <button
           className='inline-flex w-8 h-8 text-sm text-gray-500 rounded-lg  hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600'
-          onClick={toggleSidebar}>
+          onClick={useStore.setState({ sidebarOpen: !useStore.getState().sidebarOpen })}>
           <svg
             className='h-8 w-8 fill-gray-600 dark:fill-gray-400'
             xmlns='http://www.w3.org/2000/svg'
@@ -28,8 +21,8 @@ function Header() {
         </div>
 
         <div className='mr-auto flex items-start justify-center gap-2'>
-          <button className='flex gap-2 rounded-xl card p-1'>
-            <p className='hidden md:flex'>مرحبا بك، {currentAdmin?.name}</p>
+          <button className='flex gap-1 rounded-xl card p-1'>
+            <p className='hidden md:flex'>مرحبا بك، <span className="font-roboto mx-1">{session?.name}</span></p>
             <svg
               className='h-6 w-6 fill-gray-600 dark:fill-gray-400'
               xmlns='http://www.w3.org/2000/svg'

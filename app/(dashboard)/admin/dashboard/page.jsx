@@ -1,25 +1,26 @@
-"use client";
-import { useEffect } from "react";
-import { useStore } from "@context/store";
+import { useStore } from "@context/serverStore";
 import Image from "next/image";
 import Doctors from "@components/cards/dashboard/Doctors";
 
-function page() {
-  const { users, doctors, fetchUsers } = useStore();
-   useEffect(() => {
-     fetchUsers();
-   }, []);
+async function page() {
+  const { fetchUsers, fetchDoctors } = useStore.getState();
+  const users = await fetchUsers();
+  const doctors = await fetchDoctors();
   return (
-    <div className='bg-gray-200 dark:bg-slate-900'>
-      <div id='cards' className='flex gap-2 flex-wrap justify-around items-center'>
+    <div className='bg-gray-200 dark:bg-slate-900 p-2 flex flex-wrap gap-2 justify-center'>
+      <div
+        id='cards'
+        className='grow shrink basis-full gap-2 flex flex-wrap justify-around items-center'>
         <Doctors />
         <Doctors />
         <Doctors />
         <Doctors />
       </div>
-      <div id='doctors-sumbit' className='inline-block m-4 card p-2 rounded-xl'>
-        <h1 className='font-bold text-xl text-sky-500 my-2 text-center'>طلبات تسجيل الأطباء</h1>
-        <table className='w-full'>
+      <div
+        id='doctors-sumbit'
+        className='grow shrink basis-1/3  md:w-auto card p-2 rounded-xl'>
+        <h1 className='font-bold md:text-xl text-sky-500 my-2 text-center'>طلبات تسجيل الأطباء</h1>
+        <table className='w-full text-sm md:text-base'>
           <thead>
             <tr>
               <th className='w-1/4 text-center text-yellow-600 p-2'>الأطباء</th>
@@ -51,7 +52,7 @@ function page() {
                     </div>
                   </div>
                 </td>
-                <td>{doctor.date.split("T")[0]}</td>
+                <td>{doctor.date.toISOString().substring(0, 10)}</td>
                 <td>
                   <button>
                     <svg
@@ -72,9 +73,11 @@ function page() {
           </tbody>
         </table>
       </div>
-      <div id='last-sub' className='inline-block m-4 card p-2 rounded-xl '>
-        <h1 className='font-bold text-xl text-sky-500 my-2 text-center'>آخر التسجيلات</h1>
-        <table className='w-full'>
+      <div
+        id='last-sub'
+        className='grow shrink basis-1/3  md:w-auto card p-2 rounded-xl '>
+        <h1 className='font-bold md:text-xl text-sky-500 my-2 text-center'>آخر التسجيلات</h1>
+        <table className='w-full text-sm md:text-base'>
           <thead>
             <tr>
               <th className='w-1/4 text-center text-yellow-600 p-2'>المستخدم</th>
@@ -93,15 +96,17 @@ function page() {
                       viewBox='0 0 24 24'>
                       <path d='M12,2C6.477,2,2,6.477,2,12c0,5.523,4.477,10,10,10s10-4.477,10-10C22,6.477,17.523,2,12,2z M12,4.75 c1.795,0,3.25,1.455,3.25,3.25s-1.455,3.25-3.25,3.25S8.75,9.795,8.75,8S10.205,4.75,12,4.75z M12,20 c-2.438,0-4.621-1.091-6.088-2.812c-0.381-0.447-0.296-1.118,0.173-1.471C7.602,14.576,10.366,14,12,14s4.398,0.576,5.916,1.717 c0.469,0.353,0.554,1.025,0.173,1.471C16.621,18.909,14.438,20,12,20z' />
                     </svg>
-                    <div id='avatar' className='text-right md:whitespace-nowrap flex flex-col'>
-                      <h1 className='font-bold  text-sm text-sky-500'>{doctor?.email}</h1>
+                    <div id='avatar' className='text-right  flex flex-col'>
+                      <h1 className='font-bold hidden md:inline-block text-sm text-sky-500'>
+                        {doctor?.email}
+                      </h1>
                       <h2 className='text-sm'>{doctor?.name}</h2>
                     </div>
                   </div>
                 </td>
-                <td className='p-2 align-top'>{doctor.date.split("T")[0]}</td>
+                <td className='p-2 align-top'>{doctor.date.toISOString().substring(0, 10)}</td>
                 <td className='p-2 align-top'>
-                  <button className='flex flex-wrap md:flex-nowrap items-center gap-2'>
+                  <button className='flex flex-wrap mx-auto md:flex-nowrap items-center gap-2'>
                     <svg
                       className='h-5 w-5 fill-yellow-400'
                       xmlns='http://www.w3.org/2000/svg'

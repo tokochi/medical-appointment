@@ -34,6 +34,7 @@ export const options = {
                 password: { label: 'password', type: 'password' }
             },
             async authorize(credentials, req) {
+                await connectToDB();
                 if (!credentials?.email || !credentials?.password) { throw new Error('empty credentials!! ') }
                 const user = await User.findOne({ email: credentials?.email });
                 if (!user || !user?.password) {
@@ -46,6 +47,7 @@ export const options = {
                 if (!isCorrectPassword) {
                     throw new Error('Invalid Password');
                 }
+              await User.updateOne({ email: credentials?.email }, { $set: { lastLogin: Date.now() } })
                 return user
             }
         }),
@@ -57,6 +59,7 @@ export const options = {
                 password: { label: 'password', type: 'password' }
             },
             async authorize(credentials, req) {
+                await connectToDB();
                 if (!credentials?.email || !credentials?.password) { throw new Error('empty credentials!! ') }
                 const user = await Admin.findOne({ email: credentials?.email });
                 if (!user || !user?.password) {
@@ -69,6 +72,7 @@ export const options = {
                 if (!isCorrectPassword) {
                     throw new Error('Invalid Password');
                 }
+                await Admin.updateOne({ email: credentials?.email }, { $set: { lastLogin: Date.now() } })
                 return user
             }
         }),
@@ -80,11 +84,13 @@ export const options = {
                 password: { label: 'password', type: 'password' }
             },
             async authorize(credentials, req) {
+                await connectToDB();
                 if (!credentials?.email || !credentials?.password) { throw new Error('empty credentials!! ') }
                 const user = await Doctor.findOne({ email: credentials?.email });
                 if (!user) {
                     throw new Error('User not Found in db !! ')
                 }
+                await Doctor.updateOne({ email: credentials?.email }, { $set: { lastLogin: Date.now() } })
                 return user
             }
         }),
@@ -133,7 +139,11 @@ export const options = {
                     return false
                 }
             }
-            if (credentials) return credentials
+            if (credentials) {
+                
+                
+                return credentials
+            }
         },
     },
     session: {

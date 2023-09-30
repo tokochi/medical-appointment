@@ -2,7 +2,7 @@ import '@app/globals.css'
 import '@app/SyncfussionCSS.css'
 import Header from '@components/Header';
 import Footer from '@components/Footer';
-import { useStore } from "@context/store";
+import { useStore } from "@context/serverStore";
 import { getServerSession } from 'next-auth';
 import { options } from '@app/api/auth/[...nextauth]/options';
 import ClientSideWrapper from '@components/ClientSideWrapper';
@@ -15,15 +15,9 @@ import StoreInit from '@components/StoreInit';
   };
 export default async function RootLayout({ children }) {
   const session = await getServerSession(options)
-  const { dir, fetchDoctors, fetchQuestions, fetchPosts, fetchPharms, fetchLabs, fetchHosps } = useStore.getState()
+  const { dir} = useStore.getState()
   useStore.setState({ session });
   const data = {
-    // doctors: JSON.stringify(await fetchDoctors()),
-    // questions: JSON.stringify(await fetchQuestions()),
-    // posts: JSON.stringify(await fetchPosts()),
-    // pharms: JSON.stringify(await fetchPharms()),
-    // labs: JSON.stringify(await fetchLabs()),
-    // hosps: JSON.stringify(await fetchHosps()),
     session: JSON.stringify(await getServerSession(options)),
   };
   return (

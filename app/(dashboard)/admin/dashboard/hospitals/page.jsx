@@ -1,13 +1,17 @@
-"use client";
-import React, { useState } from "react";
-import { useStore } from "@context/store";
+import StoreInit from "@components/StoreInit";
+import HospsTable from "@components/table/HospsTable";
+import { useStore } from "@context/serverStore";
 
 
-function page() {
-  const { currentAdmin } = useStore();
+async function page() {
+  const { fetchHosps } = useStore.getState();
+    const data = {
+      hosps: JSON.stringify(await fetchHosps()),
+    };
   return (
-    <div className="">
-     
+    <div className=''>
+      <StoreInit {...data} />
+      <HospsTable />
     </div>
   );
 }

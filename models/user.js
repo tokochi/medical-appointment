@@ -24,6 +24,7 @@ const userSchema = new Schema({
         required: [true, 'Email is required!']
     },
     date: { type: Date, default: Date.now },
+    lastLogin: { type: Date },
 })
 const User = models.user || model("user", userSchema);
 export default User;

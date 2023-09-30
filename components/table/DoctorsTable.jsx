@@ -1,3 +1,4 @@
+"use client"
 import {
   GridComponent,
   ColumnsDirective,
@@ -32,16 +33,7 @@ function DoctorsTable() {
   // ******** Grid Table  ********
   const [active, setActive] = useState({ all: true, sub: false });
   const gridRef = useRef(null);
-  const {
-    fetchDoctors,
-    doctors,
-    handleAddGrid,
-    handleDeleteGrid,
-    handleEditGrid,
-  } = useStore();
-  useEffect(() => {
-    fetchDoctors();
-  }, []);
+  const { handleAddGrid, handleDeleteGrid, handleEditGrid, doctors  } = useStore();
   const doctorsData = useStore((state) => state.doctors).filter((doctor) => filterDoctor(doctor));
   const SubscribedDoctors = useStore((state) => state.doctors).filter(
     (doctor) => doctor.subscription != null

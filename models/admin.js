@@ -29,6 +29,7 @@ const adminSchema = new Schema({
         required: [true, 'Email is required!']
     },
     date: { type: Date, default: Date.now },
+    lastLogin: { type: Date },
 })
 const Admin = models.admin || model("admin", adminSchema);
 export default Admin;

@@ -1,7 +1,7 @@
 import { useStore } from "@context/serverStore";
 import Link from "next/link";
 import Image from "next/image";
-import SlicerDoctor from "@components/slicerDoctor";
+import SlicerDoctor from "@components/SlicerDoctor";
 
 async function Doctors() {
   const { fetchDoctors } = useStore.getState();

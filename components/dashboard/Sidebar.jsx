@@ -2,6 +2,7 @@
 import { useStore } from "@context/store";
 import Link from "next/link";
 import Image from "next/image";
+
 function Sidebar() {
   const isSidebarOpen = useStore((state) => state.sidebarOpen);
 
@@ -12,19 +13,21 @@ function Sidebar() {
       try {
         if (typeof window !== "undefined") {
           const value = JSON.parse(localStorage?.getItem("theme"));
+          if (value === null) {
+            localStorage?.setItem("theme", JSON.stringify(true));
+            useStore.setState({ darkTheme: true });
+}
           localStorage?.setItem("theme", JSON.stringify(!value));
-          useStore.setState({ dark: !value });
-          useStore.setState({ syncfussionThem: !value });
+          useStore.setState({ darkTheme: !value });
         }
       } catch (error) {
         console.log("error localStorage");
       }
     }
   return (
-    
     <div
       className={`${
-        isSidebarOpen ? "w-[150px]" : "w-[45px] "
+        isSidebarOpen ? "w-[250px]" : "w-[45px] "
       }  bg-gray-100 overflow-x-hidden shadow-xl  dark:bg-[#002130]  transition-w duration-300`}>
       <div className='flex flex-col gap-4 p-2 list-none dark:text-gray-100'>
         <Link className='' href='/'>
@@ -125,7 +128,10 @@ function Sidebar() {
           </Link>
         </li>
         <li>
-          <Link onClick={() => signOut()} href='/admin' className='flex gap-2 font-semibold'>
+          <Link
+            onClick={() => signOut()}
+            href='/admin'
+            className='flex gap-2 font-semibold'>
             <svg
               className='h-6 w-6 fill-gray-600 dark:fill-gray-400'
               xmlns='http://www.w3.org/2000/svg'
