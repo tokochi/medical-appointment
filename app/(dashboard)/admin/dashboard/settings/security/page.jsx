@@ -7,7 +7,7 @@ export default async function page() {
   const response = await fetchAdmin(session?._id);
  let data;
   if (response) { data = {
-    adminInfo: JSON.stringify({  _id:response._doc._id, password: "", verifyPassword:"",oldPassword: "" }),
+    adminInfo: JSON.stringify({  _id:response?._doc._id, password: "", verifyPassword:"",oldPassword: "" }),
   }; };
   return (
     <div className='flex flex-col gap-4 md:p-4 w-full'>

@@ -6,14 +6,13 @@ import { useStore } from "@context/store";
 import { useRouter} from "next/navigation";
 import { useSession } from "next-auth/react";
 import LoadingComponent from "@components/LoadingComponent";
+import { useEffect, useState } from "react";
 
 
 function page() {
-  const { data: session, status } = useSession();
+  const { isLoading, session } = useStore();
   const router = useRouter()
-  useStore.setState({ session: session?.user?._doc });
-  const { isLoading } = useStore.getState();
-   if (status === "loading") {
+   if (!session) {
      return (
        <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
          <LoadingComponent size={100} color='#0891b2' loading={isLoading} />
@@ -36,16 +35,22 @@ function page() {
           <Image src='/images/logo.png' width={150} height={150} alt='cancel' />
         </div>
         <h1 className='text-2xl  font-bold p-4'>هذه الصفحة خاصة بالمشرفين على الموقع</h1>
-        {session?.user?._doc.isAdmin ? (
+        {session?.isAdmin ? (
           <div className='flex flex-col justify-center items-center  gap-4'>
             <h1 className='font-semibold text-center p-2 border-b-[1px] border-dashed'>
               مرحبا بك في منصة المشرفين، أنت الآن مسًّجل للدخول
             </h1>
-            <h1 className='text-center'>البريد الإلكتروني: {session?.user?._doc.email} </h1>
-          
-            <button onClick={() => { router.refresh(); router.push('admin/dashboard')  }}  className='font-semibold p-2 px-2 btn2'>الذهاب الى الواجهة</button>
-   
-            
+            <h1 className='text-center'>البريد الإلكتروني: {session?.email} </h1>
+
+            <button
+              onClick={() => {
+                router.refresh();
+                router.push("admin/dashboard");
+              }}
+              className='font-semibold p-2 px-2 btn2'>
+              الذهاب الى الواجهة
+            </button>
+
             <Link href='/'>
               <button className='font-semibold p-2 px-2 btn'>الذهاب الى الصفحة الرئيسية</button>
             </Link>
