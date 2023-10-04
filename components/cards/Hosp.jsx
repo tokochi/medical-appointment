@@ -28,7 +28,7 @@ function Hosp() {
                 <div id={item._id}>
                   <Image
                     className='rounded-xl w-auto h-auto'
-                    src={item.avatar[0]}
+                    src={item.avatar?.[0]}
                     width={80}
                     height={80}
                     alt='avatar'
@@ -114,7 +114,7 @@ function Hosp() {
                 </button>
               </Link>
               {/* <Link
-                   onClick={() => console.log("display model")}
+                   onClick={() => console.log("🚀 ~display model")}
                    // href='/doctors/profile'
                    className=''>
                    <button

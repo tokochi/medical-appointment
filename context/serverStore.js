@@ -12,6 +12,8 @@ import Question from '@models/question';
 import bcrypt from 'bcrypt'
 import User from '@models/user';
 import { headers } from "next/headers";
+import Company from "@models/company";
+import Activity from "@models/activity";
 export const useStore = create((set, get) => ({
   //************** General *************/
   darkTheme: true,
@@ -500,6 +502,7 @@ export const useStore = create((set, get) => ({
   hospitals: [],
   posts: [],
   question: [],
+  activities: [],
   fetchData: async (url, keyValue) => {
     try {
       if (url) {
@@ -516,11 +519,30 @@ export const useStore = create((set, get) => ({
       console.error('Error fetching data:', error);
     }
   },
+  fetchActivity: async () => {
+    await connectToDB();
+    try {
+      const response = await Activity.find();
+      set({ activities: response });
+      return response
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  },
   fetchAdmins: async () => {
     await connectToDB();
     try {
       const response = await Admin.find();
       set({ admins: response });
+      return response
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  },
+  fetchCompany: async () => {
+    await connectToDB();
+    try {
+      const response = await Company.find();
       return response
     } catch (error) {
       console.error('Error fetching data:', error);

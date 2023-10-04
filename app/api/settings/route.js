@@ -27,7 +27,7 @@ export async function POST(req) {
 // ****** Update *********
 export async function PUT(req) {
     await connectToDB();
-    const data = await req.JSON()
+    const data = await req.json()
     try {
         const response = await User.updateOne({ _id: data?._id }, { $set: data })
         return new Response(JSON.stringify(response), { status: 200 });
@@ -39,7 +39,7 @@ export async function PUT(req) {
 // ****** Delete *********
 export async function DELETE(req) {
     await connectToDB();
-    const data = await req.JSON()
+    const data = await req.json()
     try {
         const response = await User.deleteOne({ _id: data?._id })
         return new Response(JSON.stringify(response), { status: 200 });

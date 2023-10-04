@@ -168,7 +168,7 @@ function SignupInputsForm(props) {
                   uploadBytes,
                   getDownloadURL,
                   storage,
-                  "doctors/avatar/",
+                  `doctors/avatar/${doctorInfo?.email}/`,
                   "doctorInfo"
                 )
               }
@@ -201,7 +201,7 @@ function SignupInputsForm(props) {
           <div id='other-specialities' className=''>
             <SelectInput
               name='specialities'
-              onChange={(e) => handleSelectSpecialities(e)}
+              onChange={(e) => handleSelectSpecialities(e, "doctorInfo")}
               options={filtredspecialities}
               option_value='value'
               option_text='text'
@@ -213,7 +213,9 @@ function SignupInputsForm(props) {
                 <div
                   key={index}
                   className='p-1 px-2 flex gap-1 justify-between bg-slate-200 text-sm rounded-[163px] text-gray-900 dark:text-gray-300 dark:bg-slate-700 hover:bg-slate-400 font-medium'>
-                  <button name={speciality?.text} onClick={(e) => removeSelectSpecialities(e)}>
+                  <button
+                    name={speciality?.text}
+                    onClick={(e) => removeSelectSpecialities(e, "doctorInfo")}>
                     <Image
                       name={speciality?.text}
                       src='/images/cancel.png'
@@ -290,7 +292,9 @@ function SignupInputsForm(props) {
                 <div
                   key={index}
                   className='p-1 px-2 flex gap-1 justify-between bg-slate-200 text-sm rounded-[163px] text-gray-900 dark:text-gray-300 dark:bg-slate-700 hover:bg-slate-400 font-medium'>
-                  <button name={service?.text} onClick={(e) => removeSelectService(e)}>
+                  <button
+                    name={service?.text}
+                    onClick={(e) => removeSelectService(e, "doctorInfo")}>
                     <Image
                       name={service?.text}
                       src='/images/cancel.png'
@@ -603,7 +607,7 @@ function SignupInputsForm(props) {
                   uploadBytes,
                   getDownloadURL,
                   storage,
-                  "doctors/workPlace/",
+                  `doctors/workPlace/${doctorInfo?.email}/`,
                   "doctorInfo"
                 )
               }
@@ -626,7 +630,7 @@ function SignupInputsForm(props) {
                   uploadBytes,
                   getDownloadURL,
                   storage,
-                  "doctors/proof/",
+                  `doctors/proof/${doctorInfo?.email}/`,
                   "doctorInfo"
                 )
               }

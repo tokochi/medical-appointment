@@ -16,6 +16,8 @@ const adminSchema = new Schema({
         commune: {},
     },
     phone: {},
+    notifications: {},
+    notificationsList: [],
     avatar: [],
     desc: "string",
     facebook: "string",

@@ -9,7 +9,7 @@ export async function GET(req, { params }) {
         if (!params?.id) {
             return new Response('Missing ID parameter', { status: 400 }); // Bad Request
         }
-        const response = await Doctor.findOne({ _id: params?.id });
+        const response = await Doctor.findOne({ email: params?.id });
         if (response) {
             return new Response(JSON.stringify(response), { status: 200 }); // OK
         } else {
@@ -31,7 +31,7 @@ export async function PUT(req, { params }) {
             return new Response('Empty request body', { status: 400 }); // Bad Request
         }
         const response = await Doctor.updateOne({ _id: data?._id }, { $set: data })
-        if (response.acknowledged === true) {
+        if (response.acknowledged === true && response.modifiedCount === 1) {
             return new Response('User updated successfully', { status: 200 }); // OK
         } else {
             return new Response('Failed to update user', { status: 500 }); // Internal Server Error
@@ -49,7 +49,8 @@ export async function DELETE(req, { params }) {
             return new Response('Missing ID parameter', { status: 400 }); // Bad Request
         }
         const response = await Doctor.deleteOne({ _id: params?.id })
-        if (response.acknowledged===true) {
+        console.log("🚀 ~🚀 ~ response:", response)
+        if (response.acknowledged === true && response.deletedCount === 1) {
             return new Response('User updated successfully', { status: 200 }); // OK
         } else {
             return new Response('Failed to update user', { status: 500 }); // Internal Server Error

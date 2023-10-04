@@ -2,7 +2,7 @@ import { Schema, model, models } from 'mongoose';
 
 // *********** Schema **********
 const hospSchema = new Schema({
-    name: "string",
+    title: {},
     admins: [],
     address: {
         street: "string",
@@ -14,6 +14,7 @@ const hospSchema = new Schema({
     avatar: [],
     payment: {},
     services: [],
+    specialities: [],
     officePics: [],
     otherServices: {
         isFullTimeOpen: "boolean",
@@ -27,10 +28,10 @@ const hospSchema = new Schema({
     whatsapp: "string",
     linkdin: "string",
     googleMap: {},
-    email: {
+    name: {
         type: String,
-        unique: [true, 'Email already exists!'],
-        required: [true, 'Email is required!']
+        unique: [true, 'name already exists!'],
+        required: [true, 'name is required!']
     },
     date: { type: Date, default: Date.now },
 })

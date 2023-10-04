@@ -135,7 +135,7 @@ export const options = {
                     }
                     return true
                 } catch (error) {
-                    console.log("Error checking if user exists: ", error.message);
+                    console.log("🚀 ~Error checking if user exists: ", error.message);
                     return false
                 }
             }

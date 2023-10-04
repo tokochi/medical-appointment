@@ -16933,6 +16933,7 @@ export const specialities = [
 ];
 export const pharmDefault = {
   name: "",
+  title: { text:"الصيدلية", value :"pharmacy"},
   admins: [],
   address: {
     street: "",
@@ -16950,7 +16951,7 @@ export const pharmDefault = {
   },
   services: [],
   officePics: [],
-  subscription: {},
+  specialities: [],
   facebook: "",
   instagram: "",
   whatsapp: "",
@@ -16960,6 +16961,7 @@ export const pharmDefault = {
 export const hospDefault = {
   name: "",
   admins: [],
+  title: { text: "العيادة", value: "clinic" },
   address: {
     street: "",
     wilaya: { value: "Alger", text: "الجزائر" },
@@ -16975,8 +16977,8 @@ export const hospDefault = {
     homeVisits: false,
   },
   services: [],
+  specialities: [],
   officePics: [],
-  subscription: {},
   facebook: "",
   instagram: "",
   whatsapp: "",
@@ -16986,6 +16988,7 @@ export const hospDefault = {
 export const labDefault = {
   name: "",
   admins: [],
+  title: { text: "المختبر", value: "laboratory" },
   address: {
     street: "",
     wilaya: { value: "Alger", text: "الجزائر" },
@@ -17001,8 +17004,8 @@ export const labDefault = {
     homeVisits: false,
   },
   services: [],
+  specialities: [],
   officePics: [],
-  subscription: {},
   facebook: "",
   instagram: "",
   whatsapp: "",
@@ -17013,6 +17016,7 @@ export const userDefault = {
   avatar: ["/images/user-logo.png"],
   email: "",
   password: "",
+  verifyPassword: "",
   name: "",
   gender: { value: "female", text: "إمرأة" },
   address: {
@@ -17022,7 +17026,28 @@ export const userDefault = {
     commune: {},
   },
   phone: { line1: "", line2: "", mobile: "" },
+  notifications: { users:false, doctors: false, posts: false,questions: false },
 
+  googleMap: { lat: 36.7539, lng: 3.0589 },
+  files: {},
+  facebook: "",
+  instagram: "",
+  whatsapp: "",
+}
+export const companyDefault = {
+  avatar: ["/images/user-logo.png"],
+  email: "",
+  name: "",
+  if: "",
+  rc: "",
+  site: "",
+  address: {
+    street: "",
+    wilaya: { value: "Alger", text: "الجزائر" },
+    daira: {},
+    commune: {},
+  },
+  phone: { line1: "", line2: "", mobile: "" },
   googleMap: { lat: 36.7539, lng: 3.0589 },
   files: {},
   facebook: "",
@@ -17692,11 +17717,11 @@ export const pharms = [
       region: "باب الزوار",
       province: "الجزائر",
     },
-    phone1: "+213 023 97 39 37",
+    phone1: "+213 023973937",
     mobile: "+213 023 97 39 37",
     isFullTimeOpen: true,
     insurance: true,
-    subscription: { startDate: "", endDate: "", isActive: false, amount: 0 },
+  
     avatar:
       "https://imagecdn.med.ovh/unsafe/130x130/filters:format(webp):quality(100):blur(0)/https://www.med.tn/uploads/pharmacy/767-pharmacie-kammoun-mohamed-amine-1664448714.jpg",
     OfficePics: [

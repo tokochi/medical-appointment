@@ -19,7 +19,7 @@ function Header({ session }) {
         useStore.setState({ darkTheme: !value });
       }
     } catch (error) {
-      console.log("error localStorage");
+      console.log("🚀 ~error localStorage");
     }
   }
   return (

@@ -23,7 +23,7 @@ export default async function RootLayout({ children }) {
   return (
     <html lang='en' dir={dir} >
       <body className='text-gray-900 dark:text-gray-100 w-full ' >
-        <StoreInit {...data} />
+        {data && <StoreInit {...data} />}
         <ThemeProvider>
         <Header session={session}/>
           <ClientSideWrapper>

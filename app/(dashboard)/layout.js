@@ -15,14 +15,14 @@ export const Metadata = {
 export default async function RootLayout({ children }) {
   const session = await getServerSession(options)
   const { dir } = useStore.getState()
-  useStore.setState({ session: session?.user?._doc });
+ useStore.setState({ session: session?.user?._doc });
   const data = {
     session: JSON.stringify(session?.user?._doc),
   };
   return (
-    <html lang='en' dir={dir}  >
-      <body className='text-gray-900 bg-white dark:bg-slate-800 dark:text-gray-100 w-full ' >
-        <StoreInit {...data} />
+    <html lang='ar' dir={dir}  >
+      <body className='text-gray-900 bg-gray-200 dark:bg-slate-800 dark:text-gray-100 w-full ' >
+        {data&&  <StoreInit {...data} />}
           <ClientSideWrapper>
             {children}
           </ClientSideWrapper>

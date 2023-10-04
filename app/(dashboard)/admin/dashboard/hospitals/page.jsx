@@ -5,12 +5,12 @@ import { useStore } from "@context/serverStore";
 
 async function page() {
   const { fetchHosps } = useStore.getState();
-    const data = {
-      hosps: JSON.stringify(await fetchHosps()),
-    };
+  const data = {
+    hosps: JSON.stringify(await fetchHosps()) || [],
+  };
   return (
     <div className=''>
-      <StoreInit {...data} />
+      {data && <StoreInit {...data} />}
       <HospsTable />
     </div>
   );

@@ -5,10 +5,6 @@ import Image from "next/image";
 
 function Sidebar() {
   const isSidebarOpen = useStore((state) => state.sidebarOpen);
-
-  function toggleSidebar() {
-    useStore.setState({ sidebarOpen: !useStore.getState().sidebarOpen });
-  }
     function toggleDark() {
       try {
         if (typeof window !== "undefined") {
@@ -21,13 +17,13 @@ function Sidebar() {
           useStore.setState({ darkTheme: !value });
         }
       } catch (error) {
-        console.log("error localStorage");
+        console.log("🚀 ~error localStorage");
       }
     }
   return (
     <div
       className={`${
-        isSidebarOpen ? "w-[250px]" : "w-[45px] "
+        isSidebarOpen ? "w-[150px]" : "w-[45px] "
       }  bg-gray-100 overflow-x-hidden shadow-xl  dark:bg-[#002130]  transition-w duration-300`}>
       <div className='flex flex-col gap-4 p-2 list-none dark:text-gray-100'>
         <Link className='' href='/'>
@@ -117,7 +113,7 @@ function Sidebar() {
           </Link>
         </li>
         <li>
-          <Link href='/admin/dashboard/settings' className='flex gap-2 font-semibold'>
+          <Link href='/admin/dashboard/settings/account' className='flex gap-2 font-semibold'>
             <svg
               className='h-6 w-6 fill-gray-600 dark:fill-gray-400'
               xmlns='http://www.w3.org/2000/svg'
@@ -144,7 +140,7 @@ function Sidebar() {
         {/* <li className='p-2 border-t border-gray-500'>
           <p className={`${!isSidebarOpen && "hidden"}`}>البحث عن ؟</p>
         </li> */}
-        <li className='mt-10'>
+        {/* <li className='mt-10'>
           <button onClick={toggleDark} type='button' className={` flex gap-2`}>
             <svg
               className='h-6 w-6 fill-gray-600 dark:fill-gray-400 mr-auto origin-center dark:rotate-180 transition-all duration-300'
@@ -154,7 +150,7 @@ function Sidebar() {
             </svg>
             <p className={`${!isSidebarOpen && "hidden"}`}>مظلم</p>
           </button>
-        </li>
+        </li> */}
       </div>
     </div>
   );

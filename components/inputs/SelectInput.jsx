@@ -22,10 +22,12 @@ function SelectInput({
         id={id}
         name={name}
         {...rest}
-        className='bg-gray-50 border  border-gray-300 text-gray-900 text-sm  focus:ring-gray-500 focus:border-gray-500 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500'>
+        className='bg-gray-50 border  border-gray-300 text-gray-900 text-sm  font-semibold  focus:ring-gray-500 focus:border-gray-500 block w-full p-1 dark:bg-gray-700 dark:border-gray-600  dark:text-gray-200 dark:focus:ring-gray-500 dark:focus:border-gray-500'>
         <option style={{ display: "none" }}>{placeholder}</option>
         {options.map((option, index) => (
-          <option key={index} value={option[option_value]}>
+          <option
+            key={index}
+            value={option[option_value]}>
             {option[option_text]}
           </option>
         ))}

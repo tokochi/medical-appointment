@@ -1,3 +1,4 @@
+"use client";
 import {
   GridComponent,
   ColumnsDirective,
@@ -19,23 +20,21 @@ import { useEffect, useRef, useState, useMemo } from "react";
 import toast from "react-hot-toast";
 import { useStore } from "@context/store";
 import Localization from "../../utils/Localization";
-import Status from "@components/table/templates/users/UserStatus";
 import UsersGridName from "@components/table/templates/users/UserName";
+import Status from "@components/table/templates/users/UserStatus";
 import SignupInputsForm from "@components/forms/user/SignupInputsForm";
 
 function UsersTable() {
   // ******** Get Users List  ********
   Localization("مستخدمين");
   // ******** Column Templates  ********
-  const usersGridStatus = (props) => <Status {...props} />;
   const usersGridName = (props) => <UsersGridName {...props} />;
+   const usersGridStatus = (props) => <Status {...props} />;
   // ******** Grid Table  ********
   const [active, setActive] = useState({ all: true, sub: false });
   const gridRef = useRef(null);
-  const { fetchUsers, users, handleAddGrid, handleDeleteGrid, handleEditGrid } = useStore();
-  useEffect(() => {
-    fetchUsers();
-  }, []);
+  const {  users, handleAddGrid, handleDeleteGrid, handleEditGrid } = useStore();
+ 
   const usersData = useStore((state) => state.users).filter((user) => filterUser(user));
   const SubscribedUsers = useStore((state) => state.users).filter(
     (user) => user.subscription != null
@@ -87,7 +86,7 @@ function UsersTable() {
             textBtn_1: "موافقة",
             textBtn_2: "إلغـــــاء",
             onClickBtn_1: (e) => {
-              handleAddGrid(e, toast, "/api/users");
+              handleAddGrid(e, toast, "/api/users", "userInfo");
               // gridRef?.current?.refresh();
             },
             onClickBtn_2: (e) => {
@@ -111,7 +110,7 @@ function UsersTable() {
                 handleEditGrid(
                   e,
                   toast,
-                  `/api/users/${gridRef?.current?.getSelectedRecords()[0]._id}`
+                  `/api/users/${gridRef?.current?.getSelectedRecords()[0]._id}`,"userInfo"
                 );
                 // gridRef?.current?.refresh();
               },
@@ -133,6 +132,7 @@ function UsersTable() {
       case args.item.id.includes("delete"):
         if (gridRef?.current?.getSelectedRecords()?.length > 0) {
           useStore.setState({
+            userInfo: gridRef?.current?.getSelectedRecords()[0],
             modal: {
               isOpen: true,
               title: "حذف مستخدم",
@@ -143,7 +143,8 @@ function UsersTable() {
                 handleDeleteGrid(
                   e,
                   toast,
-                  `/api/users/${gridRef?.current?.getSelectedRecords()[0]._id}`
+                  `/api/users/${gridRef?.current?.getSelectedRecords()[0]._id}`,
+                  "userInfo"
                 );
                 // gridRef?.current?.refresh();
               },
@@ -176,7 +177,7 @@ function UsersTable() {
   return (
     <div className='p-2 md:p-10'>
       <div className='mb-2 md:mb-4 md:mx-4 flex flex-wrap items-start justify-between'>
-        <ul className='flex w-full md:w-auto justify-center items-center'>
+        {/* <ul className='flex w-full md:w-auto justify-center items-center'>
           <li className='m-1 '>
             <button
               className={`${active.all ? "btn-active" : "btn-disable"} flex gap-1`}
@@ -195,9 +196,9 @@ function UsersTable() {
               المشتركين <span className='ml-1  text-sky-600'>{SubscribedUsers.length}</span>
             </button>
           </li>
-        </ul>
+        </ul> */}
         <div className='card rounded-xl mx-auto grow md:grow-0 p-2 flex justify-center items-center'>
-          عـــدد المستخدمين: <span className='text-sky-500 mr-1'>{users.length}</span>
+          عـــدد المستخدميـــن: <span className='text-sky-500 mr-1'>{users.length}</span>
         </div>
       </div>
       <div className=''>

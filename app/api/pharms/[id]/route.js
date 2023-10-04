@@ -31,7 +31,7 @@ export async function PUT(req, { params }) {
             return new Response('Empty request body', { status: 400 }); // Bad Request
         }
         const response = await Pharm.updateOne({ _id: data?._id }, { $set: data })
-        if (response.acknowledged === true) {
+        if (response.acknowledged === true && response.modifiedCount === 1) {
             return new Response('User updated successfully', { status: 200 }); // OK
         } else {
             return new Response('Failed to update user', { status: 500 }); // Internal Server Error
@@ -49,7 +49,7 @@ export async function DELETE(req, { params }) {
             return new Response('Missing ID parameter', { status: 400 }); // Bad Request
         }
         const response = await Pharm.deleteOne({ _id: params?.id })
-        if (response.acknowledged===true) {
+        if (response.acknowledged === true && response.deletedCount === 1) {
             return new Response('User updated successfully', { status: 200 }); // OK
         } else {
             return new Response('Failed to update user', { status: 500 }); // Internal Server Error

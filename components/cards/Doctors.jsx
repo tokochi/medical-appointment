@@ -109,7 +109,7 @@ async function Doctors() {
                 </button>
               </Link>
               {/* <Link
-                   onClick={() => console.log("display model")}
+                   onClick={() => console.log("🚀 ~display model")}
                    // href='/doctors/profile'
                    className=''>
                    <button

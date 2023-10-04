@@ -4,7 +4,7 @@ const nextConfig = {
   //   serverComponentsExternalPackages: ['mongoose', 'mongodb', 'bcrypt'],
   // },
   webpack: (config) => {
-    config.externals = [...config.externals, 'bcrypt', 'mongoose', 'mongodb'];
+    config.externals = [...config.externals, 'bcrypt'," moment", 'mongoose', 'mongodb'];
        return config;
      },
   images: {

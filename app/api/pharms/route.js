@@ -21,7 +21,7 @@ export async function POST(req) {
     try {
         // const hashedPassword = await bcrypt.hash(data?.password, 10);
         const pharm = new Pharm(data);
-        await pharm.save();
+       await pharm.save()
         return new Response(JSON.stringify(pharm), { status: 201 })
     } catch (error) {
         return new Response(JSON.stringify("failed to insert pharm to DB", error), { status: 500 });

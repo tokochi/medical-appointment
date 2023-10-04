@@ -2,8 +2,8 @@ import { Schema, model, models } from 'mongoose';
 
 // *********** Schema **********
 const pharmSchema = new Schema({
-    name: "string",
     admins: [],
+    title: {},
     address: {
         street: "string",
         wilaya: {},
@@ -14,6 +14,7 @@ const pharmSchema = new Schema({
     avatar: [],
     payment: {},
     services: [],
+    specialities: [],
     officePics: [],
     otherServices: {
         isFullTimeOpen: "boolean",
@@ -27,10 +28,10 @@ const pharmSchema = new Schema({
     whatsapp: "string",
     linkdin: "string",
     googleMap: {},
-    email: {
+    name: {
         type: String,
-        unique: [true, 'Email already exists!'],
-        required: [true, 'Email is required!']
+        unique: [true, 'name already exists!'],
+        required: [true, 'name is required!']
     },
     date: { type: Date, default: Date.now },
 })

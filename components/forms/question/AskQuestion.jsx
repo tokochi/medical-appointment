@@ -80,7 +80,7 @@ function AskQuestion() {
               uploadBytes,
               getDownloadURL,
               storage,
-              "users/questions/",
+              `users/questions/${askQuestion?.title}/`,
               "askQuestion"
             )
           }

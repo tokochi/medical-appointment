@@ -16,7 +16,7 @@ import {
   Sort,
   Filter,
 } from "@syncfusion/ej2-react-grids";
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useStore } from "@context/store";
 import Localization from "../../utils/Localization";
@@ -33,7 +33,7 @@ function DoctorsTable() {
   // ******** Grid Table  ********
   const [active, setActive] = useState({ all: true, sub: false });
   const gridRef = useRef(null);
-  const { handleAddGrid, handleDeleteGrid, handleEditGrid, doctors  } = useStore();
+  const { handleAddGrid, handleDeleteGrid, handleEditGrid, doctors } = useStore();
   const doctorsData = useStore((state) => state.doctors).filter((doctor) => filterDoctor(doctor));
   const SubscribedDoctors = useStore((state) => state.doctors).filter(
     (doctor) => doctor.subscription != null
@@ -85,7 +85,7 @@ function DoctorsTable() {
             textBtn_1: "موافقة",
             textBtn_2: "إلغـــــاء",
             onClickBtn_1: (e) => {
-              handleAddGrid(e, toast, "/api/doctors");
+              handleAddGrid(e, toast, "/api/doctors","doctorInfo");
               // gridRef?.current?.refresh();
             },
             onClickBtn_2: (e) => {
@@ -109,7 +109,7 @@ function DoctorsTable() {
                 handleEditGrid(
                   e,
                   toast,
-                  `/api/doctors/${gridRef?.current?.getSelectedRecords()[0]._id}`
+                  `/api/doctors/${gridRef?.current?.getSelectedRecords()[0]._id}`,"doctorInfo"
                 );
                 // gridRef?.current?.refresh();
               },
@@ -131,6 +131,7 @@ function DoctorsTable() {
       case args.item.id.includes("delete"):
         if (gridRef?.current?.getSelectedRecords()?.length > 0) {
           useStore.setState({
+            doctorInfo: gridRef?.current?.getSelectedRecords()[0],
             modal: {
               isOpen: true,
               title: "حذف طبيب",
@@ -141,7 +142,8 @@ function DoctorsTable() {
                 handleDeleteGrid(
                   e,
                   toast,
-                  `/api/doctors/${gridRef?.current?.getSelectedRecords()[0]._id}`
+                  `/api/doctors/${gridRef?.current?.getSelectedRecords()[0]._id}`,
+                  "doctorInfo"
                 );
                 // gridRef?.current?.refresh();
               },

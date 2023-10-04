@@ -21,7 +21,7 @@ export async function GET(req, { params }) {
 // ****** Update *********
 export async function PUT(req, { params }) {
     await connectToDB();
-    const data = await req.JSON()
+    const data = await req.json()
     try {
         if (!params?.id) {
             return new Response('Missing ID parameter', { status: 400 }); // Bad Request
@@ -29,7 +29,7 @@ export async function PUT(req, { params }) {
         if (!data) {
             return new Response('Empty request body', { status: 400 }); // Bad Request
         }
-        const response = await User.updateOne({ _id: data?._id }, { $set: data })
+        const response = await User.updateOne({ _id: params?.id }, { $set: data })
         if (response.ok) {
             return new Response(JSON.stringify(response), { status: 200 }); // OK
         } else {
@@ -42,15 +42,15 @@ export async function PUT(req, { params }) {
 
 // ****** Delete *********
 export async function DELETE(req, { params }) {
-    await connectToDB();
-    const data = await req.JSON()
+await connectToDB();
     try {
         if (!params?.id) {
             return new Response('Missing ID parameter', { status: 400 }); // Bad Request
         }
-        const response = await User.deleteOne({ _id: data?._id })
-        if (response.ok) {
-            return new Response(JSON.stringify(response), { status: 200 }); // OK
+        const response = await User.deleteOne({ _id: params?.id })
+        if (response.acknowledged === true && response.deletedCount === 1) {
+            console.log("🚀 ~succesfull delete")
+            return new Response('User updated successfully', { status: 200 }); // OK
         } else {
             return new Response('Failed to update user', { status: 500 }); // Internal Server Error
         }

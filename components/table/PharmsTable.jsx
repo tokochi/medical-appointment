@@ -1,3 +1,4 @@
+"use client";
 import {
   GridComponent,
   ColumnsDirective,
@@ -19,23 +20,19 @@ import { useEffect, useRef, useState, useMemo } from "react";
 import toast from "react-hot-toast";
 import { useStore } from "@context/store";
 import Localization from "../../utils/Localization";
-import Status from "@components/table/templates/pharms/PharmStatus";
 import PharmsGridName from "@components/table/templates/pharms/PharmName";
 import SignupInputsForm from "@components/forms/pharm/SignupInputsForm";
 
 function PharmsTable() {
   // ******** Get Pharms List  ********
-  Localization("اطباء");
+  Localization("صيديلة");
   // ******** Column Templates  ********
-  const pharmsGridStatus = (props) => <Status {...props} />;
   const pharmsGridName = (props) => <PharmsGridName {...props} />;
   // ******** Grid Table  ********
   const [active, setActive] = useState({ all: true, sub: false });
   const gridRef = useRef(null);
-  const { fetchPharms, pharms, handleAddGrid, handleDeleteGrid, handleEditGrid } = useStore();
-  useEffect(() => {
-    fetchPharms();
-  }, []);
+  const { pharms, handleAddGrid, handleDeleteGrid, handleEditGrid } = useStore();
+
   const pharmsData = useStore((state) => state.pharms).filter((pharm) => filterPharm(pharm));
   const SubscribedPharms = useStore((state) => state.pharms).filter(
     (pharm) => pharm.subscription != null
@@ -72,7 +69,7 @@ function PharmsTable() {
         break;
       case args.item.id.includes("excelexport"):
         gridRef.current.excelExport({
-          fileName: "الأطباء.xlsx",
+          fileName: "صيديلة.xlsx",
         });
         break;
       case args.item.id.includes("pdfexport"):
@@ -81,14 +78,13 @@ function PharmsTable() {
         useStore.setState({
           modal: {
             isOpen: true,
-            title: "إضافة طبيب",
+            title: "إضافة صيديلة",
             content: "",
             children: <SignupInputsForm />,
             textBtn_1: "موافقة",
             textBtn_2: "إلغـــــاء",
             onClickBtn_1: (e) => {
-              handleAddGrid(e, toast, "/api/pharms");
-              // gridRef?.current?.refresh();
+              handleAddGrid(e, toast, "/api/pharms", "pharmInfo");
             },
             onClickBtn_2: (e) => {
               useStore.setState((state) => ({ modal: state.modalClosed }));
@@ -102,7 +98,7 @@ function PharmsTable() {
             pharmInfo: gridRef?.current?.getSelectedRecords()[0],
             modal: {
               isOpen: true,
-              title: "تعديل طبيب",
+              title: "تعديل صيديلة",
               content: "",
               children: <SignupInputsForm />,
               textBtn_1: "موافقة",
@@ -111,7 +107,8 @@ function PharmsTable() {
                 handleEditGrid(
                   e,
                   toast,
-                  `/api/pharms/${gridRef?.current?.getSelectedRecords()[0]._id}`
+                  `/api/pharms/${gridRef?.current?.getSelectedRecords()[0]._id}`,
+                  "pharmInfo"
                 );
                 // gridRef?.current?.refresh();
               },
@@ -133,9 +130,10 @@ function PharmsTable() {
       case args.item.id.includes("delete"):
         if (gridRef?.current?.getSelectedRecords()?.length > 0) {
           useStore.setState({
+            pharmInfo: gridRef?.current?.getSelectedRecords()[0],
             modal: {
               isOpen: true,
-              title: "حذف طبيب",
+              title: "حذف صيديلة",
               content: "هل أنت متأكد من عملية الحذف!",
               textBtn_1: "موافقة",
               textBtn_2: "إلغـــــاء",
@@ -143,7 +141,8 @@ function PharmsTable() {
                 handleDeleteGrid(
                   e,
                   toast,
-                  `/api/pharms/${gridRef?.current?.getSelectedRecords()[0]._id}`
+                  `/api/pharms/${gridRef?.current?.getSelectedRecords()[0]._id}`,
+                  "pharmInfo"
                 );
                 // gridRef?.current?.refresh();
               },
@@ -176,7 +175,7 @@ function PharmsTable() {
   return (
     <div className='p-2 md:p-10'>
       <div className='mb-2 md:mb-4 md:mx-4 flex flex-wrap items-start justify-between'>
-        <ul className='flex w-full md:w-auto justify-center items-center'>
+        {/* <ul className='flex w-full md:w-auto justify-center items-center'>
           <li className='m-1 '>
             <button
               className={`${active.all ? "btn-active" : "btn-disable"} flex gap-1`}
@@ -195,9 +194,9 @@ function PharmsTable() {
               المشتركين <span className='ml-1  text-sky-600'>{SubscribedPharms.length}</span>
             </button>
           </li>
-        </ul>
+        </ul> */}
         <div className='card rounded-xl mx-auto grow md:grow-0 p-2 flex justify-center items-center'>
-          عـــدد الأطبــــاء: <span className='text-sky-500 mr-1'>{pharms.length}</span>
+          عـــدد الصيديــــلات: <span className='text-sky-500 mr-1'>{pharms.length}</span>
         </div>
       </div>
       <div className=''>
@@ -263,14 +262,6 @@ function PharmsTable() {
               width='80'
               type='datetime'
               format='dd/MM/yyyy'
-            />
-            <ColumnDirective
-              field='status'
-              headerText='الحالة'
-              textAlign='center'
-              headerTextAlign='center'
-              width='100'
-              template={pharmsGridStatus}
             />
           </ColumnsDirective>
           <Inject

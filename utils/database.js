@@ -10,9 +10,9 @@ export const connectToDB = async () => {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         }) 
-        console.log("🚀 ~ MongoDb connected ....")
+        console.log("🚀 ~🚀 ~ MongoDb connected ....")
     } catch (error) {
-        console.log("🚀 ~ MongoDb error:", error)
+        console.log("🚀 ~🚀 ~ MongoDb error:", error)
         
     }
 

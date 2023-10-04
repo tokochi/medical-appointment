@@ -21,7 +21,7 @@ export async function GET(req, { params }) {
 // ****** Update *********
 export async function PUT(req, { params }) {
     await connectToDB();
-    const data = await req.JSON()
+    const data = await req.json()
     try {
         if (!params?.id) {
             return new Response('Missing ID parameter', { status: 400 }); // Bad Request
@@ -43,14 +43,13 @@ export async function PUT(req, { params }) {
 // ****** Delete *********
 export async function DELETE(req, { params }) {
     await connectToDB();
-    const data = await req.JSON()
     try {
         if (!params?.id) {
             return new Response('Missing ID parameter', { status: 400 }); // Bad Request
         }
         const response = await Question.deleteOne({ _id: data?._id })
-        if (response.ok) {
-            return new Response(JSON.stringify(response), { status: 200 }); // OK
+        if (response.acknowledged === true && response.deletedCount === 1) {
+            return new Response('User updated successfully', { status: 200 }); // OK
         } else {
             return new Response('Failed to update user', { status: 500 }); // Internal Server Error
         }

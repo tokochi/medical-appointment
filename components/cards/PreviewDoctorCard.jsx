@@ -18,8 +18,8 @@ const { doctorInfo  } = useStore();
                     className='rounded-xl w-auto h-auto'
                     src={
                       doctorInfo?.gender.value === "male"
-                        ? doctorInfo?.avatar[0]
-                        : doctorInfo?.avatar[1] || doctorInfo?.avatar[0]
+                        ? doctorInfo?.avatar?.[0]
+                        : doctorInfo?.avatar[1] || doctorInfo?.avatar?.[0]
                     }
                     width={50}
                     height={50}

@@ -1,3 +1,4 @@
+"use client";
 import {
   GridComponent,
   ColumnsDirective,
@@ -19,27 +20,21 @@ import { useEffect, useRef, useState, useMemo } from "react";
 import toast from "react-hot-toast";
 import { useStore } from "@context/store";
 import Localization from "../../utils/Localization";
-import Status from "@components/table/templates/labs/LabStatus";
 import LabsGridName from "@components/table/templates/labs/LabName";
 import SignupInputsForm from "@components/forms/lab/SignupInputsForm";
 
 function LabsTable() {
   // ******** Get Labs List  ********
-  Localization("اطباء");
+  Localization("مختبر");
   // ******** Column Templates  ********
-  const labsGridStatus = (props) => <Status {...props} />;
   const labsGridName = (props) => <LabsGridName {...props} />;
   // ******** Grid Table  ********
   const [active, setActive] = useState({ all: true, sub: false });
   const gridRef = useRef(null);
-  const { fetchLabs, labs, handleAddGrid, handleDeleteGrid, handleEditGrid } = useStore();
-  useEffect(() => {
-    fetchLabs();
-  }, []);
+  const { labs, handleAddGrid, handleDeleteGrid, handleEditGrid } = useStore();
+
   const labsData = useStore((state) => state.labs).filter((lab) => filterLab(lab));
-  const SubscribedLabs = useStore((state) => state.labs).filter(
-    (lab) => lab.subscription != null
-  );
+  const SubscribedLabs = useStore((state) => state.labs).filter((lab) => lab.subscription != null);
   function filterLab(lab) {
     if (active.all === true) {
       return lab === lab;
@@ -81,13 +76,13 @@ function LabsTable() {
         useStore.setState({
           modal: {
             isOpen: true,
-            title: "إضافة طبيب",
+            title: "إضافة مختبر",
             content: "",
             children: <SignupInputsForm />,
             textBtn_1: "موافقة",
             textBtn_2: "إلغـــــاء",
             onClickBtn_1: (e) => {
-              handleAddGrid(e, toast, "/api/labs");
+              handleAddGrid(e, toast, "/api/labs", "labInfo");
               // gridRef?.current?.refresh();
             },
             onClickBtn_2: (e) => {
@@ -102,7 +97,7 @@ function LabsTable() {
             labInfo: gridRef?.current?.getSelectedRecords()[0],
             modal: {
               isOpen: true,
-              title: "تعديل طبيب",
+              title: "تعديل مختبر",
               content: "",
               children: <SignupInputsForm />,
               textBtn_1: "موافقة",
@@ -111,7 +106,7 @@ function LabsTable() {
                 handleEditGrid(
                   e,
                   toast,
-                  `/api/labs/${gridRef?.current?.getSelectedRecords()[0]._id}`
+                  `/api/labs/${gridRef?.current?.getSelectedRecords()[0]._id}`,"labInfo"
                 );
                 // gridRef?.current?.refresh();
               },
@@ -134,9 +129,10 @@ function LabsTable() {
         console.log(gridRef?.current?.getSelectedRecords()[0]);
         if (gridRef?.current?.getSelectedRecords()?.length > 0) {
           useStore.setState({
+            labInfo: gridRef?.current?.getSelectedRecords()[0],
             modal: {
               isOpen: true,
-              title: "حذف طبيب",
+              title: "حذف مختبر",
               content: "هل أنت متأكد من عملية الحذف!",
               textBtn_1: "موافقة",
               textBtn_2: "إلغـــــاء",
@@ -144,7 +140,8 @@ function LabsTable() {
                 handleDeleteGrid(
                   e,
                   toast,
-                  `/api/labs/${gridRef?.current?.getSelectedRecords()[0]._id}`
+                  `/api/labs/${gridRef?.current?.getSelectedRecords()[0]._id}`,
+                  "labInfo"
                 );
                 // gridRef?.current?.refresh();
               },
@@ -177,7 +174,7 @@ function LabsTable() {
   return (
     <div className='p-2 md:p-10'>
       <div className='mb-2 md:mb-4 md:mx-4 flex flex-wrap items-start justify-between'>
-        <ul className='flex w-full md:w-auto justify-center items-center'>
+        {/* <ul className='flex w-full md:w-auto justify-center items-center'>
           <li className='m-1 '>
             <button
               className={`${active.all ? "btn-active" : "btn-disable"} flex gap-1`}
@@ -196,9 +193,9 @@ function LabsTable() {
               المشتركين <span className='ml-1  text-sky-600'>{SubscribedLabs.length}</span>
             </button>
           </li>
-        </ul>
+        </ul> */}
         <div className='card rounded-xl mx-auto grow md:grow-0 p-2 flex justify-center items-center'>
-          عـــدد الأطبــــاء: <span className='text-sky-500 mr-1'>{labs.length}</span>
+          عـــدد المختبـــرات: <span className='text-sky-500 mr-1'>{labs.length}</span>
         </div>
       </div>
       <div className=''>
@@ -264,14 +261,6 @@ function LabsTable() {
               width='80'
               type='datetime'
               format='dd/MM/yyyy'
-            />
-            <ColumnDirective
-              field='status'
-              headerText='الحالة'
-              textAlign='center'
-              headerTextAlign='center'
-              width='100'
-              template={labsGridStatus}
             />
           </ColumnsDirective>
           <Inject

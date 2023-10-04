@@ -21,7 +21,7 @@ function HeadTitle() {
         setPathname("المختبـــرات");
         break;
       case "dashboard/hospitals":
-        setPathname("لعيــــــادات");
+        setPathname("العيــــادات");
         break;
       case "dashboard/posts":
         setPathname("المقـــــالات");
@@ -29,7 +29,19 @@ function HeadTitle() {
       case "dashboard/users":
         setPathname("المستخدميــــن");
         break;
-      case "dashboard/settings":
+      case "dashboard/settings/account":
+        setPathname("الإعــــــدادات");
+        break;
+      case "dashboard/settings/security":
+        setPathname("الإعــــــدادات");
+        break;
+      case "dashboard/settings/company":
+        setPathname("الإعــــــدادات");
+        break;
+      case "dashboard/settings/notification":
+        setPathname("الإعــــــدادات");
+        break;
+      case "dashboard/settings/activity":
         setPathname("الإعــــــدادات");
         break;
     }

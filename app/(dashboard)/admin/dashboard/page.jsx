@@ -16,9 +16,7 @@ async function page() {
         <Doctors />
         <Doctors />
       </div>
-      <div
-        id='doctors-sumbit'
-        className='grow shrink basis-1/3  md:w-auto card p-2 rounded-xl'>
+      <div id='doctors-sumbit' className='grow shrink basis-1/3  md:w-auto card p-2 rounded-xl'>
         <h1 className='font-bold md:text-xl text-sky-500 my-2 text-center'>طلبات تسجيل الأطباء</h1>
         <table className='w-full text-sm md:text-base'>
           <thead>
@@ -31,12 +29,12 @@ async function page() {
           </thead>
           <tbody>
             {doctors.map((doctor) => (
-              <tr key={doctor._id} className='text-center p-2'>
+              <tr key={doctor?._id} className='text-center p-2'>
                 <td className='text-center p-2  rounded-md '>
                   <div className='flex flex-wrap md:flex-nowrap items-start gap-4'>
                     <Image
                       className='rounded-xl min-w-[50px] '
-                      src={doctor?.avatar[0]}
+                      src={doctor?.avatar?.[0]}
                       width={50}
                       height={50}
                       alt='avatar'
@@ -45,14 +43,14 @@ async function page() {
                       id='avatar'
                       className='text-right md:whitespace-nowrap flex flex-col gap-2'>
                       <h1 className='font-bold text-sm text-sky-500'>
-                        {doctor.title.text + " "}
-                        {doctor.name}
+                        {doctor?.title?.text + " "}
+                        {doctor?.name}
                       </h1>
-                      <h2 className='text-sm'>{doctor.speciality.text}</h2>
+                      <h2 className='text-sm'>{doctor?.speciality?.text}</h2>
                     </div>
                   </div>
                 </td>
-                <td>{doctor.date.toISOString().substring(0, 10)}</td>
+                <td>{doctor?.date?.toISOString()?.substring(0, 10)}</td>
                 <td>
                   <button>
                     <svg
@@ -73,9 +71,7 @@ async function page() {
           </tbody>
         </table>
       </div>
-      <div
-        id='last-sub'
-        className='grow shrink basis-1/3  md:w-auto card p-2 rounded-xl '>
+      <div id='last-sub' className='grow shrink basis-1/3  md:w-auto card p-2 rounded-xl '>
         <h1 className='font-bold md:text-xl text-sky-500 my-2 text-center'>آخر التسجيلات</h1>
         <table className='w-full text-sm md:text-base'>
           <thead>
@@ -104,7 +100,7 @@ async function page() {
                     </div>
                   </div>
                 </td>
-                <td className='p-2 align-top'>{doctor.date.toISOString().substring(0, 10)}</td>
+                <td className='p-2 align-top'>{doctor?.date?.toISOString()?.substring(0, 10)}</td>
                 <td className='p-2 align-top'>
                   <button className='flex flex-wrap mx-auto md:flex-nowrap items-center gap-2'>
                     <svg
