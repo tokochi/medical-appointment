@@ -2,9 +2,10 @@
 import { useStore } from "@context/store";
 import Link from "next/link";
 import Image from "next/image";
-
+import { useRouter } from "next/navigation";
 function Sidebar() {
   const isSidebarOpen = useStore((state) => state.sidebarOpen);
+const router = useRouter() 
     function toggleDark() {
       try {
         if (typeof window !== "undefined") {
@@ -36,7 +37,10 @@ function Sidebar() {
           />
         </Link>
         <li className='mt-10'>
-          <Link href='/admin/dashboard' className='flex gap-2 font-semibold'>
+          <Link
+            onClick={() => router.refresh()}
+            href='/admin/dashboard'
+            className='flex gap-2 font-semibold'>
             <svg
               className='h-6 w-6 fill-gray-600 dark:fill-gray-400'
               xmlns='http://www.w3.org/2000/svg'
@@ -47,7 +51,10 @@ function Sidebar() {
           </Link>
         </li>
         <li>
-          <Link href='/admin/dashboard/doctors' className='flex gap-2 font-semibold'>
+          <Link
+            onClick={() => router.refresh()}
+            href='/admin/dashboard/doctors'
+            className='flex gap-2 font-semibold'>
             <svg
               className='h-6 w-6 fill-gray-600 dark:fill-gray-400'
               xmlns='http://www.w3.org/2000/svg'
@@ -58,7 +65,10 @@ function Sidebar() {
           </Link>
         </li>
         <li>
-          <Link href='/admin/dashboard/pharms' className='flex gap-2 font-semibold'>
+          <Link
+            onClick={() => router.refresh()}
+            href='/admin/dashboard/pharms'
+            className='flex gap-2 font-semibold'>
             <svg
               className='h-6 w-6 fill-gray-600 dark:fill-gray-400'
               xmlns='http://www.w3.org/2000/svg'
@@ -69,7 +79,10 @@ function Sidebar() {
           </Link>
         </li>
         <li>
-          <Link href='/admin/dashboard/labs' className='flex gap-2 font-semibold'>
+          <Link
+            onClick={() => router.refresh()}
+            href='/admin/dashboard/labs'
+            className='flex gap-2 font-semibold'>
             <svg
               className='h-6 w-6 fill-gray-600 dark:fill-gray-400'
               xmlns='http://www.w3.org/2000/svg'
@@ -80,7 +93,10 @@ function Sidebar() {
           </Link>
         </li>
         <li>
-          <Link href='/admin/dashboard/hospitals' className='flex gap-2 font-semibold'>
+          <Link
+            onClick={() => router.refresh()}
+            href='/admin/dashboard/hospitals'
+            className='flex gap-2 font-semibold'>
             <svg
               className='h-6 w-6 fill-gray-600 dark:fill-gray-400'
               xmlns='http://www.w3.org/2000/svg'
@@ -91,7 +107,10 @@ function Sidebar() {
           </Link>
         </li>
         <li>
-          <Link href='/admin/dashboard/posts' className='flex gap-2 font-semibold'>
+          <Link
+            onClick={() => router.refresh()}
+            href='/admin/dashboard/posts'
+            className='flex gap-2 font-semibold'>
             <svg
               className='h-6 w-6 fill-gray-600 dark:fill-gray-400'
               xmlns='http://www.w3.org/2000/svg'
@@ -102,7 +121,10 @@ function Sidebar() {
           </Link>
         </li>
         <li>
-          <Link href='/admin/dashboard/users' className='flex gap-2 font-semibold'>
+          <Link
+            onClick={() => router.refresh()}
+            href='/admin/dashboard/users'
+            className='flex gap-2 font-semibold'>
             <svg
               className='h-6 w-6 fill-gray-600 dark:fill-gray-400'
               xmlns='http://www.w3.org/2000/svg'
@@ -113,7 +135,10 @@ function Sidebar() {
           </Link>
         </li>
         <li>
-          <Link href='/admin/dashboard/settings/account' className='flex gap-2 font-semibold'>
+          <Link
+            onClick={() => router.refresh()}
+            href='/admin/dashboard/settings/account'
+            className='flex gap-2 font-semibold'>
             <svg
               className='h-6 w-6 fill-gray-600 dark:fill-gray-400'
               xmlns='http://www.w3.org/2000/svg'
@@ -124,10 +149,7 @@ function Sidebar() {
           </Link>
         </li>
         <li>
-          <Link
-            onClick={() => signOut()}
-            href='/admin'
-            className='flex gap-2 font-semibold'>
+          <Link onClick={() => signOut()} href='/admin' className='flex gap-2 font-semibold'>
             <svg
               className='h-6 w-6 fill-gray-600 dark:fill-gray-400'
               xmlns='http://www.w3.org/2000/svg'
