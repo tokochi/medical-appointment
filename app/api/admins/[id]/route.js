@@ -8,7 +8,10 @@ export async function GET(req,{params}) {
         if (!params?.id) {
             return new Response('Missing ID parameter', { status: 400 }); // Bad Request
         }
-        const response = await Admin.findOne({ _id: params?.id });
+        const response = await Admin.findOne({
+            $or: [{ _id: params?.id }, { email: params?.id }],
+        });
+;
         if (response) {
             return new Response(JSON.stringify(response), { status: 200 }); // OK
         } else {

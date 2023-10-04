@@ -31,7 +31,7 @@ const router = useRouter();
       <div id='login' className='mx-auto'>
         {pathNameLogin === "login" && (
           <form
-            className='p-4 flex flex-col justify-center items-center'
+            className='p-4 flex flex-col gap-2  justify-center items-center'
             onSubmit={(e) => handleSubmitAdminLogin(e, toast, router, signIn)}>
             <TextInput
               type='email'

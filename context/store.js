@@ -583,6 +583,7 @@ export const useStore = create((set, get) => ({
       toast.success("تم تسجيل دخول المستخدم بنجاح");
       get().addActivity("دخول", "مشرف", get().adminInfo?.email, "تمت")
       set({ adminInfo: { email: "", password: "" } });
+      router.refresh()
       router.push("/admin");
     } else {
       get().addActivity("دخول", "مشرف", get().adminInfo?.email, "لم تتــم")
