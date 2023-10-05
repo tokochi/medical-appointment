@@ -32,9 +32,9 @@ export async function PUT(req, { params }) {
         }
         const response = await Lab.updateOne({ _id: data?._id }, { $set: data })
         if (response.acknowledged === true && response.modifiedCount === 1) {
-            return new Response('User updated successfully', { status: 200 }); // OK
+            return new Response('Lab updated successfully', { status: 200 }); // OK
         } else {
-            return new Response('Failed to update user', { status: 500 }); // Internal Server Error
+            return new Response('Failed to update Lab', { status: 500 }); // Internal Server Error
         }
     } catch (error) {
         return new Response(JSON.stringify(error.message), { status: 500 });
@@ -50,9 +50,9 @@ export async function DELETE(req, { params }) {
         }
         const response = await Lab.deleteOne({ _id: params?.id })
         if (response.acknowledged === true && response.deletedCount === 1) {
-            return new Response('User updated successfully', { status: 200 }); // OK
+            return new Response('Lab Deleted successfully', { status: 200 }); // OK
         } else {
-            return new Response('Failed to update user', { status: 500 }); // Internal Server Error
+            return new Response('Failed to Delete Lab', { status: 500 }); // Internal Server Error
         }
     } catch (error) {
         return new Response(JSON.stringify(error), { status: 500 });

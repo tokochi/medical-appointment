@@ -156,7 +156,7 @@ function AccountForm() {
                  uploadBytes,
                  getDownloadURL,
                  storage,
-                 "users/avatar/",
+                 "company/",
                  "companyInfo"
                )
              }

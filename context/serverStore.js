@@ -513,10 +513,10 @@ export const useStore = create((set, get) => ({
         set({ isLoading: false });
         return usersData
       } else {
-        console.error('URL empty:', error);
+        console.error('🚀 ~URL empty:', error);
       }
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('🚀 ~Error fetching data:', error);
     }
   },
   fetchActivity: async () => {
@@ -526,7 +526,7 @@ export const useStore = create((set, get) => ({
       set({ activities: response });
       return response
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('🚀 ~Error fetching data:', error);
     }
   },
   fetchAdmins: async () => {
@@ -536,7 +536,7 @@ export const useStore = create((set, get) => ({
       set({ admins: response });
       return response
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('🚀 ~Error fetching data:', error);
     }
   },
   fetchCompany: async () => {
@@ -545,7 +545,7 @@ export const useStore = create((set, get) => ({
       const response = await Company.find();
       return response
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('🚀 ~Error fetching data:', error);
     }
   },
   fetchAdmin: async (id) => {
@@ -558,7 +558,7 @@ export const useStore = create((set, get) => ({
         return response
       }
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('🚀 ~Error fetching data:', error);
     }
   },
   fetchDoctor: async (id) => {
@@ -571,7 +571,7 @@ export const useStore = create((set, get) => ({
         return response
       }
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('🚀 ~Error fetching data:', error);
     }
   },
   fetchPost: async (id) => {
@@ -583,7 +583,7 @@ export const useStore = create((set, get) => ({
         return response
       }
     } catch (error) {
-      console.error('Error fetching data:');
+      console.error('🚀 ~Error fetching data:');
     }
   },
   fetchQuestion: async (id) => {
@@ -596,7 +596,7 @@ export const useStore = create((set, get) => ({
         return { ...question._doc, doctor: doctorData }
       }
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('🚀 ~Error fetching data:', error);
     }
   },
   fetchUsers: async () => {
@@ -606,7 +606,7 @@ export const useStore = create((set, get) => ({
       set({ users: response });
       return response
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('🚀 ~Error fetching data:', error);
     }
   },
   fetchDoctors: async () => {
@@ -616,7 +616,7 @@ export const useStore = create((set, get) => ({
       set({ doctors: response });
       return response
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('🚀 ~Error fetching data:', error);
     }
   },
   fetchQuestions: async () => {
@@ -633,7 +633,7 @@ export const useStore = create((set, get) => ({
       set({ questions: questionsWithDoctors });
       return questionsWithDoctors
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('🚀 ~Error fetching data:', error);
     }
   },
   fetchPosts: async () => {
@@ -643,7 +643,7 @@ export const useStore = create((set, get) => ({
       set({ doctors: response });
       return response
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('🚀 ~Error fetching data:', error);
     }
   },
   fetchPharms: async () => {
@@ -653,7 +653,7 @@ export const useStore = create((set, get) => ({
       set({ pharms: response });
       return response
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('🚀 ~Error fetching data:', error);
     }
   },
   fetchLabs: async () => {
@@ -663,7 +663,7 @@ export const useStore = create((set, get) => ({
       set({ labs: response });
       return response
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('🚀 ~Error fetching data:', error);
     }
   },
   fetchHosps: async () => {
@@ -673,7 +673,7 @@ export const useStore = create((set, get) => ({
       set({ hosps: response });
       return response
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('🚀 ~Error fetching data:', error);
     }
   },
 }));

@@ -1,4 +1,5 @@
 import { useStore } from "@context/serverStore";
+
 async function Doctors() {
   const { fetchDoctors } = useStore.getState();
 const doctors = await fetchDoctors();

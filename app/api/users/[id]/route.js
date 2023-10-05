@@ -31,7 +31,7 @@ export async function PUT(req, { params }) {
         }
         const response = await User.updateOne({ _id: params?.id }, { $set: data })
         if (response.ok) {
-            return new Response(JSON.stringify(response), { status: 200 }); // OK
+            return new Response('User updated successfully', { status: 200 }); // OK
         } else {
             return new Response('Failed to update user', { status: 500 }); // Internal Server Error
         }
@@ -42,17 +42,16 @@ export async function PUT(req, { params }) {
 
 // ****** Delete *********
 export async function DELETE(req, { params }) {
-await connectToDB();
+    await connectToDB();
     try {
         if (!params?.id) {
             return new Response('Missing ID parameter', { status: 400 }); // Bad Request
         }
         const response = await User.deleteOne({ _id: params?.id })
         if (response.acknowledged === true && response.deletedCount === 1) {
-            console.log("🚀 ~succesfull delete")
-            return new Response('User updated successfully', { status: 200 }); // OK
+            return new Response('User deleted successfully', { status: 200 }); // OK
         } else {
-            return new Response('Failed to update user', { status: 500 }); // Internal Server Error
+            return new Response('Failed to delete user', { status: 500 }); // Internal Server Error
         }
     } catch (error) {
         return new Response(JSON.stringify(error), { status: 500 });

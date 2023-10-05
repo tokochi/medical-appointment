@@ -3,11 +3,12 @@ import { useEffect } from "react";
 import { useStore } from "@context/store";
 import Modal from "./Modal";
 import ToasterContext from "@context/ToasterContext";
-import { registerLicense } from "@syncfusion/ej2-base";
 import { SessionProvider } from "next-auth/react";
 import { usePathname } from "next/navigation";
-registerLicense("ORg4AjUWIQA/Gnt2VlhhQlJCfV5AQmBIYVp/TGpJfl96cVxMZVVBJAtUQF1hSn5adERiWn9bc3dSQWJV");
-
+import { registerLicense } from "@syncfusion/ej2-base";
+registerLicense(
+  "Ngo9BigBOggjHTQxAR8/V1NHaF5cXmpCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdgWH9edHVRRGVdWUBwVkY="
+);
 function ClientSideWrapper({ children }) {
   const { closeModelAnywhere, darkTheme } = useStore();
   const path = usePathname();

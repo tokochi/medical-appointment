@@ -50,7 +50,6 @@ export async function PUT(req, { params }) {
             if (!passwordMatch) {
                 return new Response('Old password is incorrect', { status: 400 }); // Bad Request
             }
-
             // Hash the new password
             const hashedPassword = await bcrypt.hash(data?.password, 10);
 
@@ -58,19 +57,16 @@ export async function PUT(req, { params }) {
             const response = await Admin.updateOne({ _id: params?.id }, { $set: { password: hashedPassword } });
 
             if (response.acknowledged === true && response.modifiedCount === 1) {
-                return new Response(JSON.stringify(response), { status: 200 }); // OK
+                return new Response('User updated successfully', { status: 200 }); // OK
             } else {
                 return new Response('Failed to update user', { status: 500 }); // Internal Server Error
             }
         } else {
             // If oldPassword and password are not provided, proceed with a regular update
             const response = await Admin.updateOne({ _id: params?.id }, { $set: data });
-
             if (response.acknowledged === true && response.modifiedCount === 1) {
-                console.log("🚀 ~User Updated Successfully")
-                return new Response(JSON.stringify(response), { status: 200 }); // OK
+                return new Response("User Updated Successfully", { status: 200 }); // OK
             } else {
-                console.log("🚀 ~User Updated Error")
                 return new Response('Failed to update user', { status: 500 }); // Internal Server Error
             }
         }
@@ -78,7 +74,6 @@ export async function PUT(req, { params }) {
         return new Response(JSON.stringify(error), { status: 500 });
     }
 }
-
 
 // ****** Delete *********
 export async function DELETE(req, { params }) {
@@ -90,9 +85,9 @@ export async function DELETE(req, { params }) {
         }
         const response = await Admin.deleteOne({ _id: params?.id })
         if (response.acknowledged === true && response.deletedCount === 1) {
-            return new Response(JSON.stringify(response), { status: 200 }); // OK
+            return new Response("User Deleted Successfully", { status: 200 }); // OK
         } else {
-            return new Response('Failed to update user', { status: 500 }); // Internal Server Error
+            return new Response('Failed to Deleted User', { status: 500 }); // Internal Server Error
         }
     } catch (error) {
         return new Response(JSON.stringify(error), { status: 500 });

@@ -31,9 +31,9 @@ export async function PUT(req, { params }) {
         }
         const response = await Question.updateOne({ _id: data?._id }, { $set: data })
         if (response.ok) {
-            return new Response(JSON.stringify(response), { status: 200 }); // OK
+            return new Response('Question updated successfully', { status: 200 }); // OK
         } else {
-            return new Response('Failed to update user', { status: 500 }); // Internal Server Error
+            return new Response('Failed to update Question', { status: 500 }); // Internal Server Error
         }
     } catch (error) {
         return new Response(JSON.stringify(error), { status: 500 });
@@ -47,11 +47,11 @@ export async function DELETE(req, { params }) {
         if (!params?.id) {
             return new Response('Missing ID parameter', { status: 400 }); // Bad Request
         }
-        const response = await Question.deleteOne({ _id: data?._id })
+        const response = await Question.deleteOne({ _id: params?.id })
         if (response.acknowledged === true && response.deletedCount === 1) {
-            return new Response('User updated successfully', { status: 200 }); // OK
+            return new Response('Question Deleted successfully', { status: 200 }); // OK
         } else {
-            return new Response('Failed to update user', { status: 500 }); // Internal Server Error
+            return new Response('Failed to Delete Question', { status: 500 }); // Internal Server Error
         }
     } catch (error) {
         return new Response(JSON.stringify(error), { status: 500 });

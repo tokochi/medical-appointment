@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link";
-import { useRouter,refresh, usePathname } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 function SettingsSidebar() {
   const router = useRouter();

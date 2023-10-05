@@ -16,7 +16,9 @@ export const useStore = create((set, get) => ({
   completed: false,
   gridRefresh: false,
   activity: [],
-
+  editedPost: {
+    text: "", image: "/images/logo.png", speciality:{},title:""
+},
   closeModelAnywhere: (e) => {
     if (get().modal.isOpen === true && e.target.getAttribute("name") == "modal") { set(({ modal: get().modalClosed })) }
     if (get().notification.isOpen === true && e.target.getAttribute("name") !== "notification") { set(({ notification: { isOpen: false } })) }
@@ -53,11 +55,13 @@ export const useStore = create((set, get) => ({
   isRulesChecked: { first: false, seconde: false },
   loadingSppiner: {
     avatar: false,
+    image: false,
     officePics: false,
     proofPics: false,
   },
   uploadDone: {
     avatar: "",
+    image: "",
     officePics: "",
     proofPics: "",
   },
@@ -127,6 +131,30 @@ export const useStore = create((set, get) => ({
         set((prev) => ({ uploadDone: { ...prev, [e.target.getAttribute("name")]: "error" } }));
         console.error("Error getting download URLs:", error);
       });
+  },
+  uploadSingleImage: (e, ref, uploadBytes, getDownloadURL, storage, imagePath, keyValue) => {
+    const image = e.target.files[0];
+    if (!image) return;
+    set((prev) => ({ loadingSppiner: { ...prev, [e.target.getAttribute("name")]: true } }));
+      let path = imagePath + image.name;
+      const imageRef = ref(storage, path);
+      uploadBytes(imageRef, image)
+        .then(() => {
+          return getDownloadURL(imageRef);
+        })
+        .then((downloadURL) => {
+          set((state) => ({
+            [keyValue]: { ...state[keyValue], [e.target.getAttribute("name")]: downloadURL },
+          }));
+          set((prev) => ({ loadingSppiner: { ...prev, [e.target.getAttribute("name")]: false } }));
+          set((prev) => ({ uploadDone: { ...prev, [e.target.getAttribute("name")]: "success" } }));
+        })
+        .catch((error) => {
+          set((prev) => ({ loadingSppiner: { ...prev, [e.target.getAttribute("name")]: false } }));
+          set((prev) => ({ uploadDone: { ...prev, [e.target.getAttribute("name")]: "error" } }));
+          console.error("Error uploading image:", error);
+          return null; // Handle the error as needed
+        });
   },
   handleInputChange: (event, keyValue) => {
     const nameAttribtue = event.target.getAttribute("name").split(".");
@@ -366,6 +394,7 @@ export const useStore = create((set, get) => ({
       },
     }));
   },
+  
   handleSelectSpecialities: (event, keyValue) => {
     const selectedIndex = event.target.selectedIndex;
     const selectedText = event.target.options[selectedIndex].text;
@@ -424,9 +453,9 @@ export const useStore = create((set, get) => ({
       const responseData = await response.json();
       get().addNotifaction(responseData)
       // Parse the response body as JSON
-      console.log("🚀 ~🚀 ~ Activity Added:", responseData);
+      // console.log("🚀 ~🚀 ~ Activity Added:", responseData);
     } else {
-      console.log("🚀 ~🚀 ~ error adding activity:", response)
+      // console.log("🚀 ~🚀 ~ error adding activity:", response)
     }
   },
   addedAdmins: "",
@@ -449,9 +478,9 @@ export const useStore = create((set, get) => ({
         });
         if (response.ok) {
           get().fetchAdmin(admin?._id)
-          console.log("🚀 ~🚀 ~ تم إضــافة التنبيه بنجاح")
+          // console.log("🚀 ~🚀 ~ تم إضــافة التنبيه بنجاح")
         } else {
-          console.log("🚀 ~🚀 ~ فشلت عملية إضــافة التنبيه");
+          // console.log("🚀 ~🚀 ~ فشلت عملية إضــافة التنبيه");
         }
       }
     })
@@ -466,9 +495,9 @@ export const useStore = create((set, get) => ({
       body: JSON.stringify({ notificationsList: [] }),
     });
     if (response.ok) {
-      console.log("🚀 ~🚀 ~ تم إضــافة التنبيه بنجاح")
+      // console.log("🚀 ~🚀 ~ تم إضــافة التنبيه بنجاح")
     } else {
-      console.log("🚀 ~🚀 ~ فشلت عملية إضــافة التنبيه");
+      // console.log("🚀 ~🚀 ~ فشلت عملية إضــافة التنبيه");
     }
     get().fetchAdmin(get().currentAdmin._id)
   },
@@ -481,9 +510,9 @@ export const useStore = create((set, get) => ({
       body: JSON.stringify({ notificationsList: get().currentAdmin?.notificationsList.filter(not => not._id !== id) }),
     });
     if (response.ok) {
-      console.log("🚀 ~🚀 ~ تم إضــافة التنبيه بنجاح")
+      // console.log("🚀 ~🚀 ~ تم إضــافة التنبيه بنجاح")
     } else {
-      console.log("🚀 ~🚀 ~ فشلت عملية إضــافة التنبيه");
+      // console.log("🚀 ~🚀 ~ فشلت عملية إضــافة التنبيه");
     }
     get().fetchAdmin(get().currentAdmin._id)
   },
@@ -717,6 +746,86 @@ export const useStore = create((set, get) => ({
   hospInfo: hospDefault,
   //************** Lab Form *************/
   labInfo: labDefault,
+  //************** Posts *************/
+  handleAddPost: async ( toast) => {
+    const response = await fetch(`/api/posts`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(get().editedPost),
+    }
+    );
+    if (response.ok) {
+      get().addActivity("إضــافة", "مقال", get().editedPost?.title, "تمت")
+      toast.success("تم إضــافة مقال بنجاح");
+      get().fetchPosts()
+      set({
+        modal: get().modalClosed, isLoading: false, editedPost: {
+          text: "", image: "/images/logo.png", speciality: {}, title: ""
+        }, uploadDone: {
+          image: "",
+          avatar: "",
+          officePics: "",
+          proofPics: "",
+        },
+      })
+    } else {
+      get().addActivity("إضــافة", "مقال", get().editedPost?.title, "لم تتــم")
+      toast.error("فشلت عملية  إضــافة مقال المستخدم");
+    }
+  },
+  handlePostUpdate: async (toast, id) => {
+    const response = await fetch(`/api/posts/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(get().editedPost),
+    });
+    if (response.ok) {
+      get().addActivity("تعـديل", "مقال", get().editedPost?.title, "تمت")
+      toast.success("تم تعديل مقال بنجاح");
+      get().fetchPosts()
+      set({
+        modal: get().modalClosed, isLoading: false, editedPost: {
+          text: "", image: "/images/logo.png", speciality: {}, title: ""
+        }, uploadDone: {
+          image: "",
+          avatar: "",
+          officePics: "",
+          proofPics: "",
+        },
+      })
+    } else {
+      get().addActivity("تعـديل", "مقال", get().editedPost?.title, "لم تتــم")
+      toast.error("فشلت عملية تعديل مقال المستخدم");
+    }
+  },
+
+  handlePostDelete: async (toast, id) => {
+    const response = await fetch(`/api/posts/${id}`, {
+      method: "DELETE",
+    });
+    if (response.ok) {
+      get().addActivity("حذف", "مقال", get().editedPost?.title, "تمت")
+      toast.success("تم حذف مقال بنجاح");
+      get().fetchPosts()
+      set({
+        modal: get().modalClosed, isLoading: false, editedPost: {
+          text: "", image: "/images/logo.png", speciality: {}, title: ""
+        }, uploadDone: {
+          image: "",
+          avatar: "",
+          officePics: "",
+          proofPics: "",
+        },
+      })
+    } else {
+      get().addActivity("حذف", "مقال", get().editedPost?.title, "لم تتــم")
+      toast.error("فشلت عملية حذف مقال المستخدم");
+    }
+  },
   //************** Session *************/
   session: null,
   currentUser: null,
@@ -744,7 +853,7 @@ export const useStore = create((set, get) => ({
       set({ isLoading: false });
       return usersData
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('🚀 ~Error fetching data:', error);
     }
   },
   fetchAdmin: async (id) => {
@@ -755,7 +864,7 @@ export const useStore = create((set, get) => ({
       set({ currentAdmin: usersData });
       set({ isLoading: false });
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('🚀 ~Error fetching data:', error);
     }
   },
   fetchDoctor: async (id) => {
@@ -764,7 +873,7 @@ export const useStore = create((set, get) => ({
       return await usersResponse.json();
       // set({ currentDoctor: usersData });
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('🚀 ~Error fetching data:', error);
     }
   },
   fetchPost: async (id) => {
@@ -773,7 +882,7 @@ export const useStore = create((set, get) => ({
       const usersData = await usersResponse.json();
       set({ selectedPost: usersData });
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('🚀 ~Error fetching data:', error);
     }
   },
   fetchQuestion: async (id) => {
@@ -785,7 +894,7 @@ export const useStore = create((set, get) => ({
       set({ selectedQuestion: { ...questionData, doctor: doctorData } });
       return { ...questionData, doctor: doctorData }
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('🚀 ~Error fetching data:', error);
     }
   },
   fetchUsers: async () => {
@@ -797,7 +906,7 @@ export const useStore = create((set, get) => ({
       set({ isLoading: false });
       return usersData
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('🚀 ~Error fetching data:', error);
     }
   },
   fetchDoctors: async () => {
@@ -807,7 +916,7 @@ export const useStore = create((set, get) => ({
       set({ doctors: usersData });
       return usersData
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('🚀 ~Error fetching data:', error);
     }
   },
   fetchQuestions: async () => {
@@ -828,7 +937,7 @@ export const useStore = create((set, get) => ({
       set({ questions: questionsWithDoctors });
       return { questions: questionsWithDoctors }
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('🚀 ~Error fetching data:', error);
     }
   },
   fetchPosts: async () => {
@@ -840,7 +949,7 @@ export const useStore = create((set, get) => ({
       set({ isLoading: false });
       return usersData
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("🚀 ~ Error fetching data:", error);
     }
   },
   fetchPharms: async () => {
@@ -852,7 +961,7 @@ export const useStore = create((set, get) => ({
       set({ isLoading: false });
       return usersData
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('🚀 ~Error fetching data:', error);
     }
   },
   fetchLabs: async () => {
@@ -864,7 +973,7 @@ export const useStore = create((set, get) => ({
       set({ isLoading: false });
       return usersData
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('🚀 ~Error fetching data:', error);
     }
   },
   fetchHosps: async () => {
@@ -876,7 +985,7 @@ export const useStore = create((set, get) => ({
       set({ isLoading: false });
       return usersData
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('🚀 ~Error fetching data:', error);
     }
   },
 }));

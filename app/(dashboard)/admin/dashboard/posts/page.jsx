@@ -1,5 +1,5 @@
 import StoreInit from "@components/StoreInit";
-// import PostsTable from "@components/table/PostsTable";
+import PostsTable from "@components/table/templates/PostsTable";
 import { useStore } from "@context/serverStore";
 
 
@@ -11,7 +11,7 @@ async function page() {
   return (
     <div className=''>
       {data && <StoreInit {...data} />}
-      {/* <PostsTable /> */}
+<PostsTable/>
     </div>
   );
 }

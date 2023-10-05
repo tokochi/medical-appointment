@@ -1,6 +1,9 @@
 import { useStore } from "@context/serverStore";
 import Image from "next/image";
 import Doctors from "@components/cards/dashboard/Doctors";
+import Hospitals from "@components/cards/dashboard/Hospitals";
+import Labs from "@components/cards/dashboard/Labs";
+import Pharms from "@components/cards/dashboard/Pharms";
 
 async function page() {
   const { fetchUsers, fetchDoctors } = useStore.getState();
@@ -12,9 +15,9 @@ async function page() {
         id='cards'
         className='grow shrink basis-full gap-2 flex flex-wrap justify-around items-center'>
         <Doctors />
-        <Doctors />
-        <Doctors />
-        <Doctors />
+        <Hospitals />
+        <Labs />
+        <Pharms />
       </div>
       <div id='doctors-sumbit' className='grow shrink basis-1/3  md:w-auto card p-2 rounded-xl'>
         <h1 className='font-bold md:text-xl text-sky-500 my-2 text-center'>طلبات تسجيل الأطباء</h1>
