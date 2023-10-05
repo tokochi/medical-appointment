@@ -46,7 +46,7 @@ function page() {
           <div className='p-2 flex flex-col gap-2 justify-center'>
             <div className=''>
               <IconInput
-                icon='/images/user.png'
+                icon='/images/user.webp'
                 name='name'
                 value={doctorInfo.name}
                 onChange={(e) => handleInputChange(e)}
@@ -56,7 +56,7 @@ function page() {
             </div>
             <div className=''>
               <IconInput
-                icon='/images/email.png'
+                icon='/images/email.webp'
                 name='email'
                 value={doctorInfo.email}
                 onChange={(e) => handleInputChange(e)}
@@ -66,7 +66,7 @@ function page() {
             </div>
             <div className=''>
               <IconInput
-                icon='/images/phone.png'
+                icon='/images/phone.webp'
                 name='phone.mobile'
                 value={doctorInfo.phone.mobile}
                 onChange={(e) => handleInputChange(e)}
@@ -101,8 +101,8 @@ function page() {
             </div>
             <div className=''>
               <SelectInput
-                name='address.wilaya'
-                value={doctorInfo.address.wilaya}
+                name='address?.wilaya'
+                value={doctorInfo.address?.wilaya}
                 onChange={(e) => handleInputChange(e)}
                 options={wilaya}
                 option_value='value'
@@ -132,7 +132,7 @@ function page() {
                 تقديم الطلب
                 <Image
                   className='w-auto h-auto'
-                  src='/images/send.png'
+                  src='/images/send.webp'
                   width={20}
                   height={20}
                   alt='input'
@@ -148,7 +148,7 @@ function page() {
           الجيل القادم من الحلول للممارسين الطبيين مع منصة
           <Image
             className='w-auto h-auto inline-block'
-            src='/images/logo-text.png'
+            src='/images/logo-text.webp'
             width={80}
             height={20}
             alt='hero'
@@ -159,7 +159,7 @@ function page() {
             <h1 className='font-semibold'>
               <Image
                 className='w-auto h-auto inline-block pl-2'
-                src='/images/check-emoji.png'
+                src='/images/check-emoji.webp'
                 width={20}
                 height={20}
                 alt='hero'
@@ -169,7 +169,7 @@ function page() {
             <h1 className='font-semibold'>
               <Image
                 className='w-auto h-auto inline-block pl-2'
-                src='/images/check-emoji.png'
+                src='/images/check-emoji.webp'
                 width={20}
                 height={20}
                 alt='hero'
@@ -179,7 +179,7 @@ function page() {
             <h1 className='font-semibold'>
               <Image
                 className='w-auto h-auto inline-block pl-2'
-                src='/images/check-emoji.png'
+                src='/images/check-emoji.webp'
                 width={20}
                 height={20}
                 alt='hero'
@@ -190,7 +190,7 @@ function page() {
           <div className='grow shrink'>
             <Image
               className='inline-block pl-2 '
-              src='/images/work-img-2.png'
+              src='/images/work-img-2.webp'
               width={350}
               height={350}
               alt='hero'

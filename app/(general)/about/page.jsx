@@ -13,7 +13,7 @@ function page() {
             تشعر بالقلق، شك، تحتاج إلى المشورة الصحية؟
             <Image
               className='w-auto h-auto mx-1 inline-block'
-              src='/images/logo-text.png'
+              src='/images/logo-text.webp'
               width={50}
               height={50}
               alt='hero'
@@ -23,7 +23,7 @@ function page() {
           <p>
             <Image
               className='w-auto h-auto mx-1 inline-block'
-              src='/images/logo-text.png'
+              src='/images/logo-text.webp'
               width={50}
               height={50}
               alt='hero'
@@ -33,7 +33,7 @@ function page() {
           <p>
             <Image
               className='w-auto h-auto mx-1 inline-block'
-              src='/images/logo-text.png'
+              src='/images/logo-text.webp'
               width={50}
               height={50}
               alt='hero'
@@ -43,7 +43,7 @@ function page() {
           <p>
             <Image
               className='w-auto h-auto mx-1 inline-block'
-              src='/images/logo-text.png'
+              src='/images/logo-text.webp'
               width={50}
               height={50}
               alt='hero'
@@ -53,7 +53,7 @@ function page() {
           <p>
             <Image
               className='w-auto h-auto mx-1 inline-block'
-              src='/images/logo-text.png'
+              src='/images/logo-text.webp'
               width={50}
               height={50}
               alt='hero'
@@ -66,7 +66,7 @@ function page() {
           <p>
             <Image
               className='w-auto h-auto mx-1 inline-block'
-              src='/images/logo-text.png'
+              src='/images/logo-text.webp'
               width={50}
               height={50}
               alt='hero'
@@ -77,7 +77,7 @@ function page() {
           <p>
             <Image
               className='w-auto h-auto mx-1 inline-block'
-              src='/images/logo-text.png'
+              src='/images/logo-text.webp'
               width={50}
               height={50}
               alt='hero'
@@ -87,7 +87,7 @@ function page() {
           <p>
             <Image
               className='w-auto h-auto mx-1 inline-block'
-              src='/images/logo-text.png'
+              src='/images/logo-text.webp'
               width={50}
               height={50}
               alt='hero'
@@ -105,7 +105,7 @@ function page() {
         <div></div>
       </div>
       <div id='hero-img' className='basis-[40%] grow shrink min-w-[350px] p-4'>
-        <Image className='mx-auto' src='/images/about.png' width={450} height={450} alt='hero' />
+        <Image className='mx-auto' src='/images/about.webp' width={450} height={450} alt='hero' />
       </div>
     </div>
   );

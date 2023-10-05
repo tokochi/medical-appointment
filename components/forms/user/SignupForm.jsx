@@ -49,7 +49,7 @@ function SignupForm() {
             className='flex gap-4 items-center btng'>
             <Image
               className='m-1 w-auto h-auto'
-              src='/images/google.png'
+              src='/images/google.webp'
               width={30}
               height={30}
               alt='input'

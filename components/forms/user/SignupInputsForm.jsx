@@ -46,7 +46,7 @@ function SignupInputsForm(props) {
           </div>
           <div id='name' className=''>
             <IconInput
-              icon='/images/user.png'
+              icon='/images/user.webp'
               name='name'
               value={userInfo?.name}
               onChange={(e) => handleInputChange(e, "userInfo")}
@@ -57,7 +57,7 @@ function SignupInputsForm(props) {
           </div>
           <div id='email' className=''>
             <IconInput
-              icon='/images/email.png'
+              icon='/images/email.webp'
               name='email'
               value={userInfo?.email}
               onChange={(e) => handleInputChange(e, "userInfo")}
@@ -68,7 +68,7 @@ function SignupInputsForm(props) {
           </div>
           <div id='phone' className=''>
             <IconInput
-              icon='/images/phone.png'
+              icon='/images/phone.webp'
               name='phone.mobile'
               value={userInfo?.phone?.mobile}
               onChange={(e) => handleInputChange(e, "userInfo")}
@@ -79,7 +79,7 @@ function SignupInputsForm(props) {
           </div>
           <div id='facebook' className=''>
             <IconInput
-              icon='/images/Facebook.png'
+              icon='/images/Facebook.webp'
               name='facebook'
               value={userInfo?.facebook}
               onChange={(e) => handleInputChange(e, "userInfo")}
@@ -90,7 +90,7 @@ function SignupInputsForm(props) {
           </div>
           <div id='instagram' className=''>
             <IconInput
-              icon='/images/Instagram.png'
+              icon='/images/Instagram.webp'
               name='instagram'
               value={userInfo?.instagram}
               onChange={(e) => handleInputChange(e, "userInfo")}
@@ -101,7 +101,7 @@ function SignupInputsForm(props) {
           </div>
           <div id='whatsapp' className=''>
             <IconInput
-              icon='/images/whatsapp.png'
+              icon='/images/whatsapp.webp'
               name='whatsapp'
               value={userInfo?.whatsapp}
               onChange={(e) => handleInputChange(e, "userInfo")}
@@ -133,8 +133,8 @@ function SignupInputsForm(props) {
           </div>
           <div id='wilaya' className=''>
             <SelectInput
-              name='address.wilaya'
-              value={userInfo?.address?.wilaya?.value}
+              name='address?.wilaya'
+              value={userInfo?.otherServices?.value}
               onChange={(e) => handleSelectInput(e, "userInfo")}
               options={wilaya}
               option_value='value'
@@ -145,11 +145,11 @@ function SignupInputsForm(props) {
           </div>
           <div id='daira' className=''>
             <SelectInput
-              name='address.daira'
+              name='address?.daira'
               value={userInfo?.address?.daira?.value}
               onChange={(e) => handleSelectInput(e, "userInfo")}
               options={daira.filter(
-                (region) => region?.wilaya === userInfo?.address?.wilaya?.value
+                (region) => region?.wilaya === userInfo?.otherServices?.value
               )}
               option_value='value'
               option_text='text'
@@ -159,7 +159,7 @@ function SignupInputsForm(props) {
           </div>
           <div id='commune' className=''>
             <SelectInput
-              name='address.commune'
+              name='address?.commune'
               value={userInfo?.address?.commune?.value}
               onChange={(e) => handleSelectInput(e, "userInfo")}
               options={commune.filter(
@@ -173,8 +173,8 @@ function SignupInputsForm(props) {
           </div>
           <div id='street' className=''>
             <IconInput
-              icon='/images/map.png'
-              name='address.street'
+              icon='/images/map.webp'
+              name='address?.street'
               value={userInfo?.address?.street}
               onChange={(e) => handleInputChange(e, "userInfo")}
               type='text'

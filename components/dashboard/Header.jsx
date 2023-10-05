@@ -5,8 +5,8 @@ import SidebarToggle from "@components/inputs/SidebarToggle";
 import Notification from "@components/cards/dashboard/Notification";
 import { useEffect } from "react";
 
-function Header() {
-  const { session, fetchAdmin, currentAdmin } = useStore();
+function Header({ session }) {
+  const {  fetchAdmin, currentAdmin } = useStore();
   useEffect(() => {
     session && fetchAdmin(session?._id);
   }, [session?._id]);
@@ -46,7 +46,9 @@ function Header() {
               }));
             }}
             className='relative rounded-xl card p-1 z-10'>
-          {currentAdmin?.notificationsList?.length >0 && <div className="absolute top-0 right-[-3px] bg-red-600 animate-pulse rounded-full w-3 h-3"></div>}
+            {currentAdmin?.notificationsList?.length > 0 && (
+              <div className='absolute top-0 right-[-3px] bg-red-600 animate-pulse rounded-full w-3 h-3'></div>
+            )}
             <svg
               onClick={(e) => e.stopPropagation()}
               name='notification'

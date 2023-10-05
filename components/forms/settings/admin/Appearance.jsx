@@ -4,8 +4,6 @@ import RadioInput from "@components/inputs/RadioInput";
 
 function Appearance() {
   const { darkTheme, activites } = useStore();
-
-
     function toggleDark() {
       try {
         if (typeof window !== "undefined") {

@@ -37,7 +37,7 @@ function LoginForm() {
               تسجيل الدخول مع حساب الفيسبوك  
           </button>
           <button onClick={() => signIn('google')} id="google" className="flex gap-4 items-center btng">
-              <Image className="m-1" src='/images/google.png' width={30} height={30} alt='input' />تسجيل الدخول مع حساب جوجل
+              <Image className="m-1" src='/images/google.webp' width={30} height={30} alt='input' />تسجيل الدخول مع حساب جوجل
           </button>
           <div id="divider" className="flex gap-2 text-xl justify-center items-center text-gray-600 dark:text-gray-200">
               <div className="w-full border-b-2 border-gray-400 rounder-xl"></div>

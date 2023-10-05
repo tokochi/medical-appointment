@@ -8,7 +8,7 @@ export async function GET(req, { params }) {
         if (!params?.id) {
             return new Response('Missing ID parameter', { status: 400 }); // Bad Request
         }
-        const response = await User.findOne({ email: params?.id });
+        const response = await User.findOne({ _id: params?.id });
         if (response.ok) {
             return new Response(JSON.stringify(response), { status: 200 }); // OK
         } else {
@@ -30,7 +30,7 @@ export async function PUT(req, { params }) {
             return new Response('Empty request body', { status: 400 }); // Bad Request
         }
         const response = await User.updateOne({ _id: params?.id }, { $set: data })
-        if (response.ok) {
+        if (response.acknowledged === true && response.modifiedCount === 1) {
             return new Response('User updated successfully', { status: 200 }); // OK
         } else {
             return new Response('Failed to update user', { status: 500 }); // Internal Server Error

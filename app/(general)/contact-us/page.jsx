@@ -31,7 +31,7 @@ function page() {
         </h2>
         <div id='name' className=''>
           <IconInput
-            icon='/images/user.png'
+            icon='/images/user.webp'
             name='name'
             value={askQuestion.name}
             onChange={(e) => handleInputChange(e)}
@@ -42,7 +42,7 @@ function page() {
         </div>
         <div id='email' className=''>
           <IconInput
-            icon='/images/email.png'
+            icon='/images/email.webp'
             name='email'
             value={askQuestion.email}
             onChange={(e) => handleInputChange(e)}
@@ -53,7 +53,7 @@ function page() {
         </div>
         <div id='phone' className=''>
           <IconInput
-            icon='/images/phone.png'
+            icon='/images/phone.webp'
             name='phone'
             value={askQuestion.phone}
             onChange={(e) => handleInputChange(e)}
@@ -79,7 +79,7 @@ function page() {
             تقديم رسالتك
             <Image
               className='w-auto h-auto'
-              src='/images/send.png'
+              src='/images/send.webp'
               width={20}
               height={20}
               alt='input'
@@ -89,7 +89,7 @@ function page() {
         </div>
       </form>
       <div id='hero-img' className='basis-[40%] grow shrink min-w-[350px] p-4'>
-        <Image className='mx-auto' src='/images/contact.png' width={450} height={450} alt='hero' />
+        <Image className='mx-auto' src='/images/contact.webp' width={450} height={450} alt='hero' />
       </div>
     </div>
   );

@@ -31,7 +31,7 @@ const PostsEditor = () => {
       <div className='p-2 flex flex-col gap-2 justify-center'>
         <div id='phone' className=''>
           <IconInput
-            icon='/images/inscription.png'
+            icon='/images/inscription.webp'
             name='title'
             value={editedPost?.title}
             onChange={(e) => handleInputChange(e, "editedPost")}
@@ -79,7 +79,7 @@ const PostsEditor = () => {
                   name={editedPost?.image}
                   onClick={(e) =>
                     useStore.setState((state) => ({
-                      editedPost: { ...state.editedPost, image: "images/logo.png" },
+                      editedPost: { ...state.editedPost, image: "images/logo.webp" },
                     }))
                   }>
                   <svg
@@ -94,7 +94,7 @@ const PostsEditor = () => {
               )}
               <Image
                 className='rounded-xl w-auto h-auto'
-                src={editedPost?.image || "images/logo.png"}
+                src={editedPost?.image || "images/logo.webp"}
                 width={70}
                 height={70}
                 alt='avatar'

@@ -9,7 +9,7 @@ function MarkerMap() {
   const doctorInfo = useStore((state) => state.doctorInfo);
   const map = useMap();
   useEffect(() => {
-    const coordinate = wilaya.find((wilaya) => wilaya.text === doctorInfo.address.wilaya.text);
+    const coordinate = wilaya.find((wilaya) => wilaya.text === doctorInfo.address?.wilaya?.text);
     useStore.setState((state) => ({
       doctorInfo: {
         ...state.doctorInfo,
@@ -17,14 +17,14 @@ function MarkerMap() {
       },
     }));
     map.panTo({ lat: coordinate.longitude, lng: coordinate.latitude });
-  }, [doctorInfo.address.wilaya.text]);
+  }, [doctorInfo.address?.wilaya?.text]);
 
   return (
     <div>
       <Marker
         icon={
           new Icon({
-            iconUrl: "/images/location-maker.png",
+            iconUrl: "/images/location-maker.webp",
             iconSize: [50, 45],
             iconAnchor: [12, 41],
           })

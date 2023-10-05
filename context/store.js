@@ -1,7 +1,6 @@
+"use client"
 import { create } from "zustand";
-import { v4 } from "uuid";
 import { wilaya, daira, commune, userDefault, companyDefault, doctorDefault, pharmDefault, hospDefault, labDefault, relatedWorks, medicalSpecialties, specialities, titles, labs, pharms, hosp, visitArg, worksPharms, worksLabs, searchTabs, questions, specilatiyHosp, sectionWork } from "@utils/data.js";
-
 export const useStore = create((set, get) => ({
   //************** General *************/
   darkTheme: true,
@@ -17,7 +16,7 @@ export const useStore = create((set, get) => ({
   gridRefresh: false,
   activity: [],
   editedPost: {
-    text: "", image: "/images/logo.png", speciality:{},title:""
+    text: "", image: "/images/logo.webp", speciality:{},title:""
 },
   closeModelAnywhere: (e) => {
     if (get().modal.isOpen === true && e.target.getAttribute("name") == "modal") { set(({ modal: get().modalClosed })) }
@@ -408,12 +407,25 @@ export const useStore = create((set, get) => ({
         ],
       },
     }));
+  }, handleSelectServices: (event, keyValue) => {
+    const selectedIndex = event.target.selectedIndex;
+    const selectedText = event.target.options[selectedIndex].text;
+    // const selectedValue = event.target.options[selectedIndex].value;
+    set((state) => ({
+      [keyValue]: {
+        ...state[keyValue],
+        services: [
+          ...state[keyValue].services,
+          { text: selectedText, value: event.target.value },
+        ],
+      },
+    }));
   },
   removeSelectSpecialities: (event, keyValue) => {
     event.preventDefault();
     const clickedElement = event.target.getAttribute("name");
     const filtredArray = get()[keyValue].specialities.filter(
-      (speciality) => speciality.text !== clickedElement
+      (speciality) => speciality?.text !== clickedElement
     );
     set((state) => ({
       [keyValue]: {
@@ -425,7 +437,7 @@ export const useStore = create((set, get) => ({
   removeSelectService: (event, keyValue) => {
     event.preventDefault();
     const clickedElement = event.target.getAttribute("name");
-    const filtredArray = get()[keyValue].services.filter((service) => service.text !== clickedElement);
+    const filtredArray = get()[keyValue].services?.filter((service) => service.text !== clickedElement);
     set((state) => ({
       [keyValue]: {
         ...state[keyValue],
@@ -762,7 +774,7 @@ export const useStore = create((set, get) => ({
       get().fetchPosts()
       set({
         modal: get().modalClosed, isLoading: false, editedPost: {
-          text: "", image: "/images/logo.png", speciality: {}, title: ""
+          text: "", image: "/images/logo.webp", speciality: {}, title: ""
         }, uploadDone: {
           image: "",
           avatar: "",
@@ -789,7 +801,7 @@ export const useStore = create((set, get) => ({
       get().fetchPosts()
       set({
         modal: get().modalClosed, isLoading: false, editedPost: {
-          text: "", image: "/images/logo.png", speciality: {}, title: ""
+          text: "", image: "/images/logo.webp", speciality: {}, title: ""
         }, uploadDone: {
           image: "",
           avatar: "",
@@ -813,7 +825,7 @@ export const useStore = create((set, get) => ({
       get().fetchPosts()
       set({
         modal: get().modalClosed, isLoading: false, editedPost: {
-          text: "", image: "/images/logo.png", speciality: {}, title: ""
+          text: "", image: "/images/logo.webp", speciality: {}, title: ""
         }, uploadDone: {
           image: "",
           avatar: "",

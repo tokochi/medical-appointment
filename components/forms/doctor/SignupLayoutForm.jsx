@@ -52,7 +52,7 @@ function SignupLayoutForm() {
           تقديم الطلب
           <Image
             className='w-auto h-auto'
-            src='/images/send.png'
+            src='/images/send.webp'
             width={20}
             height={20}
             alt='input'

@@ -32,7 +32,7 @@ function Sidebar() {
         <li>
           <Link onClick={() => toggleSidebar()} href='/' className='flex gap-2 font-bold'>
             <Image
-              src='/images/home.png'
+              src='/images/home.webp'
               className='min-w-[24px] w-auto h-auto'
               width={24}
               height={24}
@@ -44,7 +44,7 @@ function Sidebar() {
         <li>
           <Link onClick={() => toggleSidebar()} href='/about' className='flex gap-2 font-bold'>
             <Image
-              src='/images/info.png'
+              src='/images/info.webp'
               className=' w-auto h-auto'
               width={24}
               height={24}
@@ -56,7 +56,7 @@ function Sidebar() {
         <li>
           <Link onClick={() => toggleSidebar()} href='/contact-us' className='flex gap-2 font-bold'>
             <Image
-              src='/images/messaging.png'
+              src='/images/messaging.webp'
               className=' w-auto h-auto'
               width={24}
               height={24}
@@ -68,7 +68,7 @@ function Sidebar() {
         <li>
           <Link onClick={() => toggleSidebar()} href='/blog' className='flex gap-2 font-bold '>
             <Image
-              src='/images/blog.png'
+              src='/images/blog.webp'
               className=' w-auto h-auto'
               width={24}
               height={24}
@@ -81,7 +81,7 @@ function Sidebar() {
         <li>
           <Link onClick={() => toggleSidebar()} href='/doctors' className='flex gap-2 font-bold'>
             <Image
-              src='/images/doctor.png'
+              src='/images/doctor.webp'
               className=' w-auto h-auto'
               width={24}
               height={24}
@@ -93,7 +93,7 @@ function Sidebar() {
         <li>
           <Link onClick={() => toggleSidebar()} href='/hospitals' className='flex gap-2 font-bold'>
             <Image
-              src='/images/hospital.png'
+              src='/images/hospital.webp'
               className='w-auto h-auto'
               width={24}
               height={24}
@@ -105,7 +105,7 @@ function Sidebar() {
         <li>
           <Link onClick={() => toggleSidebar()} href='/labs' className='flex gap-2 font-bold'>
             <Image
-              src='/images/laboratory.png'
+              src='/images/laboratory.webp'
               className='w-auto h-auto'
               width={24}
               height={24}
@@ -117,7 +117,7 @@ function Sidebar() {
         <li>
           <Link onClick={() => toggleSidebar()} href='/pharms' className='flex gap-2 font-bold'>
             <Image
-              src='/images/pharm.png'
+              src='/images/pharm.webp'
               className=' w-auto h-auto'
               width={24}
               height={24}
@@ -129,7 +129,7 @@ function Sidebar() {
         <li>
           <Link onClick={() => toggleSidebar()} href='/questions' className='flex gap-2 font-bold'>
             <Image
-              src='/images/help.png'
+              src='/images/help.webp'
               className='w-auto h-auto'
               width={24}
               height={24}
@@ -142,7 +142,7 @@ function Sidebar() {
         <li>
           <Link onClick={() => toggleSidebar()} href='/login' className='flex gap-2 font-bold'>
             <Image
-              src='/images/user.png'
+              src='/images/user.webp'
               className='w-auto h-auto'
               width={24}
               height={24}
@@ -154,7 +154,7 @@ function Sidebar() {
         <li>
           <Link href='#' className='flex gap-2 font-bold'>
             <Image
-              src='/images/lang.png'
+              src='/images/lang.webp'
               className='w-auto h-auto'
               width={24}
               height={24}

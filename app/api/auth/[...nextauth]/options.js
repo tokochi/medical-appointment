@@ -149,6 +149,5 @@ export const options = {
     session: {
         strategy: 'jwt'
     },
-    debug: process.env.NODE_ENV === 'development',
     secret: process.env.NEXTAUTH_SECRET,
 }

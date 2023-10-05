@@ -7,7 +7,7 @@ function SearchFaq() {
       <div className='flex flex-wrap '>
         <div className='grow shrink basis-1/2 min-w-[280px]  lg:min-w-[180px]'>
           <IconInput
-            icon='/images/search.png'
+            icon='/images/search.webp'
             type='text'
             placeholder='الأمراض / الأسباب / الأعراض / العلاج'
           />
@@ -19,7 +19,7 @@ function SearchFaq() {
             بحث
             <Image
               className='w-auto h-auto'
-              src='/images/search2.png'
+              src='/images/search2.webp'
               width={20}
               height={20}
               alt='input'

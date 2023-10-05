@@ -27,7 +27,7 @@ async function page({params}) {
                 <div id='avatar'>
                   <Image
                     className='rounded-xl w-auto h-auto'
-                    src={selectedQuestion?.doctor?.avatar?.[0] || "/images/heart.png"}
+                    src={selectedQuestion?.doctor?.avatar?.[0] || "/images/heart.webp"}
                     width={80}
                     height={80}
                     alt='avatar'

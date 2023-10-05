@@ -15,12 +15,12 @@ function RelatedSections() {
               <button className='w-full flex gap-2 text-sm items-start'>
                 <Image
                   className='w-auto h-auto'
-                  src='/images/inscription.png'
+                  src='/images/inscription.webp'
                   width={20}
                   height={5}
                   alt='avatar'
                 />
-                <p className='font-semibold text-sky-400 mx-1'>{speciality.text}</p>
+                <p className='font-semibold text-sky-400 mx-1'>{speciality?.text}</p>
               </button>
             </Link>
           ))}

@@ -2,7 +2,6 @@ import StoreInit from "@components/StoreInit";
 import PostsTable from "@components/table/templates/PostsTable";
 import { useStore } from "@context/serverStore";
 
-
 async function page() {
   const { fetchPosts } = useStore.getState();
     const data = {
@@ -10,8 +9,8 @@ async function page() {
     };
   return (
     <div className=''>
-      {data && <StoreInit {...data} />}
-<PostsTable/>
+      {data?.posts && <StoreInit {...data} />}
+      <PostsTable />
     </div>
   );
 }

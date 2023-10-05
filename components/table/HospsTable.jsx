@@ -16,7 +16,7 @@ import {
   Sort,
   Filter,
 } from "@syncfusion/ej2-react-grids";
-import { useRef, useState} from "react";
+import { useRef} from "react";
 import toast from "react-hot-toast";
 import { useStore } from "@context/store";
 import Localization from "../../utils/Localization";
@@ -29,18 +29,9 @@ function HospsTable() {
   // ******** Column Templates  ********
   const hospsGridName = (props) => <HospsGridName {...props} />;
   // ******** Grid Table  ********
-  const [active, setActive] = useState({ all: true, sub: false });
   const gridRef = useRef(null);
-  const { hosps, handleAddGrid, handleDeleteGrid, handleEditGrid } = useStore();
-  const hospsData = useStore((state) => state.hosps)?.filter((hosp) => filterHosp(hosp));
-  function filterHosp(hosp) {
-    if (active.all === true) {
-      return hosp === hosp;
-    }
-    if (active.sub === true) {
-      return hosp.subscription != null;
-    }
-  }
+  const { handleAddGrid, handleDeleteGrid, handleEditGrid, hosps } = useStore();
+  const hospsData = useStore((state) => state.hosps)
   const toolbarOptions = [
     { text: "إضافة", tooltipText: "إضافة", prefixIcon: "e-add", id: "add" },
     { text: "تعديل", tooltipText: "تعديل", prefixIcon: "e-edit", id: "edit" },
@@ -50,14 +41,6 @@ function HospsTable() {
     "ExcelExport",
   ];
 
-  function filterHosp(hosp) {
-    if (active.all === true) {
-      return hosp === hosp;
-    }
-    if (active.sub === true) {
-      return hosp.sub > 0;
-    }
-  }
   function toolbarClick(args) {
     switch (true) {
       case args.item.id.includes("print"):
@@ -80,7 +63,7 @@ function HospsTable() {
             textBtn_1: "موافقة",
             textBtn_2: "إلغـــــاء",
             onClickBtn_1: (e) => {
-              handleAddGrid(e, toast, "/api/hosps","hospInfo");
+              handleAddGrid(e, toast, "/api/hosps", "hospInfo");
               // gridRef?.current?.refresh();
             },
             onClickBtn_2: (e) => {
@@ -104,7 +87,8 @@ function HospsTable() {
                 handleEditGrid(
                   e,
                   toast,
-                  `/api/hosps/${gridRef?.current?.getSelectedRecords()[0]._id}`,"hospInfo"
+                  `/api/hosps/${gridRef?.current?.getSelectedRecords()[0]._id}`,
+                  "hospInfo"
                 );
                 // gridRef?.current?.refresh();
               },
@@ -126,27 +110,27 @@ function HospsTable() {
       case args.item.id.includes("delete"):
         if (gridRef?.current?.getSelectedRecords()?.length > 0) {
           useStore.setState({
-              hospInfo: gridRef?.current?.getSelectedRecords()[0],
-              modal: {
-                isOpen: true,
-                title: "حذف عيادة",
-                content: "هل أنت متأكد من عملية الحذف!",
-                textBtn_1: "موافقة",
-                textBtn_2: "إلغـــــاء",
-                onClickBtn_1: (e) => {
-                  handleDeleteGrid(
-                    e,
-                    toast,
-                    `/api/hosps/${gridRef?.current?.getSelectedRecords()[0]._id}`,
-                    "hospInfo"
-                  );
-                  // gridRef?.current?.refresh();
-                },
-                onClickBtn_2: (e) => {
-                  useStore.setState((state) => ({ modal: state.modalClosed }));
-                },
+            hospInfo: gridRef?.current?.getSelectedRecords()[0],
+            modal: {
+              isOpen: true,
+              title: "حذف عيادة",
+              content: "هل أنت متأكد من عملية الحذف!",
+              textBtn_1: "موافقة",
+              textBtn_2: "إلغـــــاء",
+              onClickBtn_1: (e) => {
+                handleDeleteGrid(
+                  e,
+                  toast,
+                  `/api/hosps/${gridRef?.current?.getSelectedRecords()[0]._id}`,
+                  "hospInfo"
+                );
+                // gridRef?.current?.refresh();
               },
-            });
+              onClickBtn_2: (e) => {
+                useStore.setState((state) => ({ modal: state.modalClosed }));
+              },
+            },
+          });
         } else {
           useStore.setState({
             modal: {
@@ -171,26 +155,6 @@ function HospsTable() {
   return (
     <div className='p-2 md:p-10'>
       <div className='mb-2 md:mb-4 md:mx-4 flex flex-wrap items-start justify-between'>
-        {/* <ul className='flex w-full md:w-auto justify-center items-center'>
-          <li className='m-1 '>
-            <button
-              className={`${active.all ? "btn-active" : "btn-disable"} flex gap-1`}
-              onClick={() => {
-                setActive((state) => ({ all: true, sub: false }));
-              }}>
-              الكُّل <span className='ml-1 text-indigo-200'>{hosps.length}</span>
-            </button>
-          </li>
-          <li className='m-1 flex'>
-            <button
-              className={`${active.sub ? "btn-active" : "btn-disable"} flex gap-1`}
-              onClick={() => {
-                setActive((state) => ({ all: false, sub: true }));
-              }}>
-              المشتركين <span className='ml-1  text-sky-600'>{SubscribedHosps.length}</span>
-            </button>
-          </li>
-        </ul> */}
         <div className='card rounded-xl mx-auto grow md:grow-0 p-2 flex justify-center items-center'>
           عـــدد العيـــادات: <span className='text-sky-500 mr-1'>{hosps?.length}</span>
         </div>
@@ -244,7 +208,7 @@ function HospsTable() {
               width='100'
             />
             <ColumnDirective
-              field='address.wilaya.text'
+              field='address?.wilaya?.text'
               headerText='الولاية'
               textAlign='center'
               headerTextAlign='center'

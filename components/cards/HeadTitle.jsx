@@ -53,7 +53,7 @@ function HeadTitle() {
       <h1 className='p-4 text-clamp-xl font-bold text-white '>{pathname}</h1>
       <Image
         className='min-w-[50px]'
-        src='/images/pulse-2.png'
+        src='/images/pulse-2.webp'
         width={150}
         height={150}
         alt='input'

@@ -34,7 +34,7 @@ function SearchFaqInPage() {
         <div id='button' className=''>
           <Link href='#' className=''>
             <button id='call-btn' className='w-full btn2 p-2 flex gap-2 items-enter justify-center'>
-              <Image className="w-auto h-auto" src='/images/ask.png' width={20} height={10} alt='avatar' />
+              <Image className="w-auto h-auto" src='/images/ask.webp' width={20} height={10} alt='avatar' />
               <p className='font-semibold mx-1'>انظر الاجابة</p>
             </button>
           </Link>
@@ -45,49 +45,49 @@ function SearchFaqInPage() {
           <div className='flex flex-col gap-2'>
             <Link href='#' className=''>
               <button className='w-full flex gap-2 text-sm items-enter'>
-                <Image className="w-auto h-auto" src='/images/inscription.png' width={20} height={5} alt='avatar' />
+                <Image className="w-auto h-auto" src='/images/inscription.webp' width={20} height={5} alt='avatar' />
                 <p className='font-semibold text-sky-400 mx-1'>كيس على المستو الجبين</p>
               </button>
             </Link>
             <Link href='#' className=''>
               <button className='w-full flex gap-2 text-sm items-enter'>
-                <Image className="w-auto h-auto" src='/images/inscription.png' width={20} height={5} alt='avatar' />
+                <Image className="w-auto h-auto" src='/images/inscription.webp' width={20} height={5} alt='avatar' />
                 <p className='font-semibold text-sky-400 mx-1'>دوائ الحساسية</p>
               </button>
             </Link>
             <Link href='#' className=''>
               <button className='w-full flex gap-2 text-sm items-enter'>
-                <Image className="w-auto h-auto" src='/images/inscription.png' width={20} height={5} alt='avatar' />
+                <Image className="w-auto h-auto" src='/images/inscription.webp' width={20} height={5} alt='avatar' />
                 <p className='font-semibold text-sky-400 mx-1'>ألم كبير في ساقاي</p>
               </button>
             </Link>
             <Link href='#' className=''>
               <button className='w-full flex gap-2 text-sm items-enter'>
-                <Image className="w-auto h-auto" src='/images/inscription.png' width={20} height={5} alt='avatar' />
+                <Image className="w-auto h-auto" src='/images/inscription.webp' width={20} height={5} alt='avatar' />
                 <p className='font-semibold text-sky-400 mx-1'>عدم القدرة على التبول </p>
               </button>
             </Link>
             <Link href='#' className=''>
               <button className='w-full flex gap-2 text-sm items-enter'>
-                <Image src='/images/inscription.png' width={20} height={5} alt='avatar' />
+                <Image src='/images/inscription.webp' width={20} height={5} alt='avatar' />
                 <p className='font-semibold text-sky-400 mx-1'>التأخر الحركي</p>
               </button>
             </Link>
             <Link href='#' className=''>
               <button className='w-full flex gap-2 text-sm items-enter'>
-                <Image className="w-auto h-auto" src='/images/inscription.png' width={20} height={5} alt='avatar' />
+                <Image className="w-auto h-auto" src='/images/inscription.webp' width={20} height={5} alt='avatar' />
                 <p className='font-semibold text-sky-400 mx-1'>المغص و الغازات</p>
               </button>
             </Link>
             <Link href='#' className=''>
               <button className='w-full flex gap-2 text-sm items-enter'>
-                <Image className="w-auto h-auto" src='/images/inscription.png' width={20} height={5} alt='avatar' />
+                <Image className="w-auto h-auto" src='/images/inscription.webp' width={20} height={5} alt='avatar' />
                 <p className='font-semibold text-sky-400 mx-1'>السكري في الدم </p>
               </button>
             </Link>
             <Link href='#' className=''>
               <button className='w-full flex gap-2 text-sm items-enter'>
-                <Image className="w-auto h-auto" src='/images/inscription.png' width={20} height={5} alt='avatar' />
+                <Image className="w-auto h-auto" src='/images/inscription.webp' width={20} height={5} alt='avatar' />
                 <p className='font-semibold text-sky-400 mx-1'>صبام الحامل</p>
               </button>
             </Link>

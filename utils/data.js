@@ -16933,7 +16933,7 @@ export const specialities = [
 ];
 export const pharmDefault = {
   name: "",
-  title: { text:"الصيدلية", value :"pharmacy"},
+  title: { text:"صيديلة", value :"pharmacy"},
   admins: [],
   address: {
     street: "",
@@ -16942,7 +16942,7 @@ export const pharmDefault = {
     commune: {},
   },
   phone: { line1: "", line2: "", mobile: "" },
-  avatar: ["/images/pharm-logo.png"],
+  avatar: ["/images/pharm-logo.webp"],
   payment: { cash: true, card: false, check: false },
   otherServices: {
     isFullTimeOpen: false,
@@ -16961,7 +16961,7 @@ export const pharmDefault = {
 export const hospDefault = {
   name: "",
   admins: [],
-  title: { text: "العيادة", value: "clinic" },
+  title: { text: "عيادة", value: "clinic" },
   address: {
     street: "",
     wilaya: { value: "Alger", text: "الجزائر" },
@@ -16969,7 +16969,7 @@ export const hospDefault = {
     commune: {},
   },
   phone: { line1: "", line2: "", mobile: "" },
-  avatar: ["/images/Hospital-logo.png"],
+  avatar: ["/images/Hospital-logo.webp"],
   payment: { cash: true, card: false, check: false },
   otherServices: {
     isFullTimeOpen: false,
@@ -16988,7 +16988,7 @@ export const hospDefault = {
 export const labDefault = {
   name: "",
   admins: [],
-  title: { text: "المختبر", value: "laboratory" },
+  title: { text: "مختبر", value: "laboratory" },
   address: {
     street: "",
     wilaya: { value: "Alger", text: "الجزائر" },
@@ -16996,7 +16996,7 @@ export const labDefault = {
     commune: {},
   },
   phone: { line1: "", line2: "", mobile: "" },
-  avatar: ["/images/labo.png"],
+  avatar: ["/images/labo.webp"],
   payment: { cash: true, card: false, check: false },
   otherServices: {
     isFullTimeOpen: false,
@@ -17013,7 +17013,7 @@ export const labDefault = {
   email: "",
 }
 export const userDefault = {
-  avatar: ["/images/user-logo.png"],
+  avatar: ["/images/user-logo.webp"],
   email: "",
   password: "",
   verifyPassword: "",
@@ -17035,7 +17035,7 @@ export const userDefault = {
   whatsapp: "",
 }
 export const companyDefault = {
-  avatar: ["/images/user-logo.png"],
+  avatar: ["/images/user-logo.webp"],
   email: "",
   name: "",
   if: "",
@@ -17055,7 +17055,7 @@ export const companyDefault = {
   whatsapp: "",
 }
 export const doctorDefault = {
-  avatar: ["/images/avatar-doctor-male.png", "/images/avatar-doctor-female.png"],
+  avatar: ["/images/avatar-doctor-male.webp", "/images/avatar-doctor-female.webp"],
   email: "",
   name: "",
   title: { text: "الدكتورة", value: "doctor" },
@@ -17186,14 +17186,14 @@ export const specilatiyHosp = [
   { text: "السكري" },
 ];
 export const worksPharms = [
-  { text: "ممر لذوي الاحتياجات الخاصة" },
-  { text: "معدات تقويم العظام" },
-  { text: "محل تمريض" },
-  { text: "الرعاية الصحية لذوي الأمراض المزمنة" },
-  { text: "ميزان للأشخاص" },
-  { text: "جهاز قياس ضغط الدم الأوتوماتيكي" },
-  { text: "بطاقة تشخيص الدم" },
-  { text: "تلقيح فيروس" },
+  { text: "ممر لذوي الاحتياجات الخاصة", value: "ممر لذوي الاحتياجات الخاصة", },
+  { text: "معدات تقويم العظام", value: "معدات تقويم العظام" },
+  { text: "محل تمريض", value: "محل تمريض" },
+  { text: "الرعاية الصحية لذوي الأمراض المزمنة", value: "الرعاية الصحية لذوي الأمراض المزمنة" },
+  { text: "ميزان للأشخاص", value: "ميزان للأشخاص" },
+  { text: "جهاز قياس ضغط الدم الأوتوماتيكي", value: "جهاز قياس ضغط الدم الأوتوماتيكي" },
+  { text: "بطاقة تشخيص الدم", value: "بطاقة تشخيص الدم" },
+  { text: "تلقيح فيروس", value: "تلقيح فيروس" },
 ];
 export const worksLabs = [
   { text: "التصوير الشعاعي" },
@@ -17211,7 +17211,7 @@ export const searchTabs = [
     title: "حدد موعدًا بسرعة مع طبيبك!",
     desc: "اختر طبيبك, اختر التاريخ والوقت المحدد لموعدك واستقبل التأكيد عبر رسالة قصيرة او البريد الإلكتروني",
     name: "طبيب",
-    icon: "/images/doctor.png",
+    icon: "/images/doctor.webp",
     active: true,
   },
   {
@@ -17219,7 +17219,7 @@ export const searchTabs = [
     title: "اعثر بسرعة على أقرب صيدلية إليك!",
     desc: "اربح وقتك وابحث بسهولة عن أقرب صيدلية مفتوحة!",
     name: "صيدلية",
-    icon: "/images/pharm.png",
+    icon: "/images/pharm.webp",
     active: false,
   },
   {
@@ -17227,7 +17227,7 @@ export const searchTabs = [
     title: "هل تريد القيام بتحاليل طبية؟",
     desc: "استخرج كل التحاليل الطبية والفحوصات في أقرب مختبر لك",
     name: "مختبر",
-    icon: "/images/laboratory.png",
+    icon: "/images/laboratory.webp",
     active: false,
   },
   {
@@ -17235,7 +17235,7 @@ export const searchTabs = [
     title: "العيادات الطبية في ولايتك.",
     desc: "استشر العيادات الطبية متعددة الاختصاصات, عمليات جراحية, مراقبة, تشخيص, مع أرقى الأطباء.",
     name: "مصحة",
-    icon: "/images/hospital.png",
+    icon: "/images/hospital.webp",
     active: false,
   },
   {
@@ -17243,7 +17243,7 @@ export const searchTabs = [
     title: "هل لديك مخاوف بشأن صحتك؟",
     desc: "الآلاف من الأطباء موجودون هنا لمساعدتك والإجابة على أسئلتك",
     name: "أسئلة",
-    icon: "/images/help.png",
+    icon: "/images/help.webp",
     active: false,
   },
 ];
@@ -17252,56 +17252,56 @@ export const sectionSpecialities = [
     id: 0,
     title: "المسالك البوليه",
     desc: 87,
-    icon: "/images/blader.png",
+    icon: "/images/blader.webp",
     link: "#",
   },
   {
     id: 1,
     title: "طب الأعصاب",
     desc: 48,
-    icon: "/images/brain.png",
+    icon: "/images/brain.webp",
     link: "#",
   },
   {
     id: 2,
     title: "طب العيون",
     desc: 26,
-    icon: "/images/eye.png",
+    icon: "/images/eye.webp",
     link: "#",
   },
   {
     id: 3,
     title: "الأمعاء و الكلى",
     desc: 39,
-    icon: "/images/stomach.png",
+    icon: "/images/stomach.webp",
     link: "#",
   },
   {
     id: 4,
     title: "الجهاز التنفسي",
     desc: 42,
-    icon: "/images/lungs.png",
+    icon: "/images/lungs.webp",
     link: "#",
   },
   {
     id: 55,
     title: "طب الأسنان",
     desc: 120,
-    icon: "/images/tooth.png",
+    icon: "/images/tooth.webp",
     link: "#",
   },
   {
     id: 5,
     title: "طب العظام",
     desc: 67,
-    icon: "/images/bone.png",
+    icon: "/images/bone.webp",
     link: "#",
   },
   {
     id: 6,
     title: "طب القلب",
     desc: 53,
-    icon: "/images/heart.png",
+    icon: "/images/heart.webp",
     link: "#",
   },
 ];
@@ -17329,7 +17329,7 @@ export const sectionWork = [
         link: "#",
       },
     ],
-    icon: "/images/blader.png",
+    icon: "/images/blader.webp",
     active: false,
   },
   {
@@ -17355,7 +17355,7 @@ export const sectionWork = [
         link: "#",
       },
     ],
-    icon: "/images/blader.png",
+    icon: "/images/blader.webp",
     active: false,
   },
   {
@@ -17381,7 +17381,7 @@ export const sectionWork = [
         link: "#",
       },
     ],
-    icon: "/images/blader.png",
+    icon: "/images/blader.webp",
     active: false,
   },
   {
@@ -17407,7 +17407,7 @@ export const sectionWork = [
         link: "#",
       },
     ],
-    icon: "/images/blader.png",
+    icon: "/images/blader.webp",
     active: false,
   },
 ];
@@ -17443,9 +17443,9 @@ export const doctors = [
     googleMap: "",
     phone: { line1: "+213 73 213 355", line2: "", mobile: "+213 21 402 049" },
     payment: [
-      { label: "نقدا", image: "/images/cash.png" },
-      { label: "الشيك", image: "/images/check.png" },
-      { label: "بطاقة الصرف", image: "/images/card-payment.png" },
+      { label: "نقدا", image: "/images/cash.webp" },
+      { label: "الشيك", image: "/images/check.webp" },
+      { label: "بطاقة الصرف", image: "/images/card-payment.webp" },
     ],
     workTime: [
       { day: "السبت", from: "13:00", to: "16:00" },
@@ -17496,9 +17496,9 @@ export const doctors = [
     phone1: "+213 023 38 85 30",
     mobile: "+213 553 99 08 02 ",
     payment: [
-      { label: "نقدا", image: "/images/cash.png" },
-      { label: "الشيك", image: "/images/check.png" },
-      { label: "بطاقة الصرف", image: "/images/card-payment.png" },
+      { label: "نقدا", image: "/images/cash.webp" },
+      { label: "الشيك", image: "/images/check.webp" },
+      { label: "بطاقة الصرف", image: "/images/card-payment.webp" },
     ],
     workTime: [
       { day: "الأحد", from: "08:30", to: "16:00" },
@@ -17621,8 +17621,8 @@ export const labs = [
     phone1: "+213 023 97 39 37",
     mobile: "+213 023 97 39 37",
     payment: [
-      { label: "نقدا", image: "/images/cash.png" },
-      { label: "بطاقة الصرف", image: "/images/card-payment.png" },
+      { label: "نقدا", image: "/images/cash.webp" },
+      { label: "بطاقة الصرف", image: "/images/card-payment.webp" },
     ],
     workTime: [
       { day: "الأحد", from: "07:30", to: "16:00" },
@@ -17673,7 +17673,7 @@ export const labs = [
     googleMap: "",
     phone1: "+213 023 97 39 37",
     mobile: "+213 023 97 39 37",
-    payment: [{ label: "نقدا", image: "/images/cash.png" }],
+    payment: [{ label: "نقدا", image: "/images/cash.webp" }],
     workTime: [
       { day: "الأحد", from: "07:30", to: "16:00" },
       { day: "الإثنين", from: "07:30", to: "16:00" },
@@ -17746,7 +17746,7 @@ export const pharms = [
     isFullTimeOpen: true,
     insurance: true,
     subscription: { startDate: "", endDate: "", isActive: false, amount: 0 },
-    avatar: "/images/pharm-logo.png",
+    avatar: "/images/pharm-logo.webp",
     OfficePics: [],
   },
 ];
@@ -17787,10 +17787,10 @@ export const hosp = [
     avatar:
       "https://imagecdn.med.ovh/unsafe/130x130/filters:format(webp):quality(50):blur(0)/https://www.med.tn/uploads/clinics/e8fbc3c9ff27dc0d6ad7863a3ac2af13.jpg",
     OfficePics: [
-      "https://www.med.tn/uploads/clinics/56_3.png",
-      "https://www.med.tn/uploads/clinics/56_4.png",
-      "https://www.med.tn/uploads/clinics/56_5.png",
-      "https://www.med.tn/uploads/clinics/56_6.png",
+      "https://www.med.tn/uploads/clinics/56_3.webp",
+      "https://www.med.tn/uploads/clinics/56_4.webp",
+      "https://www.med.tn/uploads/clinics/56_5.webp",
+      "https://www.med.tn/uploads/clinics/56_6.webp",
     ],
     desc: "",
   },

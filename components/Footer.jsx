@@ -6,7 +6,7 @@ function Footer() {
       <div className='bg-gray-50 dark:bg-gray-900 flex flex-wrap p-4 gap-4'>
         <div className='basis17 flex flex-col gap-2'>
           <div className='flex gap-2 items-center'>
-            <Image className="w-auto h-auto" src='/images/logo.png' width={60} height={60} alt='logo' />
+            <Image className="w-auto h-auto" src='/images/logo.webp' width={60} height={60} alt='logo' />
             <div className=''>
               <h1 className='font-semibold'>الشبكة الطبية</h1>
               <h1 className='font-semibold'>المهنية الأولى</h1>
@@ -55,9 +55,9 @@ function Footer() {
       <div className='bg-primary text-white p-4 flex flex-wrap w-full justify-around'>
         <h1 className='font-semibold my-2'>كل الحقوق محفوظة  sehatitaji.com .2023</h1>
         <div className='flex gap-4 justify-center items-center'>
-          <Image className="w-auto h-auto" src='/images/facebook.png' width={35} height={35} alt='logo' />
-          <Image className="w-auto h-auto" src='/images/instagram.png' width={35} height={35} alt='logo' />
-          <Image className="w-auto h-auto" src='/images/whatsapp.png' width={35} height={35} alt='logo' />
+          <Image className="w-auto h-auto" src='/images/facebook.webp' width={35} height={35} alt='logo' />
+          <Image className="w-auto h-auto" src='/images/instagram.webp' width={35} height={35} alt='logo' />
+          <Image className="w-auto h-auto" src='/images/whatsapp.webp' width={35} height={35} alt='logo' />
         </div>
         <div className=''></div>
       </div>

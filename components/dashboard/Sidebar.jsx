@@ -29,7 +29,7 @@ const router = useRouter()
       <div className='flex flex-col gap-4 p-2 list-none dark:text-gray-100'>
         <Link className='' href='/'>
           <Image
-            src='/images/logo.png'
+            src='/images/logo.webp'
             className='min-w-[24px]'
             width={100}
             height={100}

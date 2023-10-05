@@ -46,7 +46,7 @@ function Header({ session }) {
         </button>
         <Link className='' href='/'>
           <Image
-            src='/images/logo.png'
+            src='/images/logo.webp'
             className='min-w-[40px]'
             width={80}
             height={80}
@@ -94,7 +94,7 @@ function Header({ session }) {
           onClick={toggleDark}
           type='button'
           className={` mx-2 origin-center dark:rotate-180 transition-all duration-300`}>
-          <Image src='/images/dark.png' width={20} height={20} alt='Flowbite Logo' />
+          <Image src='/images/dark.webp' width={20} height={20} alt='Flowbite Logo' />
         </button>
       </div>
       <div

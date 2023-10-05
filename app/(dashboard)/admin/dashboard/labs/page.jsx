@@ -6,11 +6,11 @@ import { useStore } from "@context/serverStore";
 async function page() {
   const { fetchLabs } = useStore.getState();
     const data = {
-      labs: JSON.stringify(await fetchLabs()) || [],
+      labs: JSON.stringify(await fetchLabs()),
     };
   return (
     <div className=''>
-      {data && <StoreInit {...data} />}
+      {data?.labs && <StoreInit {...data} />}
       <LabsTable />
     </div>
   );

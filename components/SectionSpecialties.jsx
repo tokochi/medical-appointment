@@ -26,7 +26,7 @@ function  SectionSpecialties () {
               </div>
               <Image
                 className='mr-auto w-auto h-auto'
-                src='/images/arrow.png'
+                src='/images/arrow.webp'
                 width={20}
                 height={20}
                 alt='input'

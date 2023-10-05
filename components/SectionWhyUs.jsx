@@ -7,7 +7,7 @@ function SectionWhyUs() {
         <h1 className='font-bold text-clamp-2xl  py-4 text-center'>
           لماذا تحدد موعد عن بعد مع منصة         <Image
             className='w-auto h-auto inline-block'
-            src='/images/logo-text.png'
+            src='/images/logo-text.webp'
             width={80}
             height={20}
             alt='hero'
@@ -21,7 +21,7 @@ function SectionWhyUs() {
         <div className='basis3'>
           <Image
             className='mx-auto my-8 w-auto h-auto'
-            src='/images/illustration1.png'
+            src='/images/illustration1.webp'
             width={300}
             height={300}
             alt='hero'
@@ -31,7 +31,7 @@ function SectionWhyUs() {
         <div className='basis3'>
           <Image
             className='mx-auto my-8 w-auto h-auto'
-            src='/images/illustration2.png'
+            src='/images/illustration2.webp'
             width={300}
             height={300}
             alt='hero'
@@ -41,7 +41,7 @@ function SectionWhyUs() {
         <div className='basis3'>
           <Image
             className='mx-auto my-8 w-auto h-auto'
-            src='/images/illustration3.png'
+            src='/images/illustration3.webp'
             width={300}
             height={300}
             alt='hero'

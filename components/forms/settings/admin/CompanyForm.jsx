@@ -39,7 +39,7 @@ function AccountForm() {
            <div className='flex flex-wrap gap-2 w-full'>
              <div id='site' className='grow font-roboto scale-y-125'>
                <IconInput
-                 icon='/images/website.png'
+                 icon='/images/website.webp'
                  name='site'
                  value={companyInfo?.site}
                  onChange={(e) => handleInputChange(e, "companyInfo")}
@@ -50,7 +50,7 @@ function AccountForm() {
              </div>
              <div id='name' className='grow '>
                <IconInput
-                 icon='/images/work.png'
+                 icon='/images/work.webp'
                  name='name'
                  value={companyInfo?.name}
                  onChange={(e) => handleInputChange(e, "companyInfo")}
@@ -61,7 +61,7 @@ function AccountForm() {
              </div>
              <div id='email' className='grow font-roboto scale-y-125'>
                <IconInput
-                 icon='/images/email.png'
+                 icon='/images/email.webp'
                  name='email'
                  value={companyInfo?.email}
                  onChange={(e) => handleInputChange(e, "companyInfo")}
@@ -74,7 +74,7 @@ function AccountForm() {
            <div className='flex flex-wrap gap-2 w-full'>
              <div id='phone' className='grow'>
                <IconInput
-                 icon='/images/phone.png'
+                 icon='/images/phone.webp'
                  name='phone.mobile'
                  value={companyInfo?.phone?.mobile}
                  onChange={(e) => handleInputChange(e, "companyInfo")}
@@ -85,7 +85,7 @@ function AccountForm() {
              </div>
              <div id='phone' className='grow'>
                <IconInput
-                 icon='/images/fix.png'
+                 icon='/images/fix.webp'
                  name='phone.line1'
                  value={companyInfo?.phone?.line1}
                  onChange={(e) => handleInputChange(e, "companyInfo")}
@@ -96,7 +96,7 @@ function AccountForm() {
              </div>
              <div id='phone' className='grow'>
                <IconInput
-                 icon='/images/fax.png'
+                 icon='/images/fax.webp'
                  name='phone.line2'
                  value={companyInfo?.phone?.line2}
                  onChange={(e) => handleInputChange(e, "companyInfo")}
@@ -109,7 +109,7 @@ function AccountForm() {
            <div className='flex flex-wrap gap-2 w-full'>
              <div id='facebook' className='grow'>
                <IconInput
-                 icon='/images/Facebook.png'
+                 icon='/images/Facebook.webp'
                  name='facebook'
                  value={companyInfo?.facebook}
                  onChange={(e) => handleInputChange(e, "companyInfo")}
@@ -120,7 +120,7 @@ function AccountForm() {
              </div>
              <div id='instagram' className='grow'>
                <IconInput
-                 icon='/images/Instagram.png'
+                 icon='/images/Instagram.webp'
                  name='instagram'
                  value={companyInfo?.instagram}
                  onChange={(e) => handleInputChange(e, "companyInfo")}
@@ -131,7 +131,7 @@ function AccountForm() {
              </div>
              <div id='whatsapp' className='grow'>
                <IconInput
-                 icon='/images/whatsapp.png'
+                 icon='/images/whatsapp.webp'
                  name='whatsapp'
                  value={companyInfo?.whatsapp}
                  onChange={(e) => handleInputChange(e, "companyInfo")}
@@ -193,8 +193,8 @@ function AccountForm() {
          </div>
          <div id='wilaya' className=''>
            <SelectInput
-             name='address.wilaya'
-             value={companyInfo?.address?.wilaya?.value}
+             name='address?.wilaya'
+             value={companyInfo?.otherServices?.value}
              onChange={(e) => handleSelectInput(e, "companyInfo")}
              options={wilaya}
              option_value='value'
@@ -205,11 +205,11 @@ function AccountForm() {
          </div>
          <div id='daira' className=''>
            <SelectInput
-             name='address.daira'
+             name='address?.daira'
              value={companyInfo?.address?.daira?.value}
              onChange={(e) => handleSelectInput(e, "companyInfo")}
              options={daira.filter(
-               (region) => region?.wilaya === companyInfo?.address?.wilaya?.value
+               (region) => region?.wilaya === companyInfo?.otherServices?.value
              )}
              option_value='value'
              option_text='text'
@@ -219,7 +219,7 @@ function AccountForm() {
          </div>
          <div id='commune' className=''>
            <SelectInput
-             name='address.commune'
+             name='address?.commune'
              value={companyInfo?.address?.commune?.value}
              onChange={(e) => handleSelectInput(e, "companyInfo")}
              options={commune.filter(
@@ -233,8 +233,8 @@ function AccountForm() {
          </div>
          <div id='street' className=''>
            <IconInput
-             icon='/images/map.png'
-             name='address.street'
+             icon='/images/map.webp'
+             name='address?.street'
              value={companyInfo?.address?.street}
              onChange={(e) => handleInputChange(e, "companyInfo")}
              type='text'
@@ -251,7 +251,7 @@ function AccountForm() {
              {!isLoading ? (
                <Image
                  className='w-auto h-auto'
-                 src='/images/send.png'
+                 src='/images/send.webp'
                  width={20}
                  height={20}
                  alt='input'

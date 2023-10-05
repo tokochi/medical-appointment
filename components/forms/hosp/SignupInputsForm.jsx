@@ -22,6 +22,7 @@ function SignupInputsForm(props) {
     handleInputChange,
     handleSelectInput,
     removeSelectService,
+    medicalSpecialties,
     uploadImage,
     handleCheckbox,
     removeSelectAdmin,
@@ -48,7 +49,7 @@ console.log(addedAdmins);
         <div className='p-2 flex flex-col gap-2 justify-center'>
           <div id='name' className=''>
             <IconInput
-              icon='/images/user.png'
+              icon='/images/user.webp'
               name='name'
               value={hospInfo?.name}
               onChange={(e) => handleInputChange(e, "hospInfo")}
@@ -68,7 +69,7 @@ console.log(addedAdmins);
                 placeholder='الدكتور عصام شاهر، البروفيسور أحمد منير....'
               />
               <button className='mt-auto py-1' onClick={(e) => addSelectAdmin(e, "hospInfo")}>
-                <Image src='/images/add.png' width={30} height={25} alt='cancel' />
+                <Image src='/images/add.webp' width={30} height={25} alt='cancel' />
               </button>
             </div>
             <div className='flex flex-wrap  gap-2 py-2'>
@@ -79,7 +80,7 @@ console.log(addedAdmins);
                   <button name={service} onClick={(e) => removeSelectAdmin(e, "hospInfo")}>
                     <Image
                       name={service}
-                      src='/images/cancel.png'
+                      src='/images/cancel.webp'
                       width={20}
                       height={15}
                       alt='cancel'
@@ -92,7 +93,7 @@ console.log(addedAdmins);
           </div>
           <div id='phone' className=''>
             <IconInput
-              icon='/images/phone.png'
+              icon='/images/phone.webp'
               name='phone.mobile'
               value={hospInfo?.phone?.mobile}
               onChange={(e) => handleInputChange(e, "hospInfo")}
@@ -103,7 +104,7 @@ console.log(addedAdmins);
           </div>
           <div id='phone' className=''>
             <IconInput
-              icon='/images/phone.png'
+              icon='/images/phone.webp'
               name='phone.line2'
               value={hospInfo?.phone?.line2}
               onChange={(e) => handleInputChange(e, "hospInfo")}
@@ -170,7 +171,7 @@ console.log(addedAdmins);
               name='speciality'
               value={hospInfo?.speciality?.value}
               onChange={(e) => handleSelectInput(e, "hospInfo")}
-              options={specialities}
+              options={medicalSpecialties}
               option_value='value'
               option_text='text'
               placeholder='التخصص'
@@ -197,7 +198,7 @@ console.log(addedAdmins);
                     onClick={(e) => removeSelectSpecialities(e, "hospInfo")}>
                     <Image
                       name={speciality?.text}
-                      src='/images/cancel.png'
+                      src='/images/cancel.webp'
                       width={20}
                       height={15}
                       alt='cancel'
@@ -233,7 +234,7 @@ console.log(addedAdmins);
                   }));
                 useStore.setState({ addedSpeciality: "" });
               }}>
-              <Image src='/images/add.png' width={30} height={25} alt='cancel' />
+              <Image src='/images/add.webp' width={30} height={25} alt='cancel' />
             </button>
           </div>
           <div id='divider' className='border-b-[1px] border-gray-600 my-2'></div>
@@ -263,18 +264,18 @@ console.log(addedAdmins);
                     }));
                   useStore.setState({ addedService: "" });
                 }}>
-                <Image src='/images/add.png' width={30} height={25} alt='cancel' />
+                <Image src='/images/add.webp' width={30} height={25} alt='cancel' />
               </button>
             </div>
             <div className='flex flex-wrap  gap-2 py-2'>
-              {hospInfo?.services.map((service, index) => (
+              {hospInfo?.services?.map((service, index) => (
                 <div
                   key={index}
                   className='p-1 px-2 flex gap-1 justify-between bg-slate-200 text-sm rounded-[163px] text-gray-900 dark:text-gray-300 dark:bg-slate-700 hover:bg-slate-400 font-medium'>
                   <button name={service?.text} onClick={(e) => removeSelectService(e, "hospInfo")}>
                     <Image
                       name={service?.text}
-                      src='/images/cancel.png'
+                      src='/images/cancel.webp'
                       width={20}
                       height={15}
                       alt='cancel'
@@ -287,21 +288,21 @@ console.log(addedAdmins);
           </div>
           <div id='other-services' className='flex flex-wrap items-center gap-2'>
             <CheckboxInput
-              name='otherServices.homeVisits'
+              name='otherServices?.homeVisits'
               checked={hospInfo?.otherServices?.homeVisits}
               onChange={(e) => handleCheckbox(e, "hospInfo")}
               label='تنقل لعلاج منزلي'
               placeholder='خدمات اخرى:'
             />
             <CheckboxInput
-              name='otherServices.insurance'
+              name='otherServices?.insurance'
               checked={hospInfo?.otherServices?.insurance}
               onChange={(e) => handleCheckbox(e, "hospInfo")}
               label='يقبل بطاقة ضمان اجمتاعي'
               placeholder='&nbsp;'
             />
             <CheckboxInput
-              name='otherServices.isFullTimeOpen'
+              name='otherServices?.isFullTimeOpen'
               checked={hospInfo?.otherServices?.isFullTimeOpen}
               onChange={(e) => handleCheckbox(e, "hospInfo")}
               label='عيادة مفتوحة 24/7'
@@ -343,8 +344,8 @@ console.log(addedAdmins);
         <div className='p-2 flex flex-col gap-2 justify-center'>
           <div id='wilaya' className=''>
             <SelectInput
-              name='address.wilaya'
-              value={hospInfo?.address?.wilaya?.value}
+              name='address?.wilaya'
+              value={hospInfo?.otherServices?.value}
               onChange={(e) => handleSelectInput(e, "hospInfo")}
               options={wilaya}
               option_value='value'
@@ -355,12 +356,10 @@ console.log(addedAdmins);
           </div>
           <div id='daira' className=''>
             <SelectInput
-              name='address.daira'
+              name='address?.daira'
               value={hospInfo?.address?.daira?.value}
               onChange={(e) => handleSelectInput(e, "hospInfo")}
-              options={daira.filter(
-                (region) => region?.wilaya === hospInfo?.address?.wilaya?.value
-              )}
+              options={daira.filter((region) => region?.wilaya === hospInfo?.otherServices?.value)}
               option_value='value'
               option_text='text'
               placeholder='الدائرة'
@@ -369,7 +368,7 @@ console.log(addedAdmins);
           </div>
           <div id='commune' className=''>
             <SelectInput
-              name='address.commune'
+              name='address?.commune'
               value={hospInfo?.address?.commune?.value}
               onChange={(e) => handleSelectInput(e, "hospInfo")}
               options={commune.filter(
@@ -383,8 +382,8 @@ console.log(addedAdmins);
           </div>
           <div id='street' className=''>
             <IconInput
-              icon='/images/map.png'
-              name='address.street'
+              icon='/images/map.webp'
+              name='address?.street'
               value={hospInfo?.address?.street}
               onChange={(e) => handleInputChange(e, "hospInfo")}
               type='text'

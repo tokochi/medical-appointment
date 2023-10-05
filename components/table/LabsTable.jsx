@@ -16,7 +16,7 @@ import {
   Sort,
   Filter,
 } from "@syncfusion/ej2-react-grids";
-import { useEffect, useRef, useState, useMemo } from "react";
+import {  useRef } from "react";
 import toast from "react-hot-toast";
 import { useStore } from "@context/store";
 import Localization from "../../utils/Localization";
@@ -29,20 +29,9 @@ function LabsTable() {
   // ******** Column Templates  ********
   const labsGridName = (props) => <LabsGridName {...props} />;
   // ******** Grid Table  ********
-  const [active, setActive] = useState({ all: true, sub: false });
   const gridRef = useRef(null);
-  const { labs, handleAddGrid, handleDeleteGrid, handleEditGrid } = useStore();
-
-  const labsData = useStore((state) => state.labs).filter((lab) => filterLab(lab));
-  const SubscribedLabs = useStore((state) => state.labs).filter((lab) => lab.subscription != null);
-  function filterLab(lab) {
-    if (active.all === true) {
-      return lab === lab;
-    }
-    if (active.sub === true) {
-      return lab.subscription != null;
-    }
-  }
+  const { handleAddGrid, handleDeleteGrid, handleEditGrid, labs } = useStore();
+  const labsData = useStore((state) => state.labs)
   const toolbarOptions = [
     { text: "إضافة", tooltipText: "إضافة", prefixIcon: "e-add", id: "add" },
     { text: "تعديل", tooltipText: "تعديل", prefixIcon: "e-edit", id: "edit" },
@@ -51,15 +40,6 @@ function LabsTable() {
     "Print",
     "ExcelExport",
   ];
-
-  function filterLab(lab) {
-    if (active.all === true) {
-      return lab === lab;
-    }
-    if (active.sub === true) {
-      return lab.sub > 0;
-    }
-  }
   function toolbarClick(args) {
     switch (true) {
       case args.item.id.includes("print"):
@@ -106,7 +86,8 @@ function LabsTable() {
                 handleEditGrid(
                   e,
                   toast,
-                  `/api/labs/${gridRef?.current?.getSelectedRecords()[0]._id}`,"labInfo"
+                  `/api/labs/${gridRef?.current?.getSelectedRecords()[0]._id}`,
+                  "labInfo"
                 );
                 // gridRef?.current?.refresh();
               },
@@ -174,26 +155,6 @@ function LabsTable() {
   return (
     <div className='p-2 md:p-10'>
       <div className='mb-2 md:mb-4 md:mx-4 flex flex-wrap items-start justify-between'>
-        {/* <ul className='flex w-full md:w-auto justify-center items-center'>
-          <li className='m-1 '>
-            <button
-              className={`${active.all ? "btn-active" : "btn-disable"} flex gap-1`}
-              onClick={() => {
-                setActive((state) => ({ all: true, sub: false }));
-              }}>
-              الكُّل <span className='ml-1 text-indigo-200'>{labs.length}</span>
-            </button>
-          </li>
-          <li className='m-1 flex'>
-            <button
-              className={`${active.sub ? "btn-active" : "btn-disable"} flex gap-1`}
-              onClick={() => {
-                setActive((state) => ({ all: false, sub: true }));
-              }}>
-              المشتركين <span className='ml-1  text-sky-600'>{SubscribedLabs.length}</span>
-            </button>
-          </li>
-        </ul> */}
         <div className='card rounded-xl mx-auto grow md:grow-0 p-2 flex justify-center items-center'>
           عـــدد المختبـــرات: <span className='text-sky-500 mr-1'>{labs.length}</span>
         </div>
@@ -247,7 +208,7 @@ function LabsTable() {
               width='100'
             />
             <ColumnDirective
-              field='address.wilaya.text'
+              field='address?.wilaya?.text'
               headerText='الولاية'
               textAlign='center'
               headerTextAlign='center'

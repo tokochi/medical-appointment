@@ -11,6 +11,8 @@ registerLicense(
 );
 function ClientSideWrapper({ children }) {
   const { closeModelAnywhere, darkTheme } = useStore();
+    console.warn = () => {};
+    console.error = () => {};
   const path = usePathname();
   useEffect(() => {
     const isDarkMode = JSON?.parse(localStorage?.getItem("theme")) === true;
@@ -35,7 +37,6 @@ function ClientSideWrapper({ children }) {
       // Append the new link element to the head
       document.head.appendChild(newLinkElement);
     }
-
     // Add or remove the "dark" class based on the theme
     if (isDarkMode) {
       document.documentElement.classList.add("dark");

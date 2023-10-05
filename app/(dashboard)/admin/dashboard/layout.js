@@ -1,11 +1,11 @@
+import GetSession from "@components/GetSession";
 import HeadTitle from "@components/cards/HeadTitle";
 import Header from "@components/dashboard/Header";
 import Sidebar from "@components/dashboard/Sidebar";
-import { useStore } from "@context/serverStore";
 import { redirect } from "next/navigation";
 
-export default function RootLayout({ children }) {
-  const {  session } = useStore.getState();
+export default async function RootLayout({ children }) {
+  const session = await GetSession();
   if (!session?.isAdmin) {
     redirect("/admin");
   }
@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
         </div>
       <div className="flex flex-col flex-1 overflow-y-auto">
           <div className="">
-            <Header />
+          <Header session={session} />
           </div>
           <div className="">
             <HeadTitle />

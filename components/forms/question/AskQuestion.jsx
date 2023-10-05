@@ -23,7 +23,7 @@ function AskQuestion() {
         <h1 className='font-semibold p-2 text-center'>اكتب سؤالك</h1>
         <SelectInput
           name='speciality'
-          value={askQuestion?.speciality.value}
+          value={askQuestion?.speciality?.value}
           onChange={(e) => handleSelectInput(e, "askQuestion")}
           options={medicalSpecialties}
           option_value='value'
@@ -49,7 +49,7 @@ function AskQuestion() {
         <div className='flex  gap-4'>
           <IconInput
             name='details.weight'
-            icon='/images/kg.png'
+            icon='/images/kg.webp'
             value={askQuestion?.details?.weight}
             onChange={(e) => handleInputChange(e, "askQuestion")}
             type='number'
@@ -58,7 +58,7 @@ function AskQuestion() {
           />
           <IconInput
             name='details.length'
-            icon='/images/cm.png'
+            icon='/images/cm.webp'
             value={askQuestion?.details?.length}
             onChange={(e) => handleInputChange(e, "askQuestion")}
             type='number'
@@ -80,7 +80,7 @@ function AskQuestion() {
               uploadBytes,
               getDownloadURL,
               storage,
-              `users/questions/${askQuestion?.title}/`,
+              `questions/${askQuestion?.title}/`,
               "askQuestion"
             )
           }
@@ -93,7 +93,7 @@ function AskQuestion() {
             تقديم السؤال
             <Image
               className='w-auto h-auto'
-              src='/images/send.png'
+              src='/images/send.webp'
               width={20}
               height={20}
               alt='input'

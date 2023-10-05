@@ -25,7 +25,7 @@ function SectionSearch() {
       </div>
 
       <div id='hero-img' className='basis2'>
-        <Image className='mx-auto' src='/images/hero-3.png' width={350} height={350} alt='hero' />
+        <Image className='mx-auto' src='/images/hero-3.webp' width={350} height={350} alt='hero' />
       </div>
     </div>
   );

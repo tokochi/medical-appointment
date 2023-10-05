@@ -33,7 +33,7 @@ function DoctorsTable() {
   // ******** Grid Table  ********
   const [active, setActive] = useState({ all: true, sub: false });
   const gridRef = useRef(null);
-  const { handleAddGrid, handleDeleteGrid, handleEditGrid, doctors } = useStore();
+  const { doctors,handleAddGrid, handleDeleteGrid, handleEditGrid } = useStore();
   const doctorsData = useStore((state) => state.doctors).filter((doctor) => filterDoctor(doctor));
   const SubscribedDoctors = useStore((state) => state.doctors).filter(
     (doctor) => doctor.subscription != null
@@ -85,7 +85,7 @@ function DoctorsTable() {
             textBtn_1: "موافقة",
             textBtn_2: "إلغـــــاء",
             onClickBtn_1: (e) => {
-              handleAddGrid(e, toast, "/api/doctors","doctorInfo");
+              handleAddGrid(e, toast, "/api/doctors", "doctorInfo");
               // gridRef?.current?.refresh();
             },
             onClickBtn_2: (e) => {
@@ -109,7 +109,8 @@ function DoctorsTable() {
                 handleEditGrid(
                   e,
                   toast,
-                  `/api/doctors/${gridRef?.current?.getSelectedRecords()[0]._id}`,"doctorInfo"
+                  `/api/doctors/${gridRef?.current?.getSelectedRecords()[0]._id}`,
+                  "doctorInfo"
                 );
                 // gridRef?.current?.refresh();
               },
@@ -249,7 +250,7 @@ function DoctorsTable() {
               width='100'
             />
             <ColumnDirective
-              field='address.wilaya.text'
+              field='address?.wilaya?.text'
               headerText='الولاية'
               textAlign='center'
               headerTextAlign='center'

@@ -16,7 +16,7 @@ import {
   Sort,
   Filter,
 } from "@syncfusion/ej2-react-grids";
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useRef } from "react";
 import toast from "react-hot-toast";
 import { useStore } from "@context/store";
 import Localization from "../../utils/Localization";
@@ -29,22 +29,9 @@ function PharmsTable() {
   // ******** Column Templates  ********
   const pharmsGridName = (props) => <PharmsGridName {...props} />;
   // ******** Grid Table  ********
-  const [active, setActive] = useState({ all: true, sub: false });
   const gridRef = useRef(null);
-  const { pharms, handleAddGrid, handleDeleteGrid, handleEditGrid } = useStore();
-
-  const pharmsData = useStore((state) => state.pharms).filter((pharm) => filterPharm(pharm));
-  const SubscribedPharms = useStore((state) => state.pharms).filter(
-    (pharm) => pharm.subscription != null
-  );
-  function filterPharm(pharm) {
-    if (active.all === true) {
-      return pharm === pharm;
-    }
-    if (active.sub === true) {
-      return pharm.subscription != null;
-    }
-  }
+  const { handleAddGrid, handleDeleteGrid, handleEditGrid, pharms } = useStore();
+  const pharmsData = useStore((state) => state.pharms);
   const toolbarOptions = [
     { text: "إضافة", tooltipText: "إضافة", prefixIcon: "e-add", id: "add" },
     { text: "تعديل", tooltipText: "تعديل", prefixIcon: "e-edit", id: "edit" },
@@ -53,15 +40,6 @@ function PharmsTable() {
     "Print",
     "ExcelExport",
   ];
-
-  function filterPharm(pharm) {
-    if (active.all === true) {
-      return pharm === pharm;
-    }
-    if (active.sub === true) {
-      return pharm.sub > 0;
-    }
-  }
   function toolbarClick(args) {
     switch (true) {
       case args.item.id.includes("print"):
@@ -175,26 +153,6 @@ function PharmsTable() {
   return (
     <div className='p-2 md:p-10'>
       <div className='mb-2 md:mb-4 md:mx-4 flex flex-wrap items-start justify-between'>
-        {/* <ul className='flex w-full md:w-auto justify-center items-center'>
-          <li className='m-1 '>
-            <button
-              className={`${active.all ? "btn-active" : "btn-disable"} flex gap-1`}
-              onClick={() => {
-                setActive((state) => ({ all: true, sub: false }));
-              }}>
-              الكُّل <span className='ml-1 text-indigo-200'>{pharms.length}</span>
-            </button>
-          </li>
-          <li className='m-1 flex'>
-            <button
-              className={`${active.sub ? "btn-active" : "btn-disable"} flex gap-1`}
-              onClick={() => {
-                setActive((state) => ({ all: false, sub: true }));
-              }}>
-              المشتركين <span className='ml-1  text-sky-600'>{SubscribedPharms.length}</span>
-            </button>
-          </li>
-        </ul> */}
         <div className='card rounded-xl mx-auto grow md:grow-0 p-2 flex justify-center items-center'>
           عـــدد الصيديــــلات: <span className='text-sky-500 mr-1'>{pharms.length}</span>
         </div>
@@ -248,7 +206,7 @@ function PharmsTable() {
               width='100'
             />
             <ColumnDirective
-              field='address.wilaya.text'
+              field='address?.wilaya?.text'
               headerText='الولاية'
               textAlign='center'
               headerTextAlign='center'

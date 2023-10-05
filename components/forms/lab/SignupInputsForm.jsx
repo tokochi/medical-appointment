@@ -16,6 +16,7 @@ function SignupInputsForm(props) {
     addedService,
     addSelectAdmin,
     addedAdmins,
+    worksLabs,
     handleStepperButtonClick,
     handleSelectSpecialities,
     removeSelectSpecialities,
@@ -49,7 +50,7 @@ function SignupInputsForm(props) {
         <div className='p-2 flex flex-col gap-2 justify-center'>
           <div id='name' className=''>
             <IconInput
-              icon='/images/user.png'
+              icon='/images/user.webp'
               name='name'
               value={labInfo?.name}
               onChange={(e) => handleInputChange(e, "labInfo")}
@@ -69,7 +70,7 @@ function SignupInputsForm(props) {
                 placeholder='الدكتور عصام شاهر، البروفيسور أحمد منير....'
               />
               <button className='mt-auto py-1' onClick={(e) => addSelectAdmin(e, "labInfo")}>
-                <Image src='/images/add.png' width={30} height={25} alt='cancel' />
+                <Image src='/images/add.webp' width={30} height={25} alt='cancel' />
               </button>
             </div>
             <div className='flex flex-wrap  gap-2 py-2'>
@@ -80,7 +81,7 @@ function SignupInputsForm(props) {
                   <button name={service} onClick={(e) => removeSelectAdmin(e, "labInfo")}>
                     <Image
                       name={service?.text}
-                      src='/images/cancel.png'
+                      src='/images/cancel.webp'
                       width={20}
                       height={15}
                       alt='cancel'
@@ -93,7 +94,7 @@ function SignupInputsForm(props) {
           </div>
           <div id='phone' className=''>
             <IconInput
-              icon='/images/phone.png'
+              icon='/images/phone.webp'
               name='phone.mobile'
               value={labInfo?.phone?.mobile}
               onChange={(e) => handleInputChange(e, "labInfo")}
@@ -104,7 +105,7 @@ function SignupInputsForm(props) {
           </div>
           <div id='phone' className=''>
             <IconInput
-              icon='/images/phone.png'
+              icon='/images/phone.webp'
               name='phone.line2'
               value={labInfo?.phone?.line2}
               onChange={(e) => handleInputChange(e, "labInfo")}
@@ -171,7 +172,7 @@ function SignupInputsForm(props) {
               name='speciality'
               value={labInfo?.speciality?.value}
               onChange={(e) => handleSelectInput(e, "labInfo")}
-              options={specialities}
+              options={worksLabs}
               option_value='value'
               option_text='text'
               placeholder='التخصص'
@@ -198,7 +199,7 @@ function SignupInputsForm(props) {
                     onClick={(e) => removeSelectSpecialities(e, "labInfo")}>
                     <Image
                       name={speciality?.text}
-                      src='/images/cancel.png'
+                      src='/images/cancel.webp'
                       width={20}
                       height={15}
                       alt='cancel'
@@ -234,7 +235,7 @@ function SignupInputsForm(props) {
                   }));
                 useStore.setState({ addedSpeciality: "" });
               }}>
-              <Image src='/images/add.png' width={30} height={25} alt='cancel' />
+              <Image src='/images/add.webp' width={30} height={25} alt='cancel' />
             </button>
           </div>
           <div id='divider' className='border-b-[1px] border-gray-600 my-2'></div>
@@ -264,18 +265,18 @@ function SignupInputsForm(props) {
                     }));
                   useStore.setState({ addedService: "" });
                 }}>
-                <Image src='/images/add.png' width={30} height={25} alt='cancel' />
+                <Image src='/images/add.webp' width={30} height={25} alt='cancel' />
               </button>
             </div>
             <div className='flex flex-wrap  gap-2 py-2'>
-              {labInfo?.services.map((service, index) => (
+              {labInfo?.services?.map((service, index) => (
                 <div
                   key={index}
                   className='p-1 px-2 flex gap-1 justify-between bg-slate-200 text-sm rounded-[163px] text-gray-900 dark:text-gray-300 dark:bg-slate-700 hover:bg-slate-400 font-medium'>
                   <button name={service?.text} onClick={(e) => removeSelectService(e, "labInfo")}>
                     <Image
                       name={service?.text}
-                      src='/images/cancel.png'
+                      src='/images/cancel.webp'
                       width={20}
                       height={15}
                       alt='cancel'
@@ -288,21 +289,21 @@ function SignupInputsForm(props) {
           </div>
           <div id='other-services' className='flex flex-wrap items-center gap-2'>
             <CheckboxInput
-              name='otherServices.homeVisits'
+              name='otherServices?.homeVisits'
               checked={labInfo?.otherServices?.homeVisits}
               onChange={(e) => handleCheckbox(e, "labInfo")}
               label='تنقل لعلاج منزلي'
               placeholder='خدمات اخرى:'
             />
             <CheckboxInput
-              name='otherServices.insurance'
+              name='otherServices?.insurance'
               checked={labInfo?.otherServices?.insurance}
               onChange={(e) => handleCheckbox(e, "labInfo")}
               label='يقبل بطاقة ضمان اجمتاعي'
               placeholder='&nbsp;'
             />
             <CheckboxInput
-              name='otherServices.isFullTimeOpen'
+              name='otherServices?.isFullTimeOpen'
               checked={labInfo?.otherServices?.isFullTimeOpen}
               onChange={(e) => handleCheckbox(e, "labInfo")}
               label='عيادة مفتوحة 24/7'
@@ -344,8 +345,8 @@ function SignupInputsForm(props) {
         <div className='p-2 flex flex-col gap-2 justify-center'>
           <div id='wilaya' className=''>
             <SelectInput
-              name='address.wilaya'
-              value={labInfo?.address?.wilaya?.value}
+              name='address?.wilaya'
+              value={labInfo?.otherServices?.value}
               onChange={(e) => handleSelectInput(e, "labInfo")}
               options={wilaya}
               option_value='value'
@@ -356,10 +357,10 @@ function SignupInputsForm(props) {
           </div>
           <div id='daira' className=''>
             <SelectInput
-              name='address.daira'
+              name='address?.daira'
               value={labInfo?.address?.daira?.value}
               onChange={(e) => handleSelectInput(e, "labInfo")}
-              options={daira.filter((region) => region?.wilaya === labInfo?.address?.wilaya?.value)}
+              options={daira.filter((region) => region?.wilaya === labInfo?.otherServices?.value)}
               option_value='value'
               option_text='text'
               placeholder='الدائرة'
@@ -368,7 +369,7 @@ function SignupInputsForm(props) {
           </div>
           <div id='commune' className=''>
             <SelectInput
-              name='address.commune'
+              name='address?.commune'
               value={labInfo?.address?.commune?.value}
               onChange={(e) => handleSelectInput(e, "labInfo")}
               options={commune.filter((region) => region?.daira === labInfo?.address?.daira?.value)}
@@ -380,8 +381,8 @@ function SignupInputsForm(props) {
           </div>
           <div id='street' className=''>
             <IconInput
-              icon='/images/map.png'
-              name='address.street'
+              icon='/images/map.webp'
+              name='address?.street'
               value={labInfo?.address?.street}
               onChange={(e) => handleInputChange(e, "labInfo")}
               type='text'

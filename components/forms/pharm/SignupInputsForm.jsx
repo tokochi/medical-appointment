@@ -17,7 +17,7 @@ function SignupInputsForm(props) {
     addSelectAdmin,
     addedAdmins,
     handleStepperButtonClick,
-    handleSelectSpecialities,
+   handleSelectServices,
     removeSelectSpecialities,
     handleInputChange,
     handleSelectInput,
@@ -25,14 +25,14 @@ function SignupInputsForm(props) {
     uploadImage,
     handleCheckbox,
     removeSelectAdmin,
-    specialities,
+    worksPharms,
     wilaya,
     daira,
     commune,
   } = useStore();
-  const filtredspecialities = specialities.filter(
-    (specialty) =>
-      !pharmInfo?.specialities?.some((addedspecialty) => addedspecialty.text === specialty.text)
+    console.log("🚀 ~ pharmInfo:", pharmInfo?.services);
+  const filtredservices = worksPharms.filter(
+    (service) => !pharmInfo?.services.some((addedservices) => addedservices.text === service.text)
   );
 
   return (
@@ -164,7 +164,7 @@ function SignupInputsForm(props) {
           المعلومات المهنية
         </div>
         <div className='p-2 flex flex-col gap-2 justify-center'>
-          <div id='main-speciality' className=''>
+          {/* <div id='main-speciality' className=''>
             <SelectInput
               name='speciality'
               value={pharmInfo?.speciality?.value}
@@ -175,67 +175,18 @@ function SignupInputsForm(props) {
               placeholder='التخصص'
               label='التخصص  الرئيسي:'
             />
-          </div>
+          </div> */}
           <div id='other-specialities' className=''>
             <SelectInput
-              name='specialities'
-              onChange={(e) => handleSelectSpecialities(e, "pharmInfo")}
-              options={filtredspecialities}
+              name='services'
+              onChange={(e) => handleSelectServices(e, "pharmInfo")}
+              options={filtredservices}
               option_value='value'
               option_text='text'
-              placeholder='تخصصات أخرى'
-              label='تخصصات أخرى:'
+              placeholder='خدمات'
+              label='خدمات:'
             />
-            <div className='flex flex-wrap gap-2 py-2'>
-              {pharmInfo?.specialities?.map((speciality, index) => (
-                <div
-                  key={index}
-                  className='p-1 px-2 flex gap-1 justify-between bg-slate-200 text-sm rounded-[163px] text-gray-900 dark:text-gray-300 dark:bg-slate-700 hover:bg-slate-400 font-medium'>
-                  <button
-                    name={speciality?.text}
-                    onClick={(e) => removeSelectSpecialities(e, "pharmInfo")}>
-                    <Image
-                      name={speciality?.text}
-                      src='/images/cancel.png'
-                      width={20}
-                      height={15}
-                      alt='cancel'
-                    />
-                  </button>
-                  <p>{speciality?.text}</p>
-                </div>
-              ))}
-            </div>
           </div>
-          <div id='add-speciality' className='flex items-center gap-2'>
-            <TextInput
-              value={addedSpeciality}
-              onChange={(e) => useStore.setState({ addedSpeciality: e.target.value })}
-              name='add-speciality'
-              type='text'
-              label='إضافة تخصصات أخرى'
-              placeholder='إضافة تخصصات أخرى'
-            />
-            <button
-              className='mt-auto py-1'
-              onClick={(e) => {
-                e.preventDefault();
-                addedSpeciality !== "" &&
-                  useStore.setState((state) => ({
-                    pharmInfo: {
-                      ...state.pharmInfo,
-                      specialities: [
-                        ...state.pharmInfo?.specialities,
-                        { text: addedSpeciality, value: addedSpeciality },
-                      ],
-                    },
-                  }));
-                useStore.setState({ addedSpeciality: "" });
-              }}>
-              <Image src='/images/add.png' width={30} height={25} alt='cancel' />
-            </button>
-          </div>
-          <div id='divider' className='border-b-[1px] border-gray-600 my-2'></div>
           <div id='add-service'>
             <div className='flex   items-center gap-2'>
               <TextInput
@@ -284,6 +235,55 @@ function SignupInputsForm(props) {
               ))}
             </div>
           </div>
+          <div id='divider' className='border-b-[1px] border-gray-600 my-2'></div>
+          {/* <div id='add-service'>
+            <div className='flex   items-center gap-2'>
+              <TextInput
+                value={addedService}
+                onChange={(e) => useStore.setState({ addedService: e.target.value })}
+                name='service'
+                type='text'
+                label='إضافة خدمات:'
+                placeholder='مخطط كهربية القلب، الفحص الصحي، علاج التغذية...'
+              />
+              <button
+                className='mt-auto py-1'
+                onClick={(e) => {
+                  e.preventDefault();
+                  addedService !== "" &&
+                    useStore.setState((state) => ({
+                      pharmInfo: {
+                        ...state.pharmInfo,
+                        services: [
+                          ...state.pharmInfo?.services,
+                          { text: addedService, value: addedService },
+                        ],
+                      },
+                    }));
+                  useStore.setState({ addedService: "" });
+                }}>
+                <Image src='/images/add.png' width={30} height={25} alt='cancel' />
+              </button>
+            </div>
+            <div className='flex flex-wrap  gap-2 py-2'>
+              {pharmInfo?.services.map((service, index) => (
+                <div
+                  key={index}
+                  className='p-1 px-2 flex gap-1 justify-between bg-slate-200 text-sm rounded-[163px] text-gray-900 dark:text-gray-300 dark:bg-slate-700 hover:bg-slate-400 font-medium'>
+                  <button name={service?.text} onClick={(e) => removeSelectService(e, "pharmInfo")}>
+                    <Image
+                      name={service?.text}
+                      src='/images/cancel.png'
+                      width={20}
+                      height={15}
+                      alt='cancel'
+                    />
+                  </button>
+                  <p>{service?.text}</p>
+                </div>
+              ))}
+            </div>
+          </div> */}
           <div id='other-services' className='flex flex-wrap items-center gap-2'>
             <CheckboxInput
               name='otherServices.homeVisits'

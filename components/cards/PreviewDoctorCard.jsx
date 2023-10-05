@@ -28,16 +28,16 @@ const { doctorInfo  } = useStore();
                 </div>
                 <div id='title' className='flex flex-col gap-1'>
                   <h1 className='font-bold text-[18px] text-sky-500'>
-                    {doctorInfo?.title.text + " "}
+                    {doctorInfo?.title?.text + " "}
                     {doctorInfo?.name}
                   </h1>
-                  <h2 className='font-semibold '>{doctorInfo?.speciality.text}</h2>
+                  <h2 className='font-semibold '>{doctorInfo?.speciality?.text}</h2>
                   <div className='border-b-[1px] border-gray-400 w-full'></div>
-                  {doctorInfo?.otherServices.isFullTimeOpen && (
+                  {doctorInfo?.otherServices?.isFullTimeOpen && (
                     <h2 className='flex items-start gap-2 py-1 text-cyan-400 text-sm'>
                       <Image
                         className='mr-[1px] w-auto h-auto'
-                        src='/images/schedule.png'
+                        src='/images/schedule.webp'
                         width={18}
                         height={15}
                         alt='location'
@@ -45,11 +45,11 @@ const { doctorInfo  } = useStore();
                       عيادة مفتوحة 24/7
                     </h2>
                   )}
-                  {doctorInfo?.otherServices.insurance && (
+                  {doctorInfo?.otherServices?.insurance && (
                     <h2 className='flex items-start gap-2 text-green-500 text-sm'>
                       <Image
                         className='w-auto h-auto'
-                        src='/images/card_security.png'
+                        src='/images/card_security.webp'
                         width={18}
                         height={15}
                         alt='location'
@@ -57,11 +57,11 @@ const { doctorInfo  } = useStore();
                       يقبل بطاقة تأمين
                     </h2>
                   )}
-                  {doctorInfo?.otherServices.homeVisits && (
+                  {doctorInfo?.otherServices?.homeVisits && (
                     <h2 className='flex items-start gap-2 text-yellow-500 text-sm'>
                       <Image
                         className='w-auto h-auto'
-                        src='/images/home-book.png'
+                        src='/images/home-book.webp'
                         width={18}
                         height={15}
                         alt='location'
@@ -70,13 +70,13 @@ const { doctorInfo  } = useStore();
                     </h2>
                   )}
                   <h2 className='flex items-start gap-2 text-blue-300  text-sm'>
-                    <Image src='/images/location-png.png' width={18} height={15} alt='location' />
-                    {doctorInfo?.address.wilaya.text + "، "}
-                    {doctorInfo?.address.daira.text + "، "}
-                    {doctorInfo?.address.commune.text &&
-                      doctorInfo?.address.commune.text !== doctorInfo?.address.daira.text &&
-                      doctorInfo?.address.commune.text + "، "}
-                    {doctorInfo?.address.street}
+                    <Image src='/images/location-png.webp' width={18} height={15} alt='location' />
+                    {doctorInfo?.address?.wilaya?.text + "، "}
+                    {doctorInfo?.address?.daira?.text + "، "}
+                    {doctorInfo?.address?.commune?.text &&
+                      doctorInfo?.address?.commune?.text !== doctorInfo?.address?.daira?.text &&
+                      doctorInfo?.address?.commune?.text + "، "}
+                    {doctorInfo?.address?.street}
                   </h2>
                 </div>
               </div>
@@ -86,7 +86,7 @@ const { doctorInfo  } = useStore();
                     <Link href='https://www.facebook.com/doctorInfo?.facebook'>
                       <Image
                         className='w-auto h-auto'
-                        src='/images/facebook-color.png'
+                        src='/images/facebook-color.webp'
                         width={25}
                         height={25}
                         alt='logo'
@@ -97,7 +97,7 @@ const { doctorInfo  } = useStore();
                     <Link href={`https://www.instagram.com/${doctorInfo?.instagram}`}>
                       <Image
                         className='w-auto h-auto'
-                        src='/images/Insta-color.png'
+                        src='/images/Insta-color.webp'
                         width={25}
                         height={25}
                         alt='logo'
@@ -108,7 +108,7 @@ const { doctorInfo  } = useStore();
                     <Link href={`https://wa.me/${doctorInfo?.whatsapp}`}>
                       <Image
                         className='w-auto h-auto'
-                        src='/images/whatsapp-color.png'
+                        src='/images/whatsapp-color.webp'
                         width={25}
                         height={25}
                         alt='logo'
@@ -135,7 +135,7 @@ const { doctorInfo  } = useStore();
             <div id='specialities' className=''>
               <h1 className='font-bold text-[18px] text-sky-500'>الخدمات الطبية</h1>
               <div className='flex flex-wrap gap-2 p-2'>
-                {doctorInfo?.services.map((service, index) => (
+                {doctorInfo?.services?.map((service, index) => (
                   <button
                     key={index}
                     className='p-1 px-2 bg-slate-200 text-sm rounded-[163px] text-gray-900 dark:text-gray-300 dark:bg-slate-700 hover:bg-slate-400 font-medium'>
@@ -149,7 +149,7 @@ const { doctorInfo  } = useStore();
                   <h2 className='flex gap-2 text-yellow-500 text-sm'>
                     <Image
                       className='w-auto h-auto'
-                      src='/images/cash.png'
+                      src='/images/cash.webp'
                       width={18}
                       height={15}
                       alt='location'
@@ -161,7 +161,7 @@ const { doctorInfo  } = useStore();
                   <h2 className='flex gap-2 text-yellow-500 text-sm'>
                     <Image
                       className='w-auto h-auto'
-                      src='/images/check.png'
+                      src='/images/check.webp'
                       width={18}
                       height={15}
                       alt='location'
@@ -173,7 +173,7 @@ const { doctorInfo  } = useStore();
                   <h2 className='flex gap-2 text-yellow-500 text-sm'>
                     <Image
                       className='w-auto h-auto'
-                      src='/images/card-payment.png'
+                      src='/images/card-payment.webp'
                       width={18}
                       height={15}
                       alt='location'
@@ -187,7 +187,7 @@ const { doctorInfo  } = useStore();
             <div id='specialities' className=''>
               <h1 className='font-bold text-[18px] text-sky-500'>صور العيادة</h1>
               <div className='flex flex-wrap  gap-2 p-2'>
-                {doctorInfo?.officePics.map((image, index) => (
+                {doctorInfo?.officePics?.map((image, index) => (
                   <Link key={index} className='  flex gap-2' href={image}>
                     <div key={index} className='relative w-64 h-64'>
                       <Image className='w-auto h-auto' src={image} fill alt='avatar' />

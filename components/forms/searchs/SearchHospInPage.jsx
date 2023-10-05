@@ -13,7 +13,7 @@ function SearchHospInPage() {
       </div>
       <div className='p-2 flex flex-col gap-2 justify-center'>
         <div className=''>
-          <IconInput icon='/images/search.png' type='text' placeholder='اسم العيادة / مستشفى' />
+          <IconInput icon='/images/search.webp' type='text' placeholder='اسم العيادة / مستشفى' />
         </div>
         <div className=''>
           <SelectInput
@@ -44,7 +44,7 @@ function SearchHospInPage() {
             بحث
             <Image
               className='w-auto h-auto'
-              src='/images/search2.png'
+              src='/images/search2.webp'
               width={20}
               height={20}
               alt='input'

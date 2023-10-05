@@ -1,19 +1,26 @@
 import mongoose from "mongoose";
 
 let isConnected = false; // track the connection
+
 export const connectToDB = async () => {
     mongoose.set('strictQuery', true);
-    if (isConnected) { console.log('mongoDb is Already connected ...'); return; }
+    if (isConnected) {
+        console.log('MongoDB is already connected ...');
+        return;
+    }
     try {
         await mongoose.connect(process.env.MONGODB_URI, {
             dbName: "medical_app",
             useNewUrlParser: true,
             useUnifiedTopology: true,
-        }) 
-        console.log("🚀 ~🚀 ~ MongoDb connected ....")
+        });
+        isConnected = true; // Set isConnected to true when the connection is established
+        console.log("🚀 ~ MongoDB connected ....");
     } catch (error) {
-        console.log("🚀 ~🚀 ~ MongoDb error:", error)
-        
+        console.log("🚀 ~ MongoDB error:", error);
     }
+};
 
-}
+
+
+

@@ -22,7 +22,7 @@ function page() {
                 <div className='flex flex-col items-center gap-2 rounded-xl bg-slate-200 dark:bg-slate-600 p-1'>
                   <Image
                     className='rounded-md p-1 w-auto h-auto'
-                    src='/images/qr.png'
+                    src='/images/qr.webp'
                     width={100}
                     height={100}
                     alt='avatar'
@@ -41,7 +41,7 @@ function page() {
                   <h2 className='flex items-start gap-2 py-1 text-cyan-400 text-sm'>
                     <Image
                       className='mr-[1px] w-auto h-auto'
-                      src='/images/schedule.png'
+                      src='/images/schedule.webp'
                       width={18}
                       height={15}
                       alt='location'
@@ -53,7 +53,7 @@ function page() {
                   <h2 className='flex items-start gap-2 text-green-500 text-sm'>
                     <Image
                       className='w-auto h-auto'
-                      src='/images/card_security.png'
+                      src='/images/card_security.webp'
                       width={18}
                       height={15}
                       alt='location'
@@ -65,7 +65,7 @@ function page() {
                   <h2 className='flex items-start gap-2 text-yellow-500 text-sm'>
                     <Image
                       className='w-auto h-auto'
-                      src='/images/home-book.png'
+                      src='/images/home-book.webp'
                       width={18}
                       height={15}
                       alt='location'
@@ -74,8 +74,8 @@ function page() {
                   </h2>
                 )}
                 <h2 className='flex gap-2 text-blue-300  text-sm'>
-                  <Image src='/images/location-png.png' width={18} height={15} alt='location' />
-                  {doctor?.address?.wilaya?.text + "، "}
+                  <Image src='/images/location-png.webp' width={18} height={15} alt='location' />
+                  {doctor?.otherServices?.text + "، "}
                   {doctor?.address?.daira?.text + "، "}
                   {doctor?.address?.commune?.text &&
                     doctor?.address?.commune?.text !== doctor?.address?.daira?.text &&
@@ -91,7 +91,7 @@ function page() {
                   className='w-full btn2 px-4 py-2 flex gap-2 items-enter justify-center'>
                   <Image
                     className='w-auto h-auto'
-                    src='/images/today.png'
+                    src='/images/today.webp'
                     width={20}
                     height={10}
                     alt='avatar'
@@ -105,7 +105,7 @@ function page() {
                   className='w-full btn3 px-4 py-2 flex gap-2 items-enter justify-center'>
                   <Image
                     className='w-auto h-auto'
-                    src='/images/phone.png'
+                    src='/images/phone.webp'
                     width={20}
                     height={10}
                     alt='avatar'
@@ -117,7 +117,7 @@ function page() {
                 <button
                   id='call-btn'
                   className='w-full btn px-4 py-2 flex gap-2 items-enter justify-center'>
-                  <Image src='/images/email.png' width={20} height={10} alt='avatar' />
+                  <Image src='/images/email.webp' width={20} height={10} alt='avatar' />
                   <p className='font-semibold text-sm'>إرسال رسالة</p>
                 </button>
               </Link>
@@ -127,7 +127,7 @@ function page() {
                   className='w-full text-gray-100 shadow-sm dark:text-gray-900  font-bold bg-yellow-400 hover:bg-yellow-500 focus:ring-2 focus:outline-none focus:ring-orange-300 rounded-lg  text-center  px-4 py-2 flex gap-2 items-enter justify-center'>
                   <Image
                     className='w-auto h-auto'
-                    src='/images/ask.png'
+                    src='/images/ask.webp'
                     width={20}
                     height={10}
                     alt='avatar'
@@ -140,7 +140,7 @@ function page() {
                   <Link href={doctor?.facebook}>
                     <Image
                       className='w-auto h-auto'
-                      src='/images/facebook-color.png'
+                      src='/images/facebook-color.webp'
                       width={35}
                       height={35}
                       alt='logo'
@@ -151,7 +151,7 @@ function page() {
                   <Link href={doctor?.instagram}>
                     <Image
                       className='w-auto h-auto'
-                      src='/images/Insta-color.png'
+                      src='/images/Insta-color.webp'
                       width={35}
                       height={35}
                       alt='logo'
@@ -162,7 +162,7 @@ function page() {
                   <Link href={doctor?.whatsapp}>
                     <Image
                       className='w-auto h-auto'
-                      src='/images/whatsapp-color.png'
+                      src='/images/whatsapp-color.webp'
                       width={35}
                       height={35}
                       alt='logo'
@@ -203,7 +203,7 @@ function page() {
                 <h2 className='flex gap-2 text-yellow-500 text-sm'>
                   <Image
                     className='w-auto h-auto'
-                    src='/images/cash.png'
+                    src='/images/cash.webp'
                     width={18}
                     height={15}
                     alt='location'
@@ -215,7 +215,7 @@ function page() {
                 <h2 className='flex gap-2 text-yellow-500 text-sm'>
                   <Image
                     className='w-auto h-auto'
-                    src='/images/check.png'
+                    src='/images/check.webp'
                     width={18}
                     height={15}
                     alt='location'
@@ -227,7 +227,7 @@ function page() {
                 <h2 className='flex gap-2 text-yellow-500 text-sm'>
                   <Image
                     className='w-auto h-auto'
-                    src='/images/card-payment.png'
+                    src='/images/card-payment.webp'
                     width={18}
                     height={15}
                     alt='location'
@@ -258,7 +258,7 @@ function page() {
             <h2 className='flex justify-center items-start gap-2 text-orange-500 text-sm'>
               <Image
                 className='w-auto h-auto'
-                src='/images/risk.png'
+                src='/images/risk.webp'
                 width={18}
                 height={18}
                 alt='location'
@@ -293,12 +293,12 @@ function page() {
           <h2 className='flex gap-2 text-blue-400 text-sm'>
             <Image
               className='w-auto h-auto'
-              src='/images/location-png.png'
+              src='/images/location-png.webp'
               width={18}
               height={15}
               alt='location'
             />
-            {doctor?.address?.wilaya?.text + "، "}
+            {doctor?.otherServices?.text + "، "}
             {doctor?.address?.daira?.text + "، "}
             {doctor?.address?.commune?.text &&
               doctor?.address?.commune?.text !== doctor?.address?.daira?.text &&
@@ -333,7 +333,7 @@ function page() {
                   className='w-full btn px-4 py-2 flex gap-2 items-enter justify-center'>
                   <Image
                     className='w-auto h-auto'
-                    src='/images/view.png'
+                    src='/images/view.webp'
                     width={20}
                     height={10}
                     alt='avatar'

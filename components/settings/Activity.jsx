@@ -4,7 +4,7 @@ import moment from "moment/min/moment-with-locales";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useStore } from "../../contexts/Store";
-import view from "./../../data/icons/view.png";
+import view from "./../../data/icons/view.webp";
 
 
 export default function Activity() {

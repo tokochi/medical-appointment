@@ -28,7 +28,7 @@ function SecurityForm() {
          className='p-2 flex flex-col gap-2 justify-center'>
          <div id='site' className='grow'>
            <IconInput
-             icon='/images/lock.png'
+             icon='/images/lock.webp'
              name='oldPassword'
              value={adminInfo?.oldPassword}
              onChange={(e) => handleInputChange(e, "adminInfo")}
@@ -39,7 +39,7 @@ function SecurityForm() {
          </div>
          <div id='name' className='grow'>
            <IconInput
-             icon='/images/lock.png'
+             icon='/images/lock.webp'
              name='password'
              value={adminInfo?.password}
              onChange={(e) => handleInputChange(e, "adminInfo")}
@@ -72,7 +72,7 @@ function SecurityForm() {
              {!isLoading ? (
                <Image
                  className='w-auto h-auto'
-                 src='/images/send.png'
+                 src='/images/send.webp'
                  width={20}
                  height={20}
                  alt='input'

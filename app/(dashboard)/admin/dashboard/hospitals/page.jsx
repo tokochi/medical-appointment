@@ -10,7 +10,7 @@ async function page() {
     };
   return (
     <div className=''>
-      {data && <StoreInit {...data} />}
+      {data?.hosps && <StoreInit {...data} />}
       <HospsTable />
     </div>
   );

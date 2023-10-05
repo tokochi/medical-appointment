@@ -16,7 +16,7 @@ function PostsTable() {
             useStore.setState({
               editedPost: {
                 text: "",
-                image: "/images/logo.png",
+                image: "/images/logo.webp",
                 speciality: {},
                 title: "",
               },

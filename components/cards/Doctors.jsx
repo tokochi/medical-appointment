@@ -1,7 +1,7 @@
 import { useStore } from "@context/serverStore";
 import Link from "next/link";
 import Image from "next/image";
-import SlicerDoctor from "@components/SlicerDoctor";
+import SlicerServices from "@components/SlicerServices";
 
 async function Doctors() {
   const { fetchDoctors } = useStore.getState();
@@ -40,7 +40,7 @@ async function Doctors() {
                     <h2 className='flex items-start gap-2 pt-1 text-cyan-400 text-sm'>
                       <Image
                         className='mr-[1px] w-auto h-auto'
-                        src='/images/schedule.png'
+                        src='/images/schedule.webp'
                         width={18}
                         height={15}
                         alt='location'
@@ -52,7 +52,7 @@ async function Doctors() {
                     <h2 className='flex items-start gap-2 pt-1 text-green-500 text-sm'>
                       <Image
                         className='w-auto h-auto'
-                        src='/images/card_security.png'
+                        src='/images/card_security.webp'
                         width={18}
                         height={15}
                         alt='location'
@@ -64,7 +64,7 @@ async function Doctors() {
                     <h2 className='flex items-start gap-2 pt-1 text-yellow-500 text-sm'>
                       <Image
                         className='w-auto h-auto'
-                        src='/images/home-book.png'
+                        src='/images/home-book.webp'
                         width={18}
                         height={15}
                         alt='location'
@@ -75,7 +75,7 @@ async function Doctors() {
                   <h2 className='flex gap-2 items-start text-blue-600  text-sm'>
                     <Image
                       className='w-auto h-auto'
-                      src='/images/location-png.png'
+                      src='/images/location-png.webp'
                       width={18}
                       height={15}
                       alt='location'
@@ -100,7 +100,7 @@ async function Doctors() {
                   className='w-full btn2 px-4 py-2 flex gap-2 items-enter justify-center'>
                   <Image
                     className='w-auto h-auto'
-                    src='/images/today.png'
+                    src='/images/today.webp'
                     width={20}
                     height={10}
                     alt='avatar'
@@ -117,7 +117,7 @@ async function Doctors() {
                      className='w-full btn3 px-4 py-2 flex gap-2 items-enter justify-center'>
                      <Image
                        className='w-auto h-auto'
-                       src='/images/phone.png'
+                       src='/images/phone.webp'
                        width={20}
                        height={10}
                        alt='avatar'
@@ -125,15 +125,13 @@ async function Doctors() {
                      <p className='font-semibold text-sm'>عرض الهاتف</p>
                    </button>
                  </Link> */}
-              <Link
-                href={`/doctors/profile/${item?._id}`}
-                className=''>
+              <Link href={`/doctors/profile/${item?._id}`} className=''>
                 <button
                   id='call-btn'
                   className='w-full btn px-4 py-2 flex gap-2 items-enter justify-center'>
                   <Image
                     className='w-auto h-auto'
-                    src='/images/view.png'
+                    src='/images/view.webp'
                     width={20}
                     height={10}
                     alt='avatar'
@@ -156,7 +154,7 @@ async function Doctors() {
                   />
                 </Link>
               ))}
-              <SlicerDoctor item={item} />
+              <SlicerServices item={item} />
             </div>
           </div>
         </div>

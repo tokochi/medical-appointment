@@ -29,7 +29,7 @@ function FindYourAnswer() {
           className='w-full btn2 px-4 py-2 flex gap-2 items-enter justify-center'>
           <Image
             className='w-auto h-auto'
-            src='/images/view.png'
+            src='/images/view.webp'
             width={20}
             height={10}
             alt='avatar'

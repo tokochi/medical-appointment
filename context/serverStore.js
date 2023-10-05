@@ -9,11 +9,10 @@ import Hosp from '@models/hosp';
 import Lab from '@models/lab';
 import Pharm from '@models/pharm';
 import Question from '@models/question';
-import bcrypt from 'bcrypt'
 import User from '@models/user';
-import { headers } from "next/headers";
 import Company from "@models/company";
 import Activity from "@models/activity";
+
 export const useStore = create((set, get) => ({
   //************** General *************/
   darkTheme: true,
@@ -304,7 +303,7 @@ export const useStore = create((set, get) => ({
     event.preventDefault();
     const clickedElement = event.target.getAttribute("name");
     const filtredArray = get().doctorInfo.specialities.filter(
-      (speciality) => speciality.text !== clickedElement
+      (speciality) => speciality?.text !== clickedElement
     );
     set((state) => ({
       doctorInfo: {
@@ -316,7 +315,7 @@ export const useStore = create((set, get) => ({
   removeSelectService: (event) => {
     event.preventDefault();
     const clickedElement = event.target.getAttribute("name");
-    const filtredArray = get().doctorInfo.services.filter((service) => service.text !== clickedElement);
+    const filtredArray = get().doctorInfo.services?.filter((service) => service.text !== clickedElement);
     set((state) => ({
       doctorInfo: {
         ...state.doctorInfo,

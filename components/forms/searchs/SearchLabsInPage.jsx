@@ -13,7 +13,7 @@ function SearchLabsInPage() {
       </div>
       <div className='p-2 flex flex-col gap-2 justify-center'>
         <div className=''>
-          <IconInput icon='/images/search.png' type='text' placeholder='اسم المختبر' />
+          <IconInput icon='/images/search.webp' type='text' placeholder='اسم المختبر' />
         </div>
         <div className=''>
           <SelectInput options={specialities} option_value='value'option_text='text' placeholder='التخصص' />
@@ -32,7 +32,7 @@ function SearchLabsInPage() {
             type='button'
             className='bg-yellow-400 hover:bg-yellow-500  focus:ring-2 focus:ring-yellow-700 flex mt-2 gap-2 text-w justify-center items-center text-lg w-full pr-5 p-1  dark:border-gray-600  dark:text-black'>
             بحث
-            <Image  className="w-auto h-auto" src='/images/search2.png' width={20} height={20} alt='input' />
+            <Image  className="w-auto h-auto" src='/images/search2.webp' width={20} height={20} alt='input' />
           </button>
         </div>
       </div>
