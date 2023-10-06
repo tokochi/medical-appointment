@@ -82,7 +82,7 @@ function CompanyForm() {
          </div>
          <div id='facebook' className=''>
            <IconInput
-             icon='/images/Facebook.webp'
+             icon='/images/facebook.webp'
              name='facebook'
              value={adminInfo?.facebook}
              onChange={(e) => handleInputChange(e, "adminInfo")}
@@ -93,7 +93,7 @@ function CompanyForm() {
          </div>
          <div id='instagram' className=''>
            <IconInput
-             icon='/images/Instagram.webp'
+             icon='/images/instagram.webp'
              name='instagram'
              value={adminInfo?.instagram}
              onChange={(e) => handleInputChange(e, "adminInfo")}

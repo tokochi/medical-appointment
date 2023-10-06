@@ -123,7 +123,7 @@ function SignupInputsForm(props) {
 
           <div id='facebook' className=''>
             <IconInput
-              icon='/images/Facebook.webp'
+              icon='/images/facebook.webp'
               name='facebook'
               value={doctorInfo?.facebook}
               onChange={(e) => handleInputChange(e, "doctorInfo")}
@@ -134,7 +134,7 @@ function SignupInputsForm(props) {
           </div>
           <div id='instagram' className=''>
             <IconInput
-              icon='/images/Instagram.webp'
+              icon='/images/instagram.webp'
               name='instagram'
               value={doctorInfo?.instagram}
               onChange={(e) => handleInputChange(e, "doctorInfo")}

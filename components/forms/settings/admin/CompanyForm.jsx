@@ -109,7 +109,7 @@ function AccountForm() {
            <div className='flex flex-wrap gap-2 w-full'>
              <div id='facebook' className='grow'>
                <IconInput
-                 icon='/images/Facebook.webp'
+                 icon='/images/facebook.webp'
                  name='facebook'
                  value={companyInfo?.facebook}
                  onChange={(e) => handleInputChange(e, "companyInfo")}
@@ -120,7 +120,7 @@ function AccountForm() {
              </div>
              <div id='instagram' className='grow'>
                <IconInput
-                 icon='/images/Instagram.webp'
+                 icon='/images/instagram.webp'
                  name='instagram'
                  value={companyInfo?.instagram}
                  onChange={(e) => handleInputChange(e, "companyInfo")}

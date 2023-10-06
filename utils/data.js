@@ -16969,7 +16969,7 @@ export const hospDefault = {
     commune: {},
   },
   phone: { line1: "", line2: "", mobile: "" },
-  avatar: ["/images/Hospital-logo.webp"],
+  avatar: ["/images/hospital-logo.webp"],
   payment: { cash: true, card: false, check: false },
   otherServices: {
     isFullTimeOpen: false,
