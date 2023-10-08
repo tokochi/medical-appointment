@@ -1,16 +1,13 @@
-"use client";
-import { useStore } from "@context/store";
-import { useEffect, useState } from "react";
+import { useStore } from "@context/serverStore";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
-function page() {
-  const path = usePathname().replace("/doctors/profile/",""); 
-  const { fetchDoctor } = useStore()
-  const [doctor,setDoctor] = useState({avatar:"/images/heart.webp"})
-    useEffect(() => {
-      fetchDoctor(path).then((res) => setDoctor(res));
-    }, []);
+import ShowPhoneNum from "@components/buttons/ShowPhoneNum";
+import TakeAppointment from "@components/buttons/TakeAppointment";
+import SendMessage from "@components/forms/question/SendMessage";
+
+async function page({ params }) {
+  const { fetchDoctor } = useStore.getState();
+  const doctor = await fetchDoctor(params?.id);
   return (
     <div className='p-4 flex flex-wrap gap-4 bg-gray-300 dark:bg-slate-900'>
       <div id='info' className='grow shrink basis-[60%] min-w-[300px]  '>
@@ -91,56 +88,9 @@ function page() {
               </div>
             </Link>
             <div className='mb-1 flex flex-col  gap-2 grow shrink'>
-              <Link href='#' className=''>
-                <button
-                  id='call-btn'
-                  className='w-full btn2 px-4 py-2 flex gap-2 items-enter justify-center'>
-                  <Image
-                    className='w-auto h-auto'
-                    src='/images/today.webp'
-                    width={20}
-                    height={10}
-                    alt='avatar'
-                  />
-                  <p className='font-semibold text-sm mx-1'>إحجز موعد</p>
-                </button>
-              </Link>
-              <Link href='#' className=''>
-                <button
-                  id='call-btn'
-                  className='w-full btn3 px-4 py-2 flex gap-2 items-enter justify-center'>
-                  <Image
-                    className='w-auto h-auto'
-                    src='/images/phone.webp'
-                    width={20}
-                    height={10}
-                    alt='avatar'
-                  />
-                  <p className='font-semibold text-sm'>عرض الهاتف</p>
-                </button>
-              </Link>
-              <Link href='#' className=''>
-                <button
-                  id='call-btn'
-                  className='w-full btn px-4 py-2 flex gap-2 items-enter justify-center'>
-                  <Image src='/images/email.webp' width={20} height={10} alt='avatar' />
-                  <p className='font-semibold text-sm'>إرسال رسالة</p>
-                </button>
-              </Link>
-              <Link href='#' className=''>
-                <button
-                  id='call-btn'
-                  className='w-full text-gray-100 shadow-sm dark:text-gray-900  font-bold bg-yellow-400 hover:bg-yellow-500 focus:ring-2 focus:outline-none focus:ring-orange-300 rounded-lg  text-center  px-4 py-2 flex gap-2 items-enter justify-center'>
-                  <Image
-                    className='w-auto h-auto'
-                    src='/images/ask.webp'
-                    width={20}
-                    height={10}
-                    alt='avatar'
-                  />
-                  <p className='font-semibold text-sm'>سؤال طبي</p>
-                </button>
-              </Link>
+              <TakeAppointment doctor={doctor} />
+              <ShowPhoneNum phone={doctor?.phone} />
+              <SendMessage doctor={doctor} />
               <div className='flex gap-8 justify-center items-center m-auto'>
                 {doctor?.facebook?.length > 0 && (
                   <Link href={doctor?.facebook}>

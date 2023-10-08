@@ -1,10 +1,9 @@
-"use client";
-import { useStore, useEffect } from "@context/store";
+import { useStore } from "@context/serverStore";
 import Link from "next/link";
 import Image from "next/image";
 
 function page() {
-  const doctor = useStore((state) => state.selectedDoctor);
+  const { selectedDoctor:doctor } = useStore.getState();
   return (
     <div className='p-4 flex flex-wrap gap-4 bg-gray-300 dark:bg-slate-900'>
       <div id='info' className='grow shrink basis-[60%] min-w-[300px]  '>

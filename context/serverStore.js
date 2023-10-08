@@ -12,6 +12,7 @@ import Question from '@models/question';
 import User from '@models/user';
 import Company from "@models/company";
 import Activity from "@models/activity";
+import Appointment from "@models/appointment";
 
 export const useStore = create((set, get) => ({
   //************** General *************/
@@ -323,7 +324,7 @@ export const useStore = create((set, get) => ({
       },
     }));
   },
-  handleSubmitDoctors: async (e, toast, router, signIn) => {
+  handleSubmitDoctorsSignup: async (e, toast, router, signIn) => {
     e.preventDefault();
     if (!get().isRulesChecked.first && !get().isRulesChecked.seconde) {
       return toast.error("يرجى موافقة على الشروط");
@@ -579,6 +580,17 @@ export const useStore = create((set, get) => ({
       if (id) {
         const response = await Post.findOne({ _id: id });
         set({ selectedPost: response });
+        return response
+      }
+    } catch (error) {
+      console.error('🚀 ~Error fetching data:');
+    }
+  },
+  fetchAppointment: async (id) => {
+    await connectToDB();
+    try {
+      if (id) {
+        const response = await Appointment.findOne({ _id: id });
         return response
       }
     } catch (error) {

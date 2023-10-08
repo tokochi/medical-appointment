@@ -41,7 +41,7 @@ function Modal() {
               maxHeight: "calc(80vh - 5rem)", // Adjust the max height as needed
               overflowY: "auto",
             }}
-            className='p-4 '>
+            className={`px-2 ${modal.content && "p-2"}`}>
             {modal.content}
             {modal.children}
           </div>

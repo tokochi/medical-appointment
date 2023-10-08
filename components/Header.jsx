@@ -6,7 +6,7 @@ import Sidebar from "./Sidebar";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 function Header({ session }) {
-  const isSidebarOpen = useStore((state) => state.sidebarOpen);
+ const { isSidebarOpen } = useStore();
   function toggleSidebar() {
     useStore.setState({ sidebarOpen: !useStore.getState().sidebarOpen });
   }
@@ -77,7 +77,7 @@ function Header({ session }) {
           </Link> */}
         </div>
 
-        {!session?.user ? (
+        {!session ? (
           <Link className='mx-2 mr-auto' href='/login'>
             <button type='button' className='btn px-4 py-2'>
               تسجيل

@@ -22,6 +22,7 @@ const doctorSchema = new Schema({
     services: [],
     officePics: [],
     proofPics: [],
+    messages: [],
     questions: [{
         type: Schema.ObjectId,
         ref: 'Question', // Reference the Doctor model

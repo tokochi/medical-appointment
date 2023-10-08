@@ -169,7 +169,7 @@ function PharmsTable() {
           enableRtl
           height='100%'
           width='100%'
-          locale='AR'
+          locale='ar-DZ'
           pageSettings={{ pageSize: 10 }}
           toolbar={toolbarOptions}
           beforePrint={beforePrint}

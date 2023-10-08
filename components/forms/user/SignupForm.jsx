@@ -31,7 +31,7 @@ function SignupForm() {
             أو
             <div className='w-full border-b-2 border-gray-400 rounder-xl'></div>
           </div>
-          <button
+          {/* <button
             onClick={() => signIn("facebook")}
             id='facebook'
             className='flex gap-2 items-center btnf'>
@@ -42,7 +42,7 @@ function SignupForm() {
               />
             </svg>
             إنشاء حساب باستخدام الفيسبوك
-          </button>
+          </button> */}
           <button
             onClick={() => signIn("google")}
             id='google'
@@ -54,7 +54,8 @@ function SignupForm() {
               height={30}
               alt='input'
             />
-            إنشاء حساب باستخدام جوجل
+            <p className="text-sm md:text-base">إنشاء حساب باستخدام جوجل</p>
+ 
           </button>
           <div
             id='divider'
@@ -133,7 +134,7 @@ function SignupForm() {
                 />
                 <label
                   htmlFor='default-checkbox'
-                  className='text-sm font-medium text-gray-900 dark:text-gray-300'>
+                  className='text-sm whitespace-nowrap font-medium text-gray-900 dark:text-gray-300'>
                   <div className='flex gap-1'>
                     <p>أوافق على</p>
                     <p className='text-sky-500'> شروط وأحكام الإستخدام</p>

@@ -5,10 +5,10 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { signIn } from "next-auth/react";
 function SignupLayoutForm() {
-  const { handleRulesCheckbox, isRulesChecked, handleSubmitDoctors } = useStore();
+  const { handleRulesCheckbox, isRulesChecked, handleSubmitDoctorsSignup } = useStore();
   const router = useRouter();
   return (
-    <form onSubmit={(e) => handleSubmitDoctors(e, toast, router, signIn)}>
+    <form onSubmit={(e) => handleSubmitDoctorsSignup(e, toast, router, signIn)}>
       <SignupInputsForm />
       <div id='divider' className='border-b-[1px] border-gray-600 my-2'></div>
       <div className='flex items-center gap-2'>

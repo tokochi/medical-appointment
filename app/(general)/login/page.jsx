@@ -1,37 +1,72 @@
 "use client";
-import LoginForm from '@components/forms/user/LoginForm';
-import SignupForm from '@components/forms/user/SignupForm';
+import Link from "next/link";
+import Image from "next/image";
 import { useStore } from "@context/store";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import LoadingComponent from "@components/LoadingComponent";
+import LoginForm from "@components/forms/user/LoginForm";
+import SignupForm from "@components/forms/user/SignupForm";
+import LoginOrSignup from "@components/forms/user/LoginOrSignup";
+
 function page() {
-const { pathNameLogin, session } = useStore();
-  if (session){redirect("/");}
+  const { isLoading, pathNameLogin } = useStore();
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  if (status == "loading") {
     return (
-      <div className='flex flex-col justify-center items-center  bg-gradient-to-r from-gray-100 to-gray-300 dark:from-slate-800 dark:to-slate-900'>
-        <div className='flex gap-4 '>
-          <button
-            onClick={() => useStore.setState({ pathNameLogin: "login" })}
-            className={`font-bold p-4 border-b-4 ${
-              pathNameLogin === "login" ? "border-blue-400 text-blue-500" : "border-gray-400"
-            }`}>
-            تسجيل الدخول
-          </button>
-          <button
-            onClick={() => useStore.setState({ pathNameLogin: "signup" })}
-            className={`font-bold p-4 border-b-4 ${
-              pathNameLogin === "signup" ? "border-blue-400 text-blue-500" : "border-gray-400"
-            }`}>
-            إنشاء حساب
-          </button>
-        </div>
-        <div id='login' className='max-w-xl mx-auto'>
-          {pathNameLogin === "login" && <LoginForm />}
-        </div>
-        <div id='signup' className=''></div>
-        {pathNameLogin === "signup" && <SignupForm />}
-        <div></div>
+      <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
+        <LoadingComponent size={100} color='#0891b2' loading={status == "loading"} />
       </div>
     );
-}
+  }
+  return (
+    <div className='flex  items-stretch'>
+      <div
+        id='background'
+        className='hidden md:flex items-end justify-end flex-1 bg-white dark:bg-gray-900'>
+        <div className='flex whitespace-nowrap font-semibold items-center gap-2 text-[#999999]'>
+          <p className='m-2'>صحــة و رعــــاية</p>
+          <img className='w-[450px]' src='/images/hexa-bg.webp' alt='cancel' />
+        </div>
+      </div>
+      <div
+        id='middle-circle'
+        className='hidden  md:flex w-24 h-24 rounded-full z-10 mx-[-48px] my-auto  items-center justify-center bg-white dark:bg-gray-900'>
+        <div className='w-12 h-12 rounded-full  flex items-center justify-center bg-primary'></div>
+      </div>
+      <div id='form' className='p-10  h-full overflow-y-auto grow flex-1 text-white  bg-primary'>
+        <div className='flex-col flex  justify-center items-center'>
+          <div>
+            <Image src='/images/logo.webp' width={150} height={150} alt='cancel' />
+          </div>
+          <h1 className='text-2xl text-center font-bold p-4'>هذه الصفحة خاصة لتسجيل الدخول</h1>
+          {session?.user? (
+            <div className='flex flex-col justify-center items-center  gap-4'>
+              <h1 className='font-semibold text-center p-2 border-b-[1px] border-dashed'>
+                مرحبا بك في منصة صحتي تاجي، أنت الآن مسًّجل للدخول
+              </h1>
+              <h1 className='text-center'>البريد الإلكتروني: {session?.user?._doc?.email} </h1>
 
-export default page
+              <button
+                onClick={() => {
+                  router.refresh();
+                  router.push("admin/dashboard");
+                }}
+                className='font-semibold p-2 px-2 btn2'>
+                الذهاب الى حسـابي
+              </button>
+
+              <Link href='/'>
+                <button className='font-semibold p-2 px-2 btn'>الذهاب الى الصفحة الرئيسية</button>
+              </Link>
+            </div>
+          ) : (
+            <LoginOrSignup />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+export default page;

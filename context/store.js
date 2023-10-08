@@ -14,13 +14,39 @@ export const useStore = create((set, get) => ({
   isLoading: false,
   completed: false,
   gridRefresh: false,
+  showPinCode: false,
   activity: [],
   editedPost: {
-    text: "", image: "/images/logo.webp", speciality:{},title:""
-},
+    text: "", image: "/images/logo.webp", speciality: {}, title: ""
+  },
+
   closeModelAnywhere: (e) => {
     if (get().modal.isOpen === true && e.target.getAttribute("name") == "modal") { set(({ modal: get().modalClosed })) }
     if (get().notification.isOpen === true && e.target.getAttribute("name") !== "notification") { set(({ notification: { isOpen: false } })) }
+  },
+  scrollToElement: (id) => {
+    if (typeof window !== "undefined") {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  },
+  scrollToBottom: () => {
+    if (typeof window !== "undefined") {
+      window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: 'smooth',
+      })
+    }
+  },
+  scrollToTop: () => {
+    if (typeof window !== "undefined") {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      })
+    }
   },
   setStoreProps: (props) => {
     // Parse JSON strings before setting them in the state
@@ -52,6 +78,7 @@ export const useStore = create((set, get) => ({
   worksLabs,
   //************** Genral Form *************/
   isRulesChecked: { first: false, seconde: false },
+  errorInput: { name: false, password: false, pinCode: false, email: false },
   loadingSppiner: {
     avatar: false,
     image: false,
@@ -63,6 +90,70 @@ export const useStore = create((set, get) => ({
     image: "",
     officePics: "",
     proofPics: "",
+  },
+  pinCodeVerification: async (router, toast) => {
+    set({ isLoading: true })
+    switch (true) {
+      case !get().appointInfo?.pinCode:
+        set({ isLoading: false, errorInput: { ...get().errorInput, pinCode: true } });
+        return;
+    }
+    const response = await fetch(`/api/verifyToken/pin`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(get().appointInfo),
+    }
+    );
+    if (response.ok) {
+      const data = await response.json();
+     
+      get().addActivity("إضــافة", "موعد طبي", get().appointInfo?.user?.email, "تمت")
+      toast.success("تم إضــافة موعد طبي بنجاح");
+      set({
+        modal: get().modalClosed,
+        showPinCode: false,
+      })
+      router.push(`/appointments/${data._id}`)
+    } else {
+      get().addActivity("إضــافة", "موعد طبي", get().appointInfo?.user?.email, "لم تتــم")
+      toast.error("فشلت عملية  إضــافة موعد طبي المستخدم");
+    }
+    set({ isLoading: false })
+  },
+  sendPinCode: async () => {
+    set({ isLoading: true })
+    switch (true) {
+      case !get().appointInfo?.user?.name:
+        set({ isLoading: false, errorInput: { ...get().errorInput, name: true } });
+        return;
+      case !get().appointInfo?.user?.email:
+        set({ isLoading: false, errorInput: { ...get().errorInput, email: true } });
+        return;
+      // case !get().appointInfo?.pinCode:
+      //   set({ isLoading: false, errorInput: { ...get().errorInput, pinCode: true } });
+      //   return;
+    }
+    set({ showPinCode: true })
+
+    const response = await fetch(`/api/sendToken/pin`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(get().appointInfo),
+    }
+    );
+    if (response.ok) {
+      console.log("✔ sending email from client...")
+    } else {
+      console.log("⚠️ Error sending email from client...")
+      // get().addActivity("إضــافة", "موعد طبي", get().editedPost?.title, "لم تتــم")
+      // toast.error("فشلت عملية  إضــافة موعد طبي المستخدم");
+    }
+    set({ isLoading: false })
+    get().scrollToElement("modal-bottom")
   },
   handleRulesCheckbox: (event) => {
     const nameAttribtue = event.target.getAttribute("name").split(".")
@@ -135,27 +226,28 @@ export const useStore = create((set, get) => ({
     const image = e.target.files[0];
     if (!image) return;
     set((prev) => ({ loadingSppiner: { ...prev, [e.target.getAttribute("name")]: true } }));
-      let path = imagePath + image.name;
-      const imageRef = ref(storage, path);
-      uploadBytes(imageRef, image)
-        .then(() => {
-          return getDownloadURL(imageRef);
-        })
-        .then((downloadURL) => {
-          set((state) => ({
-            [keyValue]: { ...state[keyValue], [e.target.getAttribute("name")]: downloadURL },
-          }));
-          set((prev) => ({ loadingSppiner: { ...prev, [e.target.getAttribute("name")]: false } }));
-          set((prev) => ({ uploadDone: { ...prev, [e.target.getAttribute("name")]: "success" } }));
-        })
-        .catch((error) => {
-          set((prev) => ({ loadingSppiner: { ...prev, [e.target.getAttribute("name")]: false } }));
-          set((prev) => ({ uploadDone: { ...prev, [e.target.getAttribute("name")]: "error" } }));
-          console.error("Error uploading image:", error);
-          return null; // Handle the error as needed
-        });
+    let path = imagePath + image.name;
+    const imageRef = ref(storage, path);
+    uploadBytes(imageRef, image)
+      .then(() => {
+        return getDownloadURL(imageRef);
+      })
+      .then((downloadURL) => {
+        set((state) => ({
+          [keyValue]: { ...state[keyValue], [e.target.getAttribute("name")]: downloadURL },
+        }));
+        set((prev) => ({ loadingSppiner: { ...prev, [e.target.getAttribute("name")]: false } }));
+        set((prev) => ({ uploadDone: { ...prev, [e.target.getAttribute("name")]: "success" } }));
+      })
+      .catch((error) => {
+        set((prev) => ({ loadingSppiner: { ...prev, [e.target.getAttribute("name")]: false } }));
+        set((prev) => ({ uploadDone: { ...prev, [e.target.getAttribute("name")]: "error" } }));
+        console.error("Error uploading image:", error);
+        return null; // Handle the error as needed
+      });
   },
   handleInputChange: (event, keyValue) => {
+    set({ errorInput: { name: false, password: false, pinCode: false, email: false } })
     const nameAttribtue = event.target.getAttribute("name").split(".");
     nameAttribtue.length > 1
       ? set((state) => ({
@@ -393,7 +485,6 @@ export const useStore = create((set, get) => ({
       },
     }));
   },
-  
   handleSelectSpecialities: (event, keyValue) => {
     const selectedIndex = event.target.selectedIndex;
     const selectedText = event.target.options[selectedIndex].text;
@@ -577,7 +668,7 @@ export const useStore = create((set, get) => ({
     updatedButtons[btn] = true;
     set({ setteperBtn: updatedButtons });
   },
-  handleSubmitDoctors: async (e, toast, router, signIn) => {
+  handleSubmitDoctorsSignup: async (e, toast, router, signIn) => {
     e.preventDefault();
     if (!get().isRulesChecked.first && !get().isRulesChecked.seconde) {
       return toast.error("يرجى موافقة على الشروط");
@@ -604,6 +695,24 @@ export const useStore = create((set, get) => ({
       toast.error("فشلت عملية تسجيل المستخدم", response);
     }
     set({ doctorInfo: doctorDefault, isRulesChecked: { first: false, seconde: false } });
+  },
+  handleSubmitDoctorUpdate: async (e, toast, id) => {
+    e.preventDefault();
+    const response = await fetch(`/api/doctors/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(get().doctorInfo),
+    });
+    if (response.ok) {
+      get().addActivity("تعـديل", "طبيب", get().doctorInfo?.email, "تمت")
+      toast.success("تم تعديل المستخدم بنجاح");
+      set({ isLoading: false })
+    } else {
+      get().addActivity("تعـديل", "طبيب", get().doctorInfo?.email, "لم تتــم")
+      toast.error("فشلت عملية تعديل المستخدم");
+    }
   },
   addedSpeciality: "",
   addedService: "",
@@ -683,7 +792,7 @@ export const useStore = create((set, get) => ({
       set({ isLoading: false })
     } else {
       get().addActivity("تعـديل", "مشرف", get().adminInfo?.email, "لم تتــم")
-      toast.error("فشلت عملية تسجيل المستخدم");
+      toast.error("فشلت عملية تعديل المستخدم");
     }
   },
   //************** Question Form *************/
@@ -694,6 +803,28 @@ export const useStore = create((set, get) => ({
     response: "",
     author: "",
     details: { weight: 85, length: 180 },
+  },
+  handleSubmitMessage: async (e, toast, id) => {
+    e.preventDefault();
+    set({ isLoading: true })
+    const response = await fetch(`/api/doctors/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ message: { ...get().askQuestion } }),
+    });
+    if (response.status === 203) {
+      toast.error("يرجى الانتظار قبل طرح سؤال آخر", response);
+    } else if (response.ok) {
+      get().addActivity("إضــافة", "سؤال", get().askQuestion?.title, "تمت");
+      toast.success("تم تقديم سؤالك بنجاح");
+      set({ modal: get().modalClosed });
+    } else {
+      get().addActivity("إضــافة", "سؤال", get().askQuestion?.title, "لم تتــم");
+      toast.error("حدث خطأ في تقديم سؤالك", response);
+    }
+    set({ isLoading: false })
   },
   handleSubmitQuestion: async (e, toast) => {
     e.preventDefault();
@@ -707,7 +838,7 @@ export const useStore = create((set, get) => ({
     if (response.ok) {
       get().addActivity("إضــافة", "سؤال", get().askQuestion?.title, "تمت")
       toast.success("  تم تقديم سؤالك بنجاح");
-      set({ modal: modalClosed });
+      set({ modal: get().modalClosed });
       //   router.push("/questions");
     } else {
       get().addActivity("إضــافة", "سؤال", get().askQuestion?.title, "لم تتــم")
@@ -752,6 +883,38 @@ export const useStore = create((set, get) => ({
       toast.error("فشلت عملية تسجيل المستخدم");
     }
   },
+  handleSubmitUserLogin: async (e, toast, router, signIn) => {
+    e.preventDefault();
+    const response = await signIn("user-login", { ...get().userInfo, type: "user", redirect: false });
+    if (response?.ok && !response?.error) {
+      toast.success("تم تسجيل دخول المستخدم بنجاح");
+      get().addActivity("دخول", "مستخدم", get().userInfo?.email, "تمت")
+      set({ userInfo: { email: "", password: "" } });
+      router.refresh()
+      router.push("/user");
+    } else {
+      get().addActivity("دخول", "مستخدم", get().userInfo?.email, "لم تتــم")
+      toast.error(response?.error);
+    }
+  },
+  handleSubmitUserUpdate: async (e, toast, id) => {
+    e.preventDefault();
+    const response = await fetch(`/api/users/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(get().userInfo),
+    });
+    if (response.ok) {
+      get().addActivity("تعـديل", "مستخدم", get().userInfo?.email, "تمت")
+      toast.success("تم تعديل المستخدم بنجاح");
+      set({ isLoading: false })
+    } else {
+      get().addActivity("تعـديل", "مستخدم", get().userInfo?.email, "لم تتــم")
+      toast.error("فشلت عملية تسجيل المستخدم");
+    }
+  },
   //************** Pharm Form *************/
   pharmInfo: pharmDefault,
   //************** Hosp Form *************/
@@ -759,7 +922,7 @@ export const useStore = create((set, get) => ({
   //************** Lab Form *************/
   labInfo: labDefault,
   //************** Posts *************/
-  handleAddPost: async ( toast) => {
+  handleAddPost: async (toast) => {
     const response = await fetch(`/api/posts`, {
       method: "POST",
       headers: {
@@ -814,7 +977,6 @@ export const useStore = create((set, get) => ({
       toast.error("فشلت عملية تعديل مقال المستخدم");
     }
   },
-
   handlePostDelete: async (toast, id) => {
     const response = await fetch(`/api/posts/${id}`, {
       method: "DELETE",
@@ -838,6 +1000,9 @@ export const useStore = create((set, get) => ({
       toast.error("فشلت عملية حذف مقال المستخدم");
     }
   },
+  //************** Appointment *************/
+
+  appointInfo: {},
   //************** Session *************/
   session: null,
   currentUser: null,
@@ -884,6 +1049,14 @@ export const useStore = create((set, get) => ({
       const usersResponse = await fetch(`/api/doctors/${id}`);
       return await usersResponse.json();
       // set({ currentDoctor: usersData });
+    } catch (error) {
+      console.error('🚀 ~Error fetching data:', error);
+    }
+  },
+  fetchAppointment: async (id) => {
+    try {
+      const usersResponse = await fetch(`/api/appointments/${id}`);
+      const usersData = await usersResponse.json();
     } catch (error) {
       console.error('🚀 ~Error fetching data:', error);
     }

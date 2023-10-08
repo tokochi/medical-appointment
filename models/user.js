@@ -24,6 +24,13 @@ const userSchema = new Schema({
         required: [true, 'Email is required!']
     },
     date: { type: Date, default: Date.now },
+    forgotPasswordToken: "string",
+    forgotPasswordTokenExpiry: { type: Date },
+    isVerified:"boolean",
+    verifyToken: "string",
+    verifyTokenExpiry: { type: Date },
+    verifyPinCode: "number",
+    verifyPinCodeExpiry: { type: Date },
     lastLogin: { type: Date },
 })
 const User = models.user || model("user", userSchema);

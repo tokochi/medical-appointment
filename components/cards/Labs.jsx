@@ -2,6 +2,7 @@ import { useStore } from "@context/serverStore";
 import Link from "next/link";
 import Image from "next/image";
 import SlicerServices from "@components/SlicerServices";
+import ShowPhoneNum from "@components/buttons/ShowPhoneNum";
 
 async function Labs() {
   const { fetchLabs } = useStore.getState();
@@ -91,54 +92,7 @@ async function Labs() {
               </Link>
             </div>
             <div className='mb-1 flex flex-col gap-2 grow shrink'>
-              <Link
-                // onClick={useStore.setState({ selectedLab: item })}
-                href={`/labs/profile/${item?._id}`}
-                className=''>
-                <button
-                  id='call-btn'
-                  className='w-full btn2 px-4 py-2 flex gap-2 items-enter justify-center'>
-                  <Image
-                    className='w-auto h-auto'
-                    src='/images/today.webp'
-                    width={20}
-                    height={10}
-                    alt='avatar'
-                  />
-                  <p className='font-semibold text-sm mx-1'>إحجز موعد</p>
-                </button>
-              </Link>
-              {/* <Link
-                   onClick={() => console.log("🚀 ~display model")}
-                   // href='/labs/profile'
-                   className=''>
-                   <button
-                     id='call-btn'
-                     className='w-full btn3 px-4 py-2 flex gap-2 items-enter justify-center'>
-                     <Image
-                       className='w-auto h-auto'
-                       src='/images/phone.webp'
-                       width={20}
-                       height={10}
-                       alt='avatar'
-                     />
-                     <p className='font-semibold text-sm'>عرض الهاتف</p>
-                   </button>
-                 </Link> */}
-              <Link href={`/labs/profile/${item?._id}`} className=''>
-                <button
-                  id='call-btn'
-                  className='w-full btn px-4 py-2 flex gap-2 items-enter justify-center'>
-                  <Image
-                    className='w-auto h-auto'
-                    src='/images/view.webp'
-                    width={20}
-                    height={10}
-                    alt='avatar'
-                  />
-                  <p className='font-semibold text-sm'>عرض الملف</p>
-                </button>
-              </Link>
+              <ShowPhoneNum phone={item?.phone} />
             </div>
           </div>
           <div id='body' className='p-2'>

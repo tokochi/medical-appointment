@@ -43,7 +43,7 @@ background-color: transparent;
 }
 */
 
-.e-grid .e-rowcell,
+/* .e-grid .e-rowcell,
 .e-grid .e-headercell,
 .e-grid .e-gridheader .e-sortfilter .e-headercelldiv {
   padding-left: 4px !important;
@@ -51,7 +51,7 @@ background-color: transparent;
 } 
 .e-edit-dialog .e-gridform .e-table {
   border-spacing: 0 !important;
-}
+} */
 
 /* treeview */
 /* .e-treeview.e-fullrow-wrap .e-text-content {
@@ -81,16 +81,16 @@ background-color: transparent;
   color: rgb(30 41 59 / 1);
 } */
 /* textbox */
-/* .e-input-group:not(.e-float-icon-left),
+.e-input-group:not(.e-float-icon-left),
 .e-input-group.e-success:not(.e-float-icon-left),
 .e-input-group.e-warning:not(.e-float-icon-left),
 .e-input-group.e-error:not(.e-float-icon-left),
 .e-input-group.e-control-wrapper:not(.e-float-icon-left),
 .e-input-group.e-control-wrapper.e-success:not(.e-float-icon-left),
 .e-input-group.e-control-wrapper.e-warning:not(.e-float-icon-left),
-.e-input-group.e-control-wrapper.e-error:not(.e-float-icon-left) {
-  border: none;
-} */
+.e-input-group.e-control-wrapper.e-ddl.e-input-focus {
+  border: none !important;
+}
 /* .e-numeric.e-control-wrapper.e-input-group .e-input-group-icon {
   display: none;
 } */
@@ -98,17 +98,17 @@ background-color: transparent;
   background-color: rgb(249 250 251 / 1) !important;
   color: rgb(148 163 184 / 1) !important;
 } */
-.e-input-group:not(.e-success):not(.e-warning):not(.e-error):not(.e-float-icon-left).e-disabled,
+/* .e-input-group:not(.e-success):not(.e-warning):not(.e-error):not(.e-float-icon-left).e-disabled,
 .e-input-group input.e-input::placeholder,
 .e-input-group textarea.e-input::placeholder {
   background-color: rgb(249 250 251 / 1) !important;
   color: rgb(148 163 184 / 1) !important;
-}
+} */
 
-.e-input-group:not(.e-success):not(.e-warning):not(.e-error):not(.e-float-icon-left) {
+/* .e-input-group:not(.e-success):not(.e-warning):not(.e-error):not(.e-float-icon-left) {
   padding-left: 0.5rem;
   padding-right: 0rem;
-}
+} */
 /* dialog */
 /* .e-dialog .e-footer-content {
   background-color: rgb(248 250 252 / 1);
@@ -120,7 +120,7 @@ background-color: transparent;
   padding: 10px;
   margin-bottom: 10px; 
 }*/
-.e-numeric .e-input-group-icon.e-spin-up:before {
+/* .e-numeric .e-input-group-icon.e-spin-up:before {
   content: "\e823";
   color: rgba(0, 0, 0, 0.54);
 }
@@ -129,7 +129,7 @@ background-color: transparent;
   color: rgba(0, 0, 0, 0.54);
 }
 /* ******switch****/
-.e-switch-wrapper .e-switch-handle.e-switch-active, .e-css.e-switch-wrapper .e-switch-handle.e-switch-active,.e-css.e-switch-wrapper .e-switch-handle.e-switch-active {
+/* .e-switch-wrapper .e-switch-handle.e-switch-active, .e-css.e-switch-wrapper .e-switch-handle.e-switch-active,.e-css.e-switch-wrapper .e-switch-handle.e-switch-active {
     background-color: rgb(99 102 241) !important;
 }
 .e-switch-wrapper .e-switch-on, .e-css.e-switch-wrapper .e-switch-on,.e-css.e-switch-wrapper:hover .e-switch-inner.e-switch-active .e-switch-on {
@@ -139,11 +139,11 @@ background-color: transparent;
 
 .e-tab  {
     background-color: transparent !important;
-}
+} */
 /* .e-tab .e-tab-header {
 
     background-color: white ;
 } */
-.e-tab .e-tab-header .e-toolbar-item .e-tab-wrap {
+/* .e-tab .e-tab-header .e-toolbar-item .e-tab-wrap {
  background-color: white
-}
+}  */

@@ -9,13 +9,12 @@ import LoadingComponent from "@components/LoadingComponent";
 
 
 function page() {
-  const { isLoading,} = useStore();
   const {  data:session,status } = useSession();
   const router = useRouter()
    if (status == "loading") {
      return (
        <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
-         <LoadingComponent size={100} color='#0891b2' loading={isLoading} />
+         <LoadingComponent size={100} color='#0891b2' loading={status == "loading"} />
        </div>
      );
    }

@@ -1,15 +1,6 @@
-import React from 'react'
+import React from "react";
 import Image from "next/image";
-function IconInput({
-  icon,
-  label,
-  type,
-  name,
-    id,
-  placeholder,
-  helper,
-  ...rest
-}) {
+function IconInput({ icon, label, type, name, id, error, placeholder, helper, ...rest }) {
   return (
     <div className='w-full'>
       <label
@@ -25,14 +16,25 @@ function IconInput({
           type={type}
           id={id}
           name={name}
-          className='bg-gray-50 border placeholder:font-noto placeholder-gray-400  placeholder:font-semibold border-gray-300 text-gray-900 text-sm  focus:ring-gray-500 focus:border-gray-500 block w-full pr-10 p-1  dark:bg-gray-700 dark:border-gray-600  dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500'
+          className={`bg-gray-50 border placeholder:font-noto placeholder-gray-400  placeholder:font-semibold ${
+            error ? "border-red-600 dark:border-red-600" : "border-gray-300 dark:border-gray-600"
+          }  text-gray-900 text-sm  focus:ring-gray-500 focus:border-gray-500 block w-full pr-10 p-1  dark:bg-gray-700   dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500`}
           placeholder={placeholder}
           {...rest}
         />
       </div>
       {helper && <p className='mt-2 text-sm text-gray-500 dark:text-gray-400'>{helper}</p>}
+      {error && name === "name" && (
+        <p className='p-1 text-xs text-red-500 dark:text-red-500'>يرجى ادخال الإسم</p>
+      )}
+      {error && name === "email" && (
+        <p className='p-1 text-xs text-red-500 dark:text-red-500'>يرجى ادخال البريد الإلكتروني</p>
+      )}
+      {error && (name === "password" || name === "verifyPassword" || name === "pinCode") && (
+        <p className='p-1 text-xs text-red-500 dark:text-red-500'>يرجى ادخال الرمز السري</p>
+      )}
     </div>
   );
 }
 
-export default IconInput
+export default IconInput;

@@ -325,7 +325,8 @@ function SignupInputsForm(props) {
             />
             <CheckboxInput
               name='otherServices?.isFullTimeOpen'
-              checked={doctorInfo?.otherServices?.isFullTimeOpen}
+              checked={doctorInfo?.
+                isFullTimeOpen}
               onChange={(e) => handleCheckbox(e, "doctorInfo")}
               label='عيادة مفتوحة 24/7'
               placeholder='&nbsp;'
@@ -390,7 +391,7 @@ function SignupInputsForm(props) {
           <div id='wilaya' className=''>
             <SelectInput
               name='address?.wilaya'
-              value={doctorInfo?.otherServices?.value}
+              value={doctorInfo?.address?.wilaya?.value}
               onChange={(e) => handleSelectInput(e, "doctorInfo")}
               options={wilaya}
               option_value='value'
@@ -405,7 +406,7 @@ function SignupInputsForm(props) {
               value={doctorInfo?.address?.daira?.value}
               onChange={(e) => handleSelectInput(e, "doctorInfo")}
               options={daira.filter(
-                (region) => region?.wilaya === doctorInfo?.otherServices?.value
+                (region) => region?.wilaya === doctorInfo?.address?.wilaya?.value
               )}
               option_value='value'
               option_text='text'

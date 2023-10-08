@@ -7,28 +7,8 @@ import { IconInput, SelectInput } from "@components/inputs";
 import toast from "react-hot-toast";
 
 function page() {
-  const [isRulesChecked, setIsRulesChecked] = useState(false);
-  const { doctorInfo, specialities, wilaya } = useStore();
+  const { doctorInfo, isRulesChecked, specialities,handleInputChange,errorInput,handleSelectInput, wilaya } = useStore();
   const router = useRouter();
-  const handleCheckboxChange = (event) => {
-    setIsRulesChecked(event.target.checked);
-  };
-  const handleInputChange = (event) => {
-    const nameAttribtue = event.target.getAttribute("name").split(".");
-    nameAttribtue.length > 1
-      ? useStore.setState((state) => ({
-          doctorInfo: {
-            ...state.doctorInfo,
-            [nameAttribtue[0]]: {
-              ...state.doctorInfo[nameAttribtue[0]],
-              [nameAttribtue[1]]: event.target.value,
-            },
-          },
-        }))
-      : useStore.setState((state) => ({
-          doctorInfo: { ...state.doctorInfo, [nameAttribtue[0]]: event.target.value },
-        }));
-  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isRulesChecked) {
@@ -48,8 +28,9 @@ function page() {
               <IconInput
                 icon='/images/user.webp'
                 name='name'
+                error={errorInput?.name}
                 value={doctorInfo.name}
-                onChange={(e) => handleInputChange(e)}
+                onChange={(e) => handleInputChange(e, "doctorInfo")}
                 type='text'
                 placeholder='الإسم كامل بالعربية'
               />
@@ -58,8 +39,9 @@ function page() {
               <IconInput
                 icon='/images/email.webp'
                 name='email'
+                error={errorInput?.email}
                 value={doctorInfo.email}
-                onChange={(e) => handleInputChange(e)}
+                onChange={(e) => handleInputChange(e, "doctorInfo")}
                 type='email'
                 placeholder='البريد الإلكتروني'
               />
@@ -69,7 +51,7 @@ function page() {
                 icon='/images/phone.webp'
                 name='phone.mobile'
                 value={doctorInfo.phone.mobile}
-                onChange={(e) => handleInputChange(e)}
+                onChange={(e) => handleInputChange(e, "doctorInfo")}
                 type='phone'
                 placeholder='رقم الجوال'
               />
@@ -78,7 +60,7 @@ function page() {
               <SelectInput
                 name='gender'
                 value={doctorInfo.gender}
-                onChange={(e) => handleOnChange(e)}
+                onChange={(e) => handleInputChange(e, "doctorInfo")}
                 options={[
                   { text: "رجل", value: "male" },
                   { text: "إمرأة", value: "female" },
@@ -91,23 +73,25 @@ function page() {
             <div className=''>
               <SelectInput
                 name='speciality'
-                value={doctorInfo.speciality}
-                onChange={(e) => handleOnChange(e)}
+                value={doctorInfo?.speciality?.value}
+                onChange={(e) => handleSelectInput(e, "doctorInfo")}
                 options={specialities}
                 option_value='value'
                 option_text='text'
                 placeholder='التخصص'
+                label='التخصص  الرئيسي:'
               />
             </div>
             <div className=''>
               <SelectInput
                 name='address?.wilaya'
-                value={doctorInfo.address?.wilaya}
-                onChange={(e) => handleInputChange(e)}
+                value={doctorInfo?.address?.wilaya?.value}
+                onChange={(e) => handleSelectInput(e, "doctorInfo")}
                 options={wilaya}
                 option_value='value'
                 option_text='text'
                 placeholder='الولاية'
+                label='الولاية:'
               />
             </div>
             <div className='flex items-center gap-2'>

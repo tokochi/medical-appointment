@@ -30,7 +30,29 @@ export async function PUT(req, { params }) {
         if (!data) {
             return new Response('Empty request body', { status: 400 }); // Bad Request
         }
-        const response = await Doctor.updateOne({ _id: data?._id }, { $set: data })
+        let response;
+        if (data?.message) {
+            const { doctor, author } = data?.message;
+            const currentTimestamp = Date.now();
+            const lastMessage = await Doctor.findOne(
+                { _id: doctor, 'messages.author': author, }, { 'messages.date': 1 })
+                .sort({ 'messages.date': -1 })
+                .limit(1);
+            if (lastMessage) {
+                const lastMessageTimestamp = lastMessage.messages[0].date;
+                const timeDifference = currentTimestamp - lastMessageTimestamp;
+                const timeLimit = 24 * 60 * 60 * 1000;
+                if (timeDifference < timeLimit) {
+           return new Response('Please wait before asking another question', { status: 203 })
+                }
+            }
+            response = await Doctor.updateOne({ _id: doctor },
+                { $push: { messages: { $each: [data?.message], }, }, }
+            );
+        }
+        else {
+            response = await Doctor.updateOne({ _id: data?._id }, { $set: data })
+        }
         if (response.acknowledged === true && response.modifiedCount === 1) {
             return new Response('Doctor updated successfully', { status: 200 }); // OK
         } else {
