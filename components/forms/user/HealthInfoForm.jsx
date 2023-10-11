@@ -178,7 +178,6 @@ function HealthInfoForm(props) {
                     <DatePicker
                       local='ar-DZ'
                       label='التوقيت:'
-                      // created={() => console.log("🚀🚀created")}
                       onChange={(e) =>
                         useStore.setState((state) => ({
                           addedsurgery: { ...state.addedsurgery, time: e.value },

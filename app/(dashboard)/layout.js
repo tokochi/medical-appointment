@@ -1,6 +1,7 @@
 import '@app/globals.css'
 import '@app/SyncfussionCSS.css'
 import ClientSideWrapper from '@components/ClientSideWrapper';
+export const dynamic = 'force-dynamic'
 // if (process.env.NODE_ENV !== 'production') {
   // Disable warnings
 // console.warn = () => { };

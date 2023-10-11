@@ -6,7 +6,7 @@ import { useStore } from "@context/serverStore";
 import ClientSideWrapper from '@components/ClientSideWrapper';
 import StoreInit from '@components/StoreInit';
 import GetSession from '@components/GetSession';
-
+export const dynamic = 'force-dynamic'
 
   export const Metadata = {
     title: "صحتي تاجي",
