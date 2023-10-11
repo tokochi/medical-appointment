@@ -40,7 +40,6 @@ function page() {
               مرحبا بك في منصة المشرفين، أنت الآن مسًّجل للدخول
             </h1>
             <h1 className='text-center'>البريد الإلكتروني: {session?.user?._doc?.email} </h1>
-
             <button
               onClick={() => {
                 router.refresh();
@@ -49,7 +48,6 @@ function page() {
               className='font-semibold p-2 px-2 btn2'>
               الذهاب الى الواجهة
             </button>
-
             <Link href='/'>
               <button className='font-semibold p-2 px-2 btn'>الذهاب الى الصفحة الرئيسية</button>
             </Link>

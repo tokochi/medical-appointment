@@ -2,36 +2,76 @@ import { Schema, model, models } from 'mongoose';
 
 // *********** Schema **********
 const userSchema = new Schema({
-    name: "string",
-    gender: {},
-    password: "string",
-    address: {
-        street: "string",
-        wilaya: {},
-        daira: {},
-        commune: {},
+    name: String,
+    birthDate: { type: Date, default: Date.now },
+    gender: {
+        value: String,
+        text: String
     },
-    phone: {},
-    avatar: [],
-    desc: "string",
-    facebook: "string",
-    instagram: "string",
-    whatsapp: "string",
-    files:{},
+    password: String,
+    address: {
+        street: String,
+        wilaya: {
+            value: String,
+            text: String
+        },
+        daira: {
+            value: String,
+            text: String
+        },
+        commune: {
+            value: String,
+            text: String
+        }
+    },
+    phone: {
+        line1: String,
+        line2: String,
+        mobile: String
+    },
+    avatar: {
+        type: [String],
+        default: ["/images/user-logo.webp"]
+    },
+    desc: String,
+    facebook: String,
+    instagram: String,
+    whatsapp: String,
+    files: {},
+    healthInfo: {},
+    inbox: [],
+    notifications: {
+        users: Boolean,
+        doctors: Boolean,
+        posts: Boolean,
+        questions: Boolean
+    },
+    googleMap: {
+        lat: Number,
+        lng: Number
+    },
+    notificationsList: [],
+    isUser: {
+        type: Boolean,
+        default: true
+    },
     email: {
         type: String,
         unique: [true, 'Email already exists!'],
         required: [true, 'Email is required!']
     },
-    date: { type: Date, default: Date.now },
-    forgotPasswordToken: "string",
+    isVerified: {
+        type: Boolean,
+        default: false 
+    },
+    forgotPasswordToken: String,
     forgotPasswordTokenExpiry: { type: Date },
-    isVerified:"boolean",
-    verifyToken: "string",
+    verifyToken: String,
     verifyTokenExpiry: { type: Date },
-    verifyPinCode: "number",
+    verifyPinCode: Number,
     verifyPinCodeExpiry: { type: Date },
     lastLogin: { type: Date },
+    date: { type: Date, default: Date.now },
 })
 const User = models.user || model("user", userSchema);
 export default User;

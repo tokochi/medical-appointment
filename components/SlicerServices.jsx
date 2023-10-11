@@ -2,13 +2,12 @@
 import Link from "next/link";
 import { useState } from "react";
 
-function SlicerServices({ item }) {
-
+function SlicerServices({ data }) {
+const doctor = JSON.parse(data);
   const [slicer, setSlicer] = useState(null);
   return (
     <div id='works' className='flex flex-wrap gap-2'>
-      {item?.services
-        .slice(0, item?._id == slicer ? item?.services?.length : 5)
+      {doctor?.services?.slice(0, doctor?._id == slicer ? doctor?.services?.length : 5)
         .map((service, index) => (
           <Link key={index} href='#'>
             <button
@@ -18,10 +17,10 @@ function SlicerServices({ item }) {
             </button>
           </Link>
         ))}
-      {item?.services?.length > 5 && item?._id != slicer && (
+      {doctor?.services?.length > 5 && doctor?._id != slicer && (
         <button
           className='text-sm text-sky-600 text-left p-2'
-          id={item?._id}
+          id={doctor?._id}
           onClick={(e) => {
             e.preventDefault();
             setSlicer(e.target.getAttribute("id"));

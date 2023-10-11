@@ -345,6 +345,9 @@ export default function Localization(props) {
       'calendar': {
         today: "اليوم"
       },
+      'datepicker': {
+        "today": "اليوم",
+      },
       "dialog": {
         "close": "إغلاق",
         "open": "فتح",

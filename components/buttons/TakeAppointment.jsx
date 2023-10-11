@@ -4,7 +4,8 @@ import LoginOrSignup from "@components/forms/user/LoginOrSignup";
 import { useStore } from "@context/store";
 import React from "react";
 
-function TakeAppointment({ doctor }) {
+function TakeAppointment({ data }) {
+const doctor = JSON.parse(data)
   const { session } = useStore();
   return (
     <button

@@ -346,7 +346,7 @@ function SignupInputsForm(props) {
           <div id='wilaya' className=''>
             <SelectInput
               name='address?.wilaya'
-              value={labInfo?.otherServices?.value}
+              value={labInfo?.address?.wilaya?.value}
               onChange={(e) => handleSelectInput(e, "labInfo")}
               options={wilaya}
               option_value='value'

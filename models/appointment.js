@@ -2,23 +2,23 @@ import { Schema, model, models } from 'mongoose';
 
 // *********** Schema **********
 const appointmentSchema = new Schema({
-    time: "string",
+    time: String,
     user: {
         id: {
             type: Schema.ObjectId,
             ref: 'User',
         },
-        email: "string",
-        phone: "string",
-        name: "string",
+        email: String,
+        phone: String,
+        name: String,
     },
     doctor: {
         type: Schema.ObjectId,
         ref: 'Doctor',
     },
-    status: "string",
-    visitArg: "string",
-    desc: "string",
+    status: String,
+    visitArg: String,
+    desc: String,
     expiryDate: {
         type: Date,
         default: () => new Date(new Date().getTime() + 10 * 24 * 60 * 60 * 1000),

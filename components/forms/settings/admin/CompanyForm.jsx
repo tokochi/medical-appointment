@@ -150,15 +150,7 @@ function AccountForm() {
              completed={uploadDone?.avatar}
              loader={loadingSppiner?.avatar}
              onChange={(e) =>
-               uploadImage(
-                 e,
-                 ref,
-                 uploadBytes,
-                 getDownloadURL,
-                 storage,
-                 "company/",
-                 "companyInfo"
-               )
+               uploadImage(e, ref, uploadBytes, getDownloadURL, storage, "company/", "companyInfo")
              }
              label='الصورة الشعار: '
            />
@@ -194,7 +186,7 @@ function AccountForm() {
          <div id='wilaya' className=''>
            <SelectInput
              name='address?.wilaya'
-             value={companyInfo?.otherServices?.value}
+             value={companyInfo?.address?.wilaya?.value}
              onChange={(e) => handleSelectInput(e, "companyInfo")}
              options={wilaya}
              option_value='value'

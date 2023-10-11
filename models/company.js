@@ -2,24 +2,24 @@ import { Schema, model, models } from 'mongoose';
 
 // *********** Schema **********
 const companySchema = new Schema({
-    name: "string",
+    name: String,
     address: {
-        street: "string",
+        street: String,
         wilaya: {},
         daira: {},
         commune: {},
     },
     phone: {},
     avatar: [],
-    desc: "string",
-    site: "string",
-    rc: "string",
-    if: "string",
-    facebook: "string",
-    instagram: "string",
-    whatsapp: "string",
+    desc: String,
+    site: String,
+    rc: String,
+    if: String,
+    facebook: String,
+    instagram: String,
+    whatsapp: String,
     files:{},
-    email: "string",
+    email: String,
     date: { type: Date, default: Date.now },
 })
 const Company = models.company || model("company", companySchema);

@@ -1,13 +1,13 @@
 "use client"
 import { create } from "zustand";
-import { wilaya, daira, commune, userDefault, companyDefault, doctorDefault, pharmDefault, hospDefault, labDefault, relatedWorks, medicalSpecialties, specialities, titles, labs, pharms, hosp, visitArg, worksPharms, worksLabs, searchTabs, questions, specilatiyHosp, sectionWork } from "@utils/data.js";
+import { wilaya, daira, commune, userDefault, bloodTypes, chronicDiseases, doctorDefault, pharmDefault, hospDefault, labDefault, relatedWorks, medicalSpecialties, specialities, titles, labs, pharms, hosp, visitArg, worksPharms, worksLabs, searchTabs, questions, specilatiyHosp, sectionWork } from "@utils/data.js";
 export const useStore = create((set, get) => ({
   //************** General *************/
   darkTheme: true,
   dir: "rtl",
   modal: { isOpen: false, title: "", content: "", children: null, textBtn_1: "", textBtn_2: "", onClickBtn_1: null, onClickBtn_2: null },
   modalClosed: { isOpen: false, title: "", content: "", children: null, onClickBtn_1: null, onClickBtn_2: null },
-  notification: { isOpen: false },
+
   sidebarOpen: false,
   activeTab: searchTabs,
   currentTab: 0,
@@ -23,6 +23,8 @@ export const useStore = create((set, get) => ({
   closeModelAnywhere: (e) => {
     if (get().modal.isOpen === true && e.target.getAttribute("name") == "modal") { set(({ modal: get().modalClosed })) }
     if (get().notification.isOpen === true && e.target.getAttribute("name") !== "notification") { set(({ notification: { isOpen: false } })) }
+    if (get().inbox.isOpen === true && e.target.getAttribute("name") !== "inbox") { set(({ inbox: { isOpen: false } })) }
+    if (get().account.isOpen === true && e.target.getAttribute("name") !== "account") { set(({ account: { isOpen: false } })) }
   },
   scrollToElement: (id) => {
     if (typeof window !== "undefined") {
@@ -65,6 +67,8 @@ export const useStore = create((set, get) => ({
   //************** Static Data *************/
   medicalSpecialties,
   specialities,
+  chronicDiseases,
+  bloodTypes,
   relatedWorks,
   specilatiyHosp,
   titles,
@@ -77,6 +81,7 @@ export const useStore = create((set, get) => ({
   worksPharms,
   worksLabs,
   //************** Genral Form *************/
+
   isRulesChecked: { first: false, seconde: false },
   errorInput: { name: false, password: false, pinCode: false, email: false },
   loadingSppiner: {
@@ -90,70 +95,6 @@ export const useStore = create((set, get) => ({
     image: "",
     officePics: "",
     proofPics: "",
-  },
-  pinCodeVerification: async (router, toast) => {
-    set({ isLoading: true })
-    switch (true) {
-      case !get().appointInfo?.pinCode:
-        set({ isLoading: false, errorInput: { ...get().errorInput, pinCode: true } });
-        return;
-    }
-    const response = await fetch(`/api/verifyToken/pin`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(get().appointInfo),
-    }
-    );
-    if (response.ok) {
-      const data = await response.json();
-     
-      get().addActivity("إضــافة", "موعد طبي", get().appointInfo?.user?.email, "تمت")
-      toast.success("تم إضــافة موعد طبي بنجاح");
-      set({
-        modal: get().modalClosed,
-        showPinCode: false,
-      })
-      router.push(`/appointments/${data._id}`)
-    } else {
-      get().addActivity("إضــافة", "موعد طبي", get().appointInfo?.user?.email, "لم تتــم")
-      toast.error("فشلت عملية  إضــافة موعد طبي المستخدم");
-    }
-    set({ isLoading: false })
-  },
-  sendPinCode: async () => {
-    set({ isLoading: true })
-    switch (true) {
-      case !get().appointInfo?.user?.name:
-        set({ isLoading: false, errorInput: { ...get().errorInput, name: true } });
-        return;
-      case !get().appointInfo?.user?.email:
-        set({ isLoading: false, errorInput: { ...get().errorInput, email: true } });
-        return;
-      // case !get().appointInfo?.pinCode:
-      //   set({ isLoading: false, errorInput: { ...get().errorInput, pinCode: true } });
-      //   return;
-    }
-    set({ showPinCode: true })
-
-    const response = await fetch(`/api/sendToken/pin`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(get().appointInfo),
-    }
-    );
-    if (response.ok) {
-      console.log("✔ sending email from client...")
-    } else {
-      console.log("⚠️ Error sending email from client...")
-      // get().addActivity("إضــافة", "موعد طبي", get().editedPost?.title, "لم تتــم")
-      // toast.error("فشلت عملية  إضــافة موعد طبي المستخدم");
-    }
-    set({ isLoading: false })
-    get().scrollToElement("modal-bottom")
   },
   handleRulesCheckbox: (event) => {
     const nameAttribtue = event.target.getAttribute("name").split(".")
@@ -453,7 +394,6 @@ export const useStore = create((set, get) => ({
     });
   },
   addSelectAdmin: (event, keyValue) => {
-    event.preventDefault();
     get().addedAdmins !== "" &&
       useStore.setState((state) => ({
         [keyValue]: {
@@ -463,6 +403,42 @@ export const useStore = create((set, get) => ({
       }));
     set({ addedAdmins: "" });
   },
+
+  addObjectItemToArray: (event, keyValue, type) => {
+    const clickedElement = event.target.getAttribute("name");
+    const selectedIndex = event.target.selectedIndex;
+    const selectedText = event.target.options[selectedIndex].text;
+    // const selectedValue = event.target.options[selectedIndex].value;
+    set((state) => ({
+      [keyValue]: {
+        ...state[keyValue],
+        [type]: [
+          ...state[keyValue][type],
+          { text: selectedText, value: event.target.value },
+        ],
+      },
+    }));
+    set({ [type]: "", addedsurgery: { name: "", time: new Date(), hosp: "" } });
+  },
+  removeItemFromArray: (event, keyValue, type) => {
+    event.preventDefault();
+    const clickedElement = event.target.getAttribute("name");
+    const filteredArray = get()[keyValue][type].filter((item) => {
+      if (typeof item === "string") {
+        return item !== clickedElement;
+      } else if (typeof item === "object") {
+        return (item.name === clickedElement || item.text === clickedElement) ? false : true;
+      }
+      return true;
+    });
+    set((state) => ({
+      [keyValue]: {
+        ...state[keyValue],
+        [type]: filteredArray,
+      },
+    }));
+  },
+
   removeSelectAdmin: (event, keyValue) => {
     event.preventDefault();
     const clickedElement = event.target.getAttribute("name");
@@ -488,7 +464,6 @@ export const useStore = create((set, get) => ({
   handleSelectSpecialities: (event, keyValue) => {
     const selectedIndex = event.target.selectedIndex;
     const selectedText = event.target.options[selectedIndex].text;
-    // const selectedValue = event.target.options[selectedIndex].value;
     set((state) => ({
       [keyValue]: {
         ...state[keyValue],
@@ -498,7 +473,34 @@ export const useStore = create((set, get) => ({
         ],
       },
     }));
-  }, handleSelectServices: (event, keyValue) => {
+  },
+  removeSelectSuregeries: (event, keyValue) => {
+    event.preventDefault();
+    const clickedElement = event.target.getAttribute("name");
+    const filtredArray = get()[keyValue].surgeries.filter(
+      (surgery) => surgery?.name !== clickedElement
+    );
+    set((state) => ({
+      [keyValue]: {
+        ...state[keyValue],
+        surgeries: filtredArray,
+      },
+    }));
+  },
+  removeSelectAlergies: (event, keyValue, field) => {
+    event.preventDefault();
+    const clickedElement = event.target.getAttribute("name");
+    const filtredArray = get()[keyValue].alergies.filter(
+      (alergy) => alergy?.text !== clickedElement
+    );
+    set((state) => ({
+      [keyValue]: {
+        ...state[keyValue],
+        alergies: filtredArray,
+      },
+    }));
+  },
+  handleSelectServices: (event, keyValue) => {
     const selectedIndex = event.target.selectedIndex;
     const selectedText = event.target.options[selectedIndex].text;
     // const selectedValue = event.target.options[selectedIndex].value;
@@ -510,6 +512,21 @@ export const useStore = create((set, get) => ({
           { text: selectedText, value: event.target.value },
         ],
       },
+    }));
+  },
+  handleSelectChrnoDiseases: (event, disease, keyValue) => {
+    const isChecked = event.target.checked;
+    const currentDiseases = get().healthInfo.chrnoDiseases;
+    if (isChecked) {
+      set(state => ({ healthInfo: { ...state.healthInfo, chrnoDiseases: [...currentDiseases, disease] } }));
+    } else {
+      set(state => ({ healthInfo: { ...state.healthInfo, chrnoDiseases: currentDiseases.filter(item => item.value !== disease.value) } }));
+    }
+    set(state => ({
+      [keyValue]: {
+        ...state[keyValue],
+        healthInfo: get().healthInfo
+      }
     }));
   },
   removeSelectSpecialities: (event, keyValue) => {
@@ -562,6 +579,62 @@ export const useStore = create((set, get) => ({
     }
   },
   addedAdmins: "",
+  //************** Inbox *************/
+  inbox: { isOpen: false },
+  handleSubmitMessage: async (e, toast, id) => {
+    e.preventDefault();
+    set({ isLoading: true })
+    const response = await fetch(`/api/doctors/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ message: { ...get().askQuestion } }),
+    });
+    if (response.status === 203) {
+      toast.error("يرجى الانتظار قبل طرح سؤال آخر", response);
+    } else if (response.ok) {
+      get().addActivity("إضــافة", "سؤال", get().askQuestion?.title, "تمت");
+      toast.success("تم تقديم سؤالك بنجاح");
+      set({ modal: get().modalClosed });
+    } else {
+      get().addActivity("إضــافة", "سؤال", get().askQuestion?.title, "لم تتــم");
+      toast.error("حدث خطأ في تقديم سؤالك", response);
+    }
+    set({ isLoading: false })
+  },
+  clearInbox: async () => {
+    const response = await fetch(`/api/admins/${get().currentAdmin._id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ notificationsList: [] }),
+    });
+    if (response.ok) {
+      // console.log("🚀 ~🚀 ~ تم إضــافة التنبيه بنجاح")
+    } else {
+      // console.log("🚀 ~🚀 ~ فشلت عملية إضــافة التنبيه");
+    }
+    get().fetchAdmin(get().currentAdmin._id)
+  },
+  deleteMessage: async (id) => {
+    const response = await fetch(`/api/admins/${get().currentAdmin._id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ notificationsList: get().currentAdmin?.notificationsList.filter(not => not._id !== id) }),
+    });
+    if (response.ok) {
+      // console.log("🚀 ~🚀 ~ تم إضــافة التنبيه بنجاح")
+    } else {
+      // console.log("🚀 ~🚀 ~ فشلت عملية إضــافة التنبيه");
+    }
+    get().fetchAdmin(get().currentAdmin._id)
+  },
+  //************** Notifications *************/
+  notification: { isOpen: false },
   addNotifaction: async (data) => {
     const admins = await get().fetchAdmins()
     admins.forEach(async (admin) => {
@@ -804,28 +877,7 @@ export const useStore = create((set, get) => ({
     author: "",
     details: { weight: 85, length: 180 },
   },
-  handleSubmitMessage: async (e, toast, id) => {
-    e.preventDefault();
-    set({ isLoading: true })
-    const response = await fetch(`/api/doctors/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ message: { ...get().askQuestion } }),
-    });
-    if (response.status === 203) {
-      toast.error("يرجى الانتظار قبل طرح سؤال آخر", response);
-    } else if (response.ok) {
-      get().addActivity("إضــافة", "سؤال", get().askQuestion?.title, "تمت");
-      toast.success("تم تقديم سؤالك بنجاح");
-      set({ modal: get().modalClosed });
-    } else {
-      get().addActivity("إضــافة", "سؤال", get().askQuestion?.title, "لم تتــم");
-      toast.error("حدث خطأ في تقديم سؤالك", response);
-    }
-    set({ isLoading: false })
-  },
+
   handleSubmitQuestion: async (e, toast) => {
     e.preventDefault();
     const response = await fetch("/api/questions", {
@@ -845,7 +897,16 @@ export const useStore = create((set, get) => ({
       toast.error("حدث خطأ في تقديم سؤالك", response);
     }
   },
-  //************** User Form *************/
+  //************** User Form *************/  
+  healthInfo: {
+    chrnoDiseases: [],
+    alergies: [],
+    surgeries: [],
+    bloodType:{},
+  },
+  addedAlergy: "",
+  addedsurgery: { name: "", time: new Date(), hosp:""},
+  account: { isOpen: false },
   userInfo: userDefault,
   handleSubmitUserSignup: async (e, toast, router, signIn) => {
     e.preventDefault();
@@ -897,8 +958,9 @@ export const useStore = create((set, get) => ({
       toast.error(response?.error);
     }
   },
-  handleSubmitUserUpdate: async (e, toast, id) => {
+  handleSubmitUserUpdate: async (e, toast, router, id) => {
     e.preventDefault();
+    // set({ isLoading: true })
     const response = await fetch(`/api/users/${id}`, {
       method: "PUT",
       headers: {
@@ -910,6 +972,7 @@ export const useStore = create((set, get) => ({
       get().addActivity("تعـديل", "مستخدم", get().userInfo?.email, "تمت")
       toast.success("تم تعديل المستخدم بنجاح");
       set({ isLoading: false })
+      router.refresh()
     } else {
       get().addActivity("تعـديل", "مستخدم", get().userInfo?.email, "لم تتــم")
       toast.error("فشلت عملية تسجيل المستخدم");
@@ -1001,8 +1064,71 @@ export const useStore = create((set, get) => ({
     }
   },
   //************** Appointment *************/
-
   appointInfo: {},
+  pinCodeVerification: async (router, toast) => {
+    set({ isLoading: true })
+    switch (true) {
+      case !get().appointInfo?.pinCode:
+        set({ isLoading: false, errorInput: { ...get().errorInput, pinCode: true } });
+        return;
+    }
+    const response = await fetch(`/api/verifyToken/pin`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(get().appointInfo),
+    }
+    );
+    if (response.ok) {
+      const data = await response.json();
+
+      get().addActivity("إضــافة", "موعد طبي", get().appointInfo?.user?.email, "تمت")
+      toast.success("تم إضــافة موعد طبي بنجاح");
+      set({
+        modal: get().modalClosed,
+        showPinCode: false,
+      })
+      router.push(`/appointments/${data._id}`)
+    } else {
+      get().addActivity("إضــافة", "موعد طبي", get().appointInfo?.user?.email, "لم تتــم")
+      toast.error("فشلت عملية  إضــافة موعد طبي المستخدم");
+    }
+    set({ isLoading: false })
+  },
+  sendPinCode: async () => {
+    set({ isLoading: true })
+    switch (true) {
+      case !get().appointInfo?.user?.name:
+        set({ isLoading: false, errorInput: { ...get().errorInput, name: true } });
+        return;
+      case !get().appointInfo?.user?.email:
+        set({ isLoading: false, errorInput: { ...get().errorInput, email: true } });
+        return;
+      // case !get().appointInfo?.pinCode:
+      //   set({ isLoading: false, errorInput: { ...get().errorInput, pinCode: true } });
+      //   return;
+    }
+    set({ showPinCode: true })
+
+    const response = await fetch(`/api/sendToken/pin`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(get().appointInfo),
+    }
+    );
+    if (response.ok) {
+      console.log("✔ sending email from client...")
+    } else {
+      console.log("⚠️ Error sending email from client...")
+      // get().addActivity("إضــافة", "موعد طبي", get().editedPost?.title, "لم تتــم")
+      // toast.error("فشلت عملية  إضــافة موعد طبي المستخدم");
+    }
+    set({ isLoading: false })
+    get().scrollToElement("modal-bottom")
+  },
   //************** Session *************/
   session: null,
   currentUser: null,
@@ -1040,6 +1166,15 @@ export const useStore = create((set, get) => ({
       const usersData = await usersResponse.json();
       set({ currentAdmin: usersData });
       set({ isLoading: false });
+    } catch (error) {
+      console.error('🚀 ~Error fetching data:', error);
+    }
+  },
+  fetchUser: async (id) => {
+    try {
+      const usersResponse = await fetch(`/api/Users/${id}`);
+      return await usersResponse.json();
+      set({ currentUser: usersData });
     } catch (error) {
       console.error('🚀 ~Error fetching data:', error);
     }

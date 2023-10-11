@@ -35,11 +35,11 @@ export async function PUT(req, { params }) {
             const { doctor, author } = data?.message;
             const currentTimestamp = Date.now();
             const lastMessage = await Doctor.findOne(
-                { _id: doctor, 'messages.author': author, }, { 'messages.date': 1 })
-                .sort({ 'messages.date': -1 })
+                { _id: doctor, 'inbox.author': author, }, { 'inbox.date': 1 })
+                .sort({ 'inbox.date': -1 })
                 .limit(1);
             if (lastMessage) {
-                const lastMessageTimestamp = lastMessage.messages[0].date;
+                const lastMessageTimestamp = lastMessage.inbox[0].date;
                 const timeDifference = currentTimestamp - lastMessageTimestamp;
                 const timeLimit = 24 * 60 * 60 * 1000;
                 if (timeDifference < timeLimit) {
@@ -47,7 +47,7 @@ export async function PUT(req, { params }) {
                 }
             }
             response = await Doctor.updateOne({ _id: doctor },
-                { $push: { messages: { $each: [data?.message], }, }, }
+                { $push: { inbox: { $each: [data?.message], }, }, }
             );
         }
         else {

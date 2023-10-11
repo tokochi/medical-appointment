@@ -4,7 +4,6 @@ import Header from '@components/Header';
 import Footer from '@components/Footer';
 import { useStore } from "@context/serverStore";
 import ClientSideWrapper from '@components/ClientSideWrapper';
-import ThemeProvider from '@components/ThemeProvider';
 import StoreInit from '@components/StoreInit';
 import GetSession from '@components/GetSession';
 
@@ -15,22 +14,35 @@ import GetSession from '@components/GetSession';
   };
 export default async function RootLayout({ children }) {
   const session = await GetSession()
-  const { dir} = useStore.getState()
-  useStore.setState({ session });
-  const data = {
-    session: JSON.stringify(session),
-  };
+  const { dir, fetchUser, fetchAdmin, fetchDoctor } = useStore.getState()
+  let currentUser = null;
+  if (session) {
+    switch (true) {
+      case session.isUser:
+        currentUser = await fetchUser(session._id);
+        break;
+        case session.isAdmin:
+          currentUser = await fetchAdmin(session._id);
+          break;
+          case session.isDoctor:
+            currentUser = await fetchDoctor(session._id);
+            break;
+          }
+        }
+        useStore.setState({ session });
+        const data = {
+          session: JSON.stringify(currentUser),
+        };
+      
   return (
     <html lang='en' dir={dir} >
-      <body className='text-gray-900 dark:text-gray-100 w-full ' >
+      <body className='text-gray-900 dark:text-gray-100 w-full flex flex-col justify-between' >
         {data?.session && <StoreInit {...data} />}
-        <ThemeProvider>
-        <Header session={session}/>
+        <Header session={currentUser} />
           <ClientSideWrapper>
             {children}
           </ClientSideWrapper>
           <Footer />
-        </ThemeProvider>
       </body>
     </html>
   );

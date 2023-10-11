@@ -2,11 +2,11 @@ import { Schema, model, models } from 'mongoose';
 
 // *********** Schema **********
 const questionSchema = new Schema({
-    title: "string",
-    text: "string",
+    title: String,
+    text: String,
     speciality: {},
-    response: "string",
-    author: "string",
+    response: String,
+    author: String,
     details: {},
     files: [],
     doctorID: {

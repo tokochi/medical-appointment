@@ -1,20 +1,37 @@
-import Image from "next/image";
+"use client";
 import Link from "next/link";
+import Image from "next/image";
+import { useRouter, usePathname } from "next/navigation";
+
 function Footer() {
+  const path = usePathname();
   return (
-    <div className=''>
-      <div className='bg-gray-50 dark:bg-gray-900 flex flex-wrap p-4 gap-4'>
+    <div className='mt-auto'>
+      <div
+        className={`bg-gray-50 ${
+          (path.includes("/user") || (path.includes("/login")) && "hidden")
+        } dark:bg-gray-900 flex flex-wrap p-4 gap-4`}>
         <div className='basis17 flex flex-col gap-2'>
           <div className='flex gap-2 items-center'>
-            <Image className="w-auto h-auto" src='/images/logo.webp' width={60} height={60} alt='logo' />
+            <Image
+              className='w-auto h-auto'
+              src='/images/logo.webp'
+              width={60}
+              height={60}
+              alt='logo'
+            />
             <div className=''>
               <h1 className='font-semibold'>الشبكة الطبية</h1>
               <h1 className='font-semibold'>المهنية الأولى</h1>
             </div>
           </div>
           <div className=''>
-           <Link href="/about"><h2 className=' text-sky-500'>من نحن؟</h2></Link>
-            <Link href="/contact-us"><h2 className=' text-sky-500'>اتصل بنا</h2></Link>
+            <Link href='/about'>
+              <h2 className=' text-sky-500'>من نحن؟</h2>
+            </Link>
+            <Link href='/contact-us'>
+              <h2 className=' text-sky-500'>اتصل بنا</h2>
+            </Link>
             <h2 className=' text-sky-500'>ميثاق الممارسات الجيدة</h2>
             <h2 className=' text-sky-500'>شروط وأحكام الاستخدام</h2>
             <h2 className=' text-sky-500'>سياسة الخصوصية</h2>
@@ -22,11 +39,21 @@ function Footer() {
         </div>
         <div className='basis17 flex flex-col gap-2'>
           <h1 className='font-semibold my-2'>عما تبحث ؟</h1>
-          <Link href="/doctors"><h2 className=' text-sky-500'>طبيب</h2></Link>
-          <Link href="/pharms"><h2 className=' text-sky-500'>صيدلية</h2></Link>
-          <Link href="/hospitals"><h2 className=' text-sky-500'>مصحة</h2></Link>
-          <Link href="/labs"><h2 className=' text-sky-500'>مختبر</h2></Link>
-          <Link href="/questions"><h2 className=' text-sky-500'>استشارات طبية</h2></Link>
+          <Link href='/doctors'>
+            <h2 className=' text-sky-500'>طبيب</h2>
+          </Link>
+          <Link href='/pharms'>
+            <h2 className=' text-sky-500'>صيدلية</h2>
+          </Link>
+          <Link href='/hospitals'>
+            <h2 className=' text-sky-500'>مصحة</h2>
+          </Link>
+          <Link href='/labs'>
+            <h2 className=' text-sky-500'>مختبر</h2>
+          </Link>
+          <Link href='/questions'>
+            <h2 className=' text-sky-500'>استشارات طبية</h2>
+          </Link>
         </div>
         <div className='basis17 flex flex-col gap-2'>
           <h1 className='font-semibold my-2'>عمليات البحث الشائعة</h1>
@@ -53,11 +80,29 @@ function Footer() {
       </div>
       <div className='border-b-4 border-b-border w-full'></div>
       <div className='bg-primary text-white p-4 flex flex-wrap w-full justify-around'>
-        <h1 className='font-semibold my-2'>كل الحقوق محفوظة  sehatitaji.com .2023</h1>
+        <h1 className='font-semibold my-2'>كل الحقوق محفوظة sehatitaji.com .2023</h1>
         <div className='flex gap-4 justify-center items-center'>
-          <Image className="w-auto h-auto" src='/images/facebook.webp' width={35} height={35} alt='logo' />
-          <Image className="w-auto h-auto" src='/images/instagram.webp' width={35} height={35} alt='logo' />
-          <Image className="w-auto h-auto" src='/images/whatsapp.webp' width={35} height={35} alt='logo' />
+          <Image
+            className='w-auto h-auto'
+            src='/images/facebook.webp'
+            width={35}
+            height={35}
+            alt='logo'
+          />
+          <Image
+            className='w-auto h-auto'
+            src='/images/instagram.webp'
+            width={35}
+            height={35}
+            alt='logo'
+          />
+          <Image
+            className='w-auto h-auto'
+            src='/images/whatsapp.webp'
+            width={35}
+            height={35}
+            alt='logo'
+          />
         </div>
         <div className=''></div>
       </div>

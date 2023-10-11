@@ -16355,6 +16355,33 @@ export const visitArg = [
   { value: "Avf Doppler", text: "AVF دوبلر", nameFR: "AVF Doppler" },
   { value: "Doppler testicle", text: "دوبلر الخصية", nameFR: "Testicule Doppler" },
 ];
+export const bloodTypes = [
+  { text: "فصيلة الدم A+", value: "A+" },
+  { text: "فصيلة الدم A-", value: "A-" },
+  { text: "فصيلة الدم B+", value: "B+" },
+  { text: "فصيلة الدم B-", value: "B-" },
+  { text: "فصيلة الدم AB+", value: "AB+" },
+  { text: "فصيلة الدم AB-", value: "AB-" },
+  { text: "فصيلة الدم O+", value: "O+" },
+  { text: "فصيلة الدم O-", value: "O-" }
+];
+export const chronicDiseases = [
+  { text: "داء السكري", value: "Diabetes" },
+  { text: "ارتفاع ضغط الدم", value: "Hypertension" },
+  { text: "أمراض القلب والأوعية الدموية", value: "Cardiovascular Diseases" },
+  { text: "السرطان", value: "Cancer" },
+  { text: "أمراض الجهاز التنفسي المزمنة", value: "Chronic Respiratory Diseases" },
+  { text: "أمراض الكلى المزمنة", value: "Chronic Kidney Diseases" },
+  { text: "السمنة", value: "Obesity" },
+  { text: "الروماتيزم وأمراض المفاصل", value: "Rheumatism and Joint Diseases" },
+  { text: "مرض التصلب العصبي المتعدد", value: "Multiple Sclerosis" },
+  { text: "أمراض الكبد المزمنة", value: "Chronic Liver Diseases" },
+  { text: "الصداع النصفي", value: "Migraine" },
+  { text: "الإمساك المزمن", value: "Chronic Constipation" },
+  { text: "ارتفاع نسبة الكولسترول", value: "High Cholesterol" },
+  { text: "أمراض الجهاز الهضمي المزمنة", value: "Chronic Digestive Diseases" },
+  { text: "التهاب المفاصل", value: "Arthritis" },
+];
 export const specialities = [
   {
     value: "Heart and arteries specialist",
@@ -16933,7 +16960,7 @@ export const specialities = [
 ];
 export const pharmDefault = {
   name: "",
-  title: { text:"صيديلة", value :"pharmacy"},
+  title: { text: "صيديلة", value: "pharmacy" },
   admins: [],
   address: {
     street: "",
@@ -17026,7 +17053,7 @@ export const userDefault = {
     commune: {},
   },
   phone: { line1: "", line2: "", mobile: "" },
-  notifications: { users:false, doctors: false, posts: false,questions: false },
+  notifications: { users: false, doctors: false, posts: false, questions: false },
 
   googleMap: { lat: 36.7539, lng: 3.0589 },
   files: {},
@@ -17084,13 +17111,13 @@ export const doctorDefault = {
   instagram: "",
   whatsapp: "",
   workTime: [
-    { id:6, state: "open", dayAR: "السبت", day: "Saturday", from: "08:30", to: "16:00" },
-    { id:0, state: "open", dayAR: "الأحد", day: "Sunday", from: "08:30", to: "16:00" },
-    { id:1, state: "open", dayAR: "الإثنين", day: "Monday", from: "08:30", to: "16:00" },
-    { id:2, state: "open", dayAR: "الثلاثاء", day: "Tuesday", from: "08:30", to: "16:00" },
-    { id:3, state: "open", dayAR: "الأربعاء", day: "Wednesday", from: "08:30", to: "16:00" },
-    { id:4, state: "open", dayAR: "الخميس", day: "Thursday", from: "08:30", to: "16:00" },
-    { id:5, state: "close", dayAR: "الجمعة", day: "Friday", from: "08:30", to: "16:00" },
+    { id: 6, state: "open", dayAR: "السبت", day: "Saturday", from: "08:30", to: "16:00" },
+    { id: 0, state: "open", dayAR: "الأحد", day: "Sunday", from: "08:30", to: "16:00" },
+    { id: 1, state: "open", dayAR: "الإثنين", day: "Monday", from: "08:30", to: "16:00" },
+    { id: 2, state: "open", dayAR: "الثلاثاء", day: "Tuesday", from: "08:30", to: "16:00" },
+    { id: 3, state: "open", dayAR: "الأربعاء", day: "Wednesday", from: "08:30", to: "16:00" },
+    { id: 4, state: "open", dayAR: "الخميس", day: "Thursday", from: "08:30", to: "16:00" },
+    { id: 5, state: "close", dayAR: "الجمعة", day: "Friday", from: "08:30", to: "16:00" },
   ],
 }
 export const titles = (gender) => [
@@ -17448,48 +17475,60 @@ export const doctors = [
       { label: "بطاقة الصرف", image: "/images/card-payment.webp" },
     ],
     workTime: [
-      {id:6,
-id:0,
-id:1,
-id:2,
-id:3,
-id:4,
-id:5,day: "السبت", from: "13:00", to: "16:00" },
-      {id:6,
-id:0,
-id:1,
-id:2,
-id:3,
-id:4,
-id:5,day: "الأحد", from: "08:30", to: "16:00" },
-      {id:6,
-id:0,
-id:1,
-id:2,
-id:3,
-id:4,
-id:5,day: "الإثنين", from: "08:30", to: "16:00" },
-      {id:6,
-id:0,
-id:1,
-id:2,
-id:3,
-id:4,
-id:5,day: "الثلاثاء", from: "08:30", to: "16:00" },
-      {id:6,
-id:0,
-id:1,
-id:2,
-id:3,
-id:4,
-id:5,day: "الأربعاء", from: "08:30", to: "16:00" },
-      {id:6,
-id:0,
-id:1,
-id:2,
-id:3,
-id:4,
-id:5,day: "الخميس", from: "08:30", to: "16:00" },
+      {
+        id: 6,
+        id: 0,
+        id: 1,
+        id: 2,
+        id: 3,
+        id: 4,
+        id: 5, day: "السبت", from: "13:00", to: "16:00"
+      },
+      {
+        id: 6,
+        id: 0,
+        id: 1,
+        id: 2,
+        id: 3,
+        id: 4,
+        id: 5, day: "الأحد", from: "08:30", to: "16:00"
+      },
+      {
+        id: 6,
+        id: 0,
+        id: 1,
+        id: 2,
+        id: 3,
+        id: 4,
+        id: 5, day: "الإثنين", from: "08:30", to: "16:00"
+      },
+      {
+        id: 6,
+        id: 0,
+        id: 1,
+        id: 2,
+        id: 3,
+        id: 4,
+        id: 5, day: "الثلاثاء", from: "08:30", to: "16:00"
+      },
+      {
+        id: 6,
+        id: 0,
+        id: 1,
+        id: 2,
+        id: 3,
+        id: 4,
+        id: 5, day: "الأربعاء", from: "08:30", to: "16:00"
+      },
+      {
+        id: 6,
+        id: 0,
+        id: 1,
+        id: 2,
+        id: 3,
+        id: 4,
+        id: 5, day: "الخميس", from: "08:30", to: "16:00"
+      },
     ],
     isFullTimeOpen: true,
     insurance: true,
@@ -17757,7 +17796,7 @@ export const pharms = [
     mobile: "+213 023 97 39 37",
     isFullTimeOpen: true,
     insurance: true,
-  
+
     avatar:
       "https://imagecdn.med.ovh/unsafe/130x130/filters:format(webp):quality(100):blur(0)/https://www.med.tn/uploads/pharmacy/767-pharmacie-kammoun-mohamed-amine-1664448714.jpg",
     OfficePics: [
@@ -17835,19 +17874,19 @@ export const questions = [{
   id: 1, title: "التهاب في اللوزتين",
   text: "مند طفولتي وانا اعاني من التهاب اللوزتين المتكرر و مرضي به يكون صعب للغاية ازور الطبيب اخد الدواء لكنه متكرر كثيرا . مؤخرا احس ان هناك التهاب دائم في اللوزتين يختفي في القليل من الاحيان فقط و لكنه مؤلم في الكثير من الاحيان الاخرى عملت تحليل aslo نتائجه كانت مرتفعة جدا بعدها وصفت لي طبيبة عامة حقنة البينيسيلين كل 21 يوم لكن عندما اأخرها قليلا امرض بالتهاب اللوزتين يتكون عنه قيح و حرارة مرتفعة و كتير من الاعراض تطرحني الفراش مؤخرا رغم اخدي الحقنة لازال هناك التهاب طفيف احس به مع العلم اني اعاني من التهاب الجيوب الانفية",
   response: "أنصحك بإزالتهم",
-  speciality: "string",
+  speciality: String,
   doctorID: "65066245f4907d5849f23146",
 },
 {
   id: 2, title: "القشرة الكثيفة",
   text: "اعاني في الفترة الاخيرة من القشرة الغير العادية في شعري فهي تسبب لي حبوب في شعري الى جانب الحكة وهي تتجمع طبقات طبقات فوق جلد راسي وانا حاليا استعمل شامبو اشتريته من الصيدليه اسمه uriage ",
   response: "اسباب القشرة في الشعر عديدة. يمكن أن تكون فطريات، حساسية، صدفية او التهاب الجلد الدهني. يجب تشخيص الحالة اولا حتى تتمكن من استعمال العلاج المناسب.",
-  speciality: "string",
+  speciality: String,
   doctorID: "65066245f4907d5849f23146",
 }, {
   id: 3, title: "ضعف في ميزان",
   text: "بنتي ضعيفة برشا نحسها وكيف نهزها لطبيب ديما يقلي لباس وميزانها مقبول نحب نعرف فماش مكمل غذائي نجم نعطيهولها ",
-  speciality: "string",
+  speciality: String,
   response: "كان الطبيب قال لابأس زايد بش تعطيها اي مكمل غذائي",
   doctorID: "65066469f4907d5849f2314e",
 }];

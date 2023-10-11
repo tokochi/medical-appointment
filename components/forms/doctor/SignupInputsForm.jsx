@@ -353,7 +353,6 @@ function SignupInputsForm(props) {
               label='متوسط مدة الاستشارة:'
             />
           </div>
-
           <div id='payment' className='flex flex-wrap items-center gap-2'>
             <CheckboxInput
               name='payment.cash'

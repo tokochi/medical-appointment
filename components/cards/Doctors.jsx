@@ -5,8 +5,9 @@ import SlicerServices from "@components/SlicerServices";
 import TakeAppointment from "@components/buttons/TakeAppointment";
 
 async function Doctors() {
-  const { fetchDoctors } = useStore.getState();
-  const doctors = await fetchDoctors();
+  const { fetchDoctors} = useStore.getState();
+
+   const doctors = await fetchDoctors();
   return (
     <div className='flex flex-col gap-4'>
       {doctors.map((item, index) => (
@@ -92,7 +93,7 @@ async function Doctors() {
               </Link>
             </div>
             <div className='mb-1 flex flex-col gap-2 grow shrink'>
-              <TakeAppointment doctor={item} />
+              <TakeAppointment data={JSON.stringify(item)} />
               <Link href={`/doctors/profile/${item?._id}`} className=''>
                 <button
                   id='call-btn'
@@ -122,7 +123,7 @@ async function Doctors() {
                   />
                 </Link>
               ))}
-              <SlicerServices item={item} />
+              <SlicerServices data={JSON.stringify(item)} />
             </div>
           </div>
         </div>

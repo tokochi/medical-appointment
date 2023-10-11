@@ -345,7 +345,7 @@ console.log(addedAdmins);
           <div id='wilaya' className=''>
             <SelectInput
               name='address?.wilaya'
-              value={hospInfo?.otherServices?.value}
+              value={hospInfo?.address?.wilaya?.value}
               onChange={(e) => handleSelectInput(e, "hospInfo")}
               options={wilaya}
               option_value='value'

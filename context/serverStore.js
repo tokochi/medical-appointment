@@ -561,6 +561,19 @@ export const useStore = create((set, get) => ({
       console.error('🚀 ~Error fetching data:', error);
     }
   },
+  fetchUser: async (id) => {
+
+    await connectToDB();
+    try {
+      if (id) {
+        const response = await User.findOne({ _id: id });
+        set({ selectedUser: response });
+        return response
+      }
+    } catch (error) {
+      console.error('🚀 ~Error fetching data:', error);
+    }
+  },
   fetchDoctor: async (id) => {
 
     await connectToDB();
@@ -621,10 +634,11 @@ export const useStore = create((set, get) => ({
     }
   },
   fetchDoctors: async () => {
+  
     await connectToDB();
     try {
       const response = await Doctor.find();
-      set({ doctors: response });
+       set({ doctors: response });
       return response
     } catch (error) {
       console.error('🚀 ~Error fetching data:', error);

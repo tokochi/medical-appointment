@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import ShowPhoneNum from "@components/buttons/ShowPhoneNum";
 import TakeAppointment from "@components/buttons/TakeAppointment";
-import SendMessage from "@components/forms/question/SendMessage";
+import SendMessage from "@components/buttons/SendMessage";
 
 async function page({ params }) {
   const { fetchDoctor } = useStore.getState();

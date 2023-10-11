@@ -1,49 +1,20 @@
-"use client";
-import { useStore } from "@context/store";
+
+import { useStore } from "@context/serverStore";
 import Image from "next/image";
 import Link from "next/link";
 import Sidebar from "./Sidebar";
-import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+import SidebarToggle from "./buttons/SidebarToggle";
+import DarkModeToggle from "./buttons/DarkModeToggle";
+import HeaderButtons from "./buttons/HeaderButtons";
+import StoreInit from "./StoreInit";
 
-function Header({ session }) {
- const { isSidebarOpen } = useStore();
-  function toggleSidebar() {
-    useStore.setState({ sidebarOpen: !useStore.getState().sidebarOpen });
-  }
-  function toggleDark() {
-    try {
-      if (typeof window !== "undefined") {
-        const value = JSON.parse(localStorage?.getItem("theme"));
-        localStorage?.setItem("theme", JSON.stringify(!value));
-        document.documentElement.classList?.toggle("dark");
-        useStore.setState({ darkTheme: !value });
-      }
-    } catch (error) {
-      console.log("🚀 ~error localStorage");
-    }
-  }
+async function Header({ session }) {
+  const { isSidebarOpen} = useStore.getState();
   return (
-    <nav className='bg-primary  border-gray-200 border-b-4 border-b-border transition-colors duration-300'>
+    <nav  className='bg-primary  border-gray-200 border-b-4 border-b-border transition-colors duration-300'>
       <div className='container flex items-center  w-full py-2  px-4'>
-        <button
-          data-collapse-toggle='navbar-default'
-          className='inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg  hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600'
-          onClick={toggleSidebar}>
-          <svg
-            className='w-5 h-5'
-            aria-hidden='true'
-            xmlns='http://www.w3.org/2000/svg'
-            fill='none'
-            viewBox='0 0 17 14'>
-            <path
-              stroke='currentColor'
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth={2}
-              d='M1 1h15M1 7h15M1 13h15'
-            />
-          </svg>
-        </button>
+        <StoreInit />
+        <SidebarToggle />
         <Link className='' href='/'>
           <Image
             src='/images/logo.webp'
@@ -76,7 +47,6 @@ function Header({ session }) {
             اتصل بنا
           </Link> */}
         </div>
-
         {!session ? (
           <Link className='mx-2 mr-auto' href='/login'>
             <button type='button' className='btn px-4 py-2'>
@@ -84,19 +54,11 @@ function Header({ session }) {
             </button>
           </Link>
         ) : (
-          <Link className='mx-2 mr-auto' href='/'>
-            <button onClick={() => signOut()} type='button' className='btn px-4 py-2'>
-              خروج
-            </button>
-          </Link>
+            <HeaderButtons />
         )}
-        <button
-          onClick={toggleDark}
-          type='button'
-          className={` mx-2 origin-center dark:rotate-180 transition-all duration-300`}>
-          <Image src='/images/dark.webp' width={20} height={20} alt='Flowbite Logo' />
-        </button>
+        <DarkModeToggle />
       </div>
+
       <div
         className={`${
           isSidebarOpen &&

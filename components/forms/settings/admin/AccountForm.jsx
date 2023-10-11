@@ -82,7 +82,7 @@ function CompanyForm() {
          </div>
          <div id='facebook' className=''>
            <IconInput
-             icon='/images/facebook.webp'
+             icon='/images/Facebook.webp'
              name='facebook'
              value={adminInfo?.facebook}
              onChange={(e) => handleInputChange(e, "adminInfo")}
@@ -93,7 +93,7 @@ function CompanyForm() {
          </div>
          <div id='instagram' className=''>
            <IconInput
-             icon='/images/instagram.webp'
+             icon='/images/Instagram.webp'
              name='instagram'
              value={adminInfo?.instagram}
              onChange={(e) => handleInputChange(e, "adminInfo")}
@@ -161,8 +161,8 @@ function CompanyForm() {
          </div>
          <div id='wilaya' className=''>
            <SelectInput
-             name='address?.wilaya'
-             value={adminInfo?.otherServices?.value}
+             name='address.wilaya'
+             value={adminInfo?.address?.wilaya?.value}
              onChange={(e) => handleSelectInput(e, "adminInfo")}
              options={wilaya}
              option_value='value'
@@ -173,11 +173,11 @@ function CompanyForm() {
          </div>
          <div id='daira' className=''>
            <SelectInput
-             name='address?.daira'
+             name='address.daira'
              value={adminInfo?.address?.daira?.value}
              onChange={(e) => handleSelectInput(e, "adminInfo")}
              options={daira.filter(
-               (region) => region?.wilaya === adminInfo?.otherServices?.value
+               (region) => region?.wilaya === adminInfo?.address?.wilaya?.value
              )}
              option_value='value'
              option_text='text'
@@ -187,7 +187,7 @@ function CompanyForm() {
          </div>
          <div id='commune' className=''>
            <SelectInput
-             name='address?.commune'
+             name='address.commune'
              value={adminInfo?.address?.commune?.value}
              onChange={(e) => handleSelectInput(e, "adminInfo")}
              options={commune.filter(
@@ -202,7 +202,7 @@ function CompanyForm() {
          <div id='street' className=''>
            <IconInput
              icon='/images/map.webp'
-             name='address?.street'
+             name='address.street'
              value={adminInfo?.address?.street}
              onChange={(e) => handleInputChange(e, "adminInfo")}
              type='text'

@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { useStore } from "@context/store";
 import Message from "@components/cards/Message";
-import LoginOrSignup from "../user/LoginOrSignup";
+import LoginOrSignup from "../forms/user/LoginOrSignup";
 
 function SendMessage({doctor}) {
 const { session } = useStore();
