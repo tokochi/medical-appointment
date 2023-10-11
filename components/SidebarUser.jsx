@@ -12,8 +12,8 @@ function SidebarUser() {
       className={` min-w-[50px] m-1 md:m-2 rounded-xl bg-gray-100 shrink-0 overflow-x-hidden shadow-xl dark:bg-[#002130] transition-w duration-300`}>
       <div className='flex flex-col gap-4 p-2 list-none dark:text-gray-100'>
         <li className={`mt-4 ${path === "/user" && "dark:bg-primary bg-cyan-500 "} rounded p-2`}>
-          <button
-            onClick={() => router.push("/user")}
+          <Link
+           onClick={() => router.refresh()}
             href='/user'
             className={`flex gap-2 font-semibold `}>
             <svg
@@ -23,11 +23,11 @@ function SidebarUser() {
               <path d='M20.5 3C18.203405 3 16.305701 4.7666235 16.050781 7L12.5 7C10.015 7 8 9.015 8 11.5L8 38.5C8 40.985 10.015 43 12.5 43L35.5 43C37.985 43 40 40.985 40 38.5L40 11.5C40 9.015 37.985 7 35.5 7L31.949219 7C31.694299 4.7666235 29.796595 3 27.5 3L20.5 3 z M 20.5 6L27.5 6C28.346499 6 29 6.6535009 29 7.5C29 8.3464991 28.346499 9 27.5 9L20.5 9C19.653501 9 19 8.3464991 19 7.5C19 6.6535009 19.653501 6 20.5 6 z M 24 17C26.209 17 28 18.791 28 21C28 23.209 26.209 25 24 25C21.791 25 20 23.209 20 21C20 18.791 21.791 17 24 17 z M 17.8125 28L30.189453 28C31.187453 28 32 28.8125 32 29.8125L32 30.230469C32 32.153469 29.457 35 24 35C18.543 35 16 32.153469 16 30.230469L16 29.8125C16 28.8125 16.8125 28 17.8125 28 z" fill="#3C3C3B' />
             </svg>
             <p className={`hidden md:inline-block `}>معلوماتي</p>
-          </button>
+          </Link>
         </li>
         <li className={`${path === "/user/health" && "dark:bg-primary bg-cyan-500"} rounded p-2`}>
-          <button
-            onClick={() => router.push("/user/health")}
+          <Link
+          onClick={() => router.refresh()}
             href='/user/health'
             className='flex gap-2 font-semibold'>
             <svg
@@ -37,7 +37,7 @@ function SidebarUser() {
               <path d='M8.5 8C6.019 8 4 10.019 4 12.5L4 35.5C4 35.917 4.0746406 36.312312 4.1816406 36.695312C4.2226406 36.543312 4.2643125 36.391188 4.3203125 36.242188L5.5390625 33L6.6152344 30.132812L9.3359375 22.890625C10.209938 20.562625 12.467125 19 14.953125 19L42 19L42 17.5C42 15.019 39.981 13 37.5 13L24.042969 13L19.572266 9.2734375C18.586266 8.4514375 17.335734 8 16.052734 8L8.5 8 z M 14.953125 22C13.703125 22 12.583531 22.775312 12.144531 23.945312L7.1308594 37.296875C6.6388594 38.603875 7.6049531 40 9.0019531 40L38.046875 40C39.296875 40 40.416469 39.224688 40.855469 38.054688L45.865234 24.714844C46.366234 23.405844 45.400047 22 43.998047 22L14.953125 22 z' />
             </svg>
             <p className={`hidden md:inline-block`}>ملفي الطبي</p>
-          </button>
+          </Link>
         </li>
         <li
           className={`${

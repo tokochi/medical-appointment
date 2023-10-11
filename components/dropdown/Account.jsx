@@ -20,7 +20,10 @@ function Account() {
        rounded-lg shadow ${!account.isOpen && "hidden"} bg-cyan-900`}>
       <ul className=' text-sm text-gray-700 z-[500] dark:text-gray-200'>
         <li
-          onClick={() => {router.push("/user") }}
+          onClick={() => {
+            router.push("/user"); router.refresh();
+            useStore.setState({ account: { isOpen: false } });
+          }}
           className={`card flex flex-col gap-2 justify-center items-center rounded-lg  shadow p-1 mx-1 m-1  `}>
           حسـابي
         </li>

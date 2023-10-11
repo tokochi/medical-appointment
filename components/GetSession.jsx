@@ -1,5 +1,6 @@
 import { getServerSession } from "next-auth";
 import { options } from "@app/api/auth/[...nextauth]/options";
+export const dynamic = "force-dynamic";
 async function GetSession() {
   let session = null;
   let retryCount = 0;
