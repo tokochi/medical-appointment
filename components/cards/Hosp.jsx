@@ -108,7 +108,7 @@ async function Hosps() {
                   />
                 </Link>
               ))}
-              <SlicerServices item={item} />
+              <SlicerServices data={JSON.stringify(item)} />
             </div>
           </div>
         </div>

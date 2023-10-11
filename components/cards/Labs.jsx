@@ -108,7 +108,7 @@ async function Labs() {
                   />
                 </Link>
               ))}
-              <SlicerServices item={item} />
+              <SlicerServices data={JSON.stringify(item)} />
             </div>
           </div>
         </div>
