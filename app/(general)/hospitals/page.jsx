@@ -2,8 +2,10 @@ import Hosp from "@components/cards/Hosp";
 import Provinces from "@components/cards/Provinces";
 import SearchHospInPage from "@components/forms/searchs/SearchHospInPage";
 import SearchFaqInPage from "@components/forms/searchs/SearchFaqInPage";
-
-function page() {
+import { useStore } from "@context/serverStore";
+async function page() {
+        const { fetchHosps } = useStore.getState();
+  const hosps = await fetchHosps();
   return (
     <div className='bg-sky-50 dark:bg-primary'>
       <h1 id='title' className='font-bold text-clamp-2xl mx-2 p-2'>
@@ -19,7 +21,7 @@ function page() {
             <Provinces />
           </div>
           <div id='doct-cards' className='p-2 my-2'>
-            <Hosp />
+            <Hosp data={JSON.stringify(hosps)} />
           </div>
         </div>
         <div className='grow shrink basis-[20%] min-w-[280px] p-2'>

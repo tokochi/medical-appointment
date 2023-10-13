@@ -1,7 +1,7 @@
 import { useStore } from "@context/serverStore";
 import AccountForm from "@components/forms/settings/admin/AccountForm";
-import StoreInit from "@components/StoreInit";
-import GetSession from "@components/GetSession";
+import StoreInit from "@components/utils/StoreInit";
+import GetSession from "@components/session/GetSession";
 
 export default async function page() {
   const session = await GetSession()

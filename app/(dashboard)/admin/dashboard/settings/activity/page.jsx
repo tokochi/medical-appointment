@@ -1,5 +1,5 @@
 import { useStore } from "@context/serverStore";
-import StoreInit from "@components/StoreInit";
+import StoreInit from "@components/utils/StoreInit";
 import Activity from "@components/forms/settings/admin/Activity";
 
 export default async function Company() {

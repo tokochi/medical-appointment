@@ -10,13 +10,13 @@ function CheckboxInput({
   ...rest
 }) {
   return (
-    <div>
+    <div >
       <label
         htmlFor={name}
         className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>
         {placeholder}
       </label>
-      <div className='flex items-center gap-2'>
+      <div className='flex items-start justify-start gap-2'>
         <input
           id={id}
           name={name}

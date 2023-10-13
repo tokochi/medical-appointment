@@ -1,8 +1,8 @@
-import SectionSearch from "@components/SectionSearch";
-import SectionSpecialties from "@components/SectionSpecialties";
-import SectionWhyUs from "@components/SectionWhyUs";
-import SectionWorks from "@components/SectionWorks";
-import SectionBlog from "@components/SectionBlog";
+import SectionSearch from "@components/home/SectionSearch";
+import SectionSpecialties from "@components/home/SectionSpecialties";
+import SectionWhyUs from "@components/home/SectionWhyUs";
+import SectionWorks from "@components/home/SectionWorks";
+import SectionBlog from "@components/home/SectionBlog";
 
 
 export default function Home() {

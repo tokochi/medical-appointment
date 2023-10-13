@@ -1,11 +1,11 @@
 import '@app/globals.css'
 import '@app/SyncfussionCSS.css'
-import Header from '@components/Header';
-import Footer from '@components/Footer';
+import Header from '@components/layout/Header';
+import Footer from '@components/layout/Footer';
 import { useStore } from "@context/serverStore";
-import ClientSideWrapper from '@components/ClientSideWrapper';
-import StoreInit from '@components/StoreInit';
-import GetSession from '@components/GetSession';
+import ClientSideWrapper from '@components/utils/ClientSideWrapper';
+import StoreInit from '@components/utils/StoreInit';
+import GetSession from '@components/session/GetSession';
 export const dynamic = 'force-dynamic'
 
   export const Metadata = {
@@ -38,7 +38,7 @@ export default async function RootLayout({ children }) {
     <html lang='en' dir={dir} >
       <body className='text-gray-900 dark:text-gray-100 w-full flex flex-col justify-between' >
         {data?.session && <StoreInit {...data} />}
-        <Header session={currentUser} />
+        <Header data={JSON.stringify(currentUser)} />
           <ClientSideWrapper>
             {children}
           </ClientSideWrapper>

@@ -4,7 +4,8 @@ import { useStore } from "@context/store";
 import Message from "@components/cards/Message";
 import LoginOrSignup from "../forms/user/LoginOrSignup";
 
-function SendMessage({doctor}) {
+function SendMessage({ data }) {
+  const doctor = JSON.parse(data);
 const { session } = useStore();
   return (
     <button

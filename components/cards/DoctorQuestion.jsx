@@ -6,7 +6,6 @@ function DoctorQuestion({ doctor }) {
   return (
     <div>
       <Link
-        // onClick={(e) => useStore.setState({ selectedDoctor: doctor })}
         className='my-1 grow shrink basis-[70%] min-w-[280px] flex gap-4'
         href={`/doctors/profile/${doctor?._id}`}>
         <div id='avatar'>

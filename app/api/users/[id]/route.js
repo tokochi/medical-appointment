@@ -1,6 +1,6 @@
 import { connectToDB } from '@utils/database';
 import User from '@models/user';
-
+import bcrypt from 'bcrypt';
 // ****** Get one Data *********
 export async function GET(req, { params }) {
     await connectToDB();
@@ -21,7 +21,7 @@ export async function GET(req, { params }) {
 // ****** Update *********
 export async function PUT(req, { params }) {
     await connectToDB();
-    const data = await req.json()
+    const data = await req.json();
     try {
         if (!params?.id) {
             return new Response('Missing ID parameter', { status: 400 }); // Bad Request
@@ -29,11 +29,34 @@ export async function PUT(req, { params }) {
         if (!data) {
             return new Response('Empty request body', { status: 400 }); // Bad Request
         }
-        const response = await User.updateOne({ _id: params?.id }, { $set: data })
-        if (response.acknowledged === true && response.modifiedCount === 1) {
-            return new Response('User updated successfully', { status: 200 }); // OK
+        if (data?.oldPassword) {
+            const user = await User.findOne({ _id: params?.id });
+            if (!user) {
+                return new Response('User not found', { status: 404 }); // Not Found
+            }
+        
+            const passwordMatch = await bcrypt.compare(data?.oldPassword, user?.password);
+            console.log("🚀 ~ passwordMatch:", passwordMatch)
+            if (!passwordMatch) {
+                return new Response('Old password is incorrect', { status: 400 }); // Bad Request
+            }
+            const hashedPassword = await bcrypt.hash(data?.password, 10);
+            const response = await User.updateOne({ _id: params?.id }, { $set: { password: hashedPassword } });
+          console.log("🚀 ~ response:", response)
+
+            if (response.acknowledged === true && response.modifiedCount === 1) {
+                return new Response('User updated successfully', { status: 200 }); // OK
+            } else {
+                return new Response('Failed to update user', { status: 500 }); // Internal Server Error
+            }
         } else {
-            return new Response('Failed to update user', { status: 500 }); // Internal Server Error
+            // If oldPassword and password are not provided, proceed with a regular update
+            const response = await User.updateOne({ _id: params?.id }, { $set: data });
+            if (response.acknowledged === true && response.modifiedCount === 1) {
+                return new Response("User Updated Successfully", { status: 200 }); // OK
+            } else {
+                return new Response('Failed to update user', { status: 500 }); // Internal Server Error
+            }
         }
     } catch (error) {
         return new Response(JSON.stringify(error), { status: 500 });

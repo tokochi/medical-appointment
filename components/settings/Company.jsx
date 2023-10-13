@@ -1,6 +1,6 @@
 import { useStore } from "@context/serverStore";
 import CompanyForm from "@components/forms/settings/admin/CompanyForm";
-import StoreInit from "@components/StoreInit";
+import StoreInit from "@components/utils/StoreInit";
 
 
 

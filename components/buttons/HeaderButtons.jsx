@@ -26,7 +26,7 @@ const { session, closeModelAnywhere } = useStore();
         {session?.avatar?.[0] ? (
           <Image
             name='acount'
-            className='rounded-xl pointer-events-none '
+            className='rounded-xl pointer-events-none aspect-square min-w-[24px]'
             src={session?.avatar?.[0]}
             width={27}
             height={27}

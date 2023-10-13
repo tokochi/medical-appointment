@@ -225,7 +225,7 @@ function SignupInputsForm(props) {
             </div>
           </div>
 
-          <div className=' p-4  text-center mx-auto  flex flex-col gap-2'>
+          <div className='p-4 text-center mx-auto'>
             <button
               type='submit'
               onClick={() => useStore.setState({ isLoading: true })}

@@ -27,13 +27,14 @@ function SignupInputsForm(props) {
     handleCheckbox,
     removeSelectAdmin,
     specialities,
+    medicalSpecialties,
     wilaya,
     daira,
     commune,
   } = useStore();
 
 
-  const filtredspecialities = specialities.filter(
+  const filtredspecialities = medicalSpecialties.filter(
     (specialty) =>
       !labInfo?.specialities?.some((addedspecialty) => addedspecialty.text === specialty.text)
   );
@@ -360,7 +361,7 @@ function SignupInputsForm(props) {
               name='address?.daira'
               value={labInfo?.address?.daira?.value}
               onChange={(e) => handleSelectInput(e, "labInfo")}
-              options={daira.filter((region) => region?.wilaya === labInfo?.otherServices?.value)}
+              options={daira.filter((region) => region?.wilaya === labInfo?.address?.wilaya?.value)}
               option_value='value'
               option_text='text'
               placeholder='الدائرة'

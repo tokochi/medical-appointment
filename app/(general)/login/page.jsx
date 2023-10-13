@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useStore } from "@context/store";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import LoadingComponent from "@components/LoadingComponent";
+import LoadingComponent from "@components/utils/LoadingComponent";
 import LoginForm from "@components/forms/user/LoginForm";
 import SignupForm from "@components/forms/user/SignupForm";
 import LoginOrSignup from "@components/forms/user/LoginOrSignup";
@@ -21,7 +21,7 @@ function page() {
     );
   }
   return (
-    <div className='flex  items-stretch'>
+    <div className='flex h-[calc(100vh-177px)] items-stretch'>
       <div
         id='background'
         className='hidden md:flex items-end justify-end flex-1 bg-white dark:bg-gray-900'>
@@ -51,7 +51,7 @@ function page() {
               <button
                 onClick={() => {
                   router.refresh();
-                  router.push("admin/dashboard");
+                  router.push("/user");
                 }}
                 className='font-semibold p-2 px-2 btn2'>
                 الذهاب الى حسـابي

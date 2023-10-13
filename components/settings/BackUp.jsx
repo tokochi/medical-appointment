@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useStore } from "../../contexts/Store";
 import backup from "../../data/icons/backup.webp";
-import Animation from "../animation";
+import Animation from "../utils/Animation";
 const { ipcRenderer } = require("electron");
 
 export default function BackUp() {

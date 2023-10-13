@@ -1,4 +1,4 @@
-import SidebarUser from "@components/SidebarUser";
+import SidebarUser from "@components/layout/SidebarUser";
 
 
 export default async function RootLayout({ children }) {

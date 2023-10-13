@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer"
 import bcrypt from 'bcrypt';
 import User from "@models/user";
-import { contactUsEmail, passwordReset, verficationCode, verficationEmail } from "@components/EmailTemplate";
+import { contactUsEmail, passwordReset, verficationCode, verficationEmail } from "@components/utils/EmailTemplate";
 
 export const sendEmail = async ({ email, type, userId, contactUsInfo }) => {
 

@@ -2,7 +2,7 @@
 import { useStore } from "@context/store";
 import Link from "next/link";
 import Image from "next/image";
-import SearchForm from "./forms/searchs/SearchForm";
+import SearchForm from "../forms/searchs/SearchForm";
 
 function SectionSearch() {
   const activeTab = useStore((state) => state.activeTab);

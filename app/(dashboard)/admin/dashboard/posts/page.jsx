@@ -1,4 +1,4 @@
-import StoreInit from "@components/StoreInit";
+import StoreInit from "@components/utils/StoreInit";
 import PostsTable from "@components/table/templates/PostsTable";
 import { useStore } from "@context/serverStore";
 

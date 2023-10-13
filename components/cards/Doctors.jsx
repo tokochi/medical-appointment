@@ -1,15 +1,19 @@
-import { useStore } from "@context/serverStore";
+"use client";
+import { useStore } from "@context/store";
 import Link from "next/link";
 import Image from "next/image";
-import SlicerServices from "@components/SlicerServices";
+import SlicerServices from "@components/utils/SlicerServices";
 import TakeAppointment from "@components/buttons/TakeAppointment";
+import NothingFound from "./NothingFound";
 
-async function Doctors() {
-  const { fetchDoctors} = useStore.getState();
+function Doctors({ data }) {
+  const { handleFilterInfo } = useStore();
+  const doctorsList = JSON.parse(data);
+  const doctors = handleFilterInfo(doctorsList);
 
-   const doctors = await fetchDoctors();
   return (
     <div className='flex flex-col gap-4'>
+      {doctors.length === 0 && <NothingFound/>}
       {doctors.map((item, index) => (
         <div key={item?._id} className=' p-2 card rounded-md'>
           <div
@@ -24,7 +28,7 @@ async function Doctors() {
                 href={`/doctors/profile/${item?._id}`}>
                 <div id={item?._id}>
                   <Image
-                    className='rounded-xl w-auto h-auto'
+                    className='rounded-xl w-auto h-auto min-w-[70px]'
                     src={item?.avatar?.[0]}
                     width={80}
                     height={80}

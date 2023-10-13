@@ -1,9 +1,10 @@
-import GetSession from "@components/GetSession";
+import GetSession from "@components/session/GetSession";
 import HeadTitle from "@components/cards/HeadTitle";
 import Header from "@components/dashboard/Header";
 import Sidebar from "@components/dashboard/Sidebar";
 import { redirect } from "next/navigation";
 import { useStore } from "@context/serverStore";
+import StoreInit from "@components/utils/StoreInit";
 
 export default async function RootLayout({ children }) {
   const session = await GetSession();
@@ -12,7 +13,7 @@ export default async function RootLayout({ children }) {
     redirect("/admin");
   }
   const currentUser = await fetchAdmin(session._id);
-  useStore.setState({ session });
+  useStore.setState({ session: currentUser });
   const data = {
     session: JSON.stringify(currentUser),
   };
@@ -24,7 +25,7 @@ export default async function RootLayout({ children }) {
         </div>
       <div className="flex flex-col flex-1 overflow-y-auto">
           <div className="">
-          <Header session={currentUser} />
+          <Header  />
           </div>
           <div className="">
             <HeadTitle />

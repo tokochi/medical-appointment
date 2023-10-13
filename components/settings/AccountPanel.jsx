@@ -1,8 +1,10 @@
 import { useStore } from "@context/serverStore";
 import AccountForm from "@components/forms/settings/admin/AccountForm";
-import StoreInit from "@components/StoreInit";
+import StoreInit from "@components/utils/StoreInit";
+import GetSession from "@components/session/GetSession";
 export default async function AccountPanel() {
-const {fetchAdmin,session} = useStore.getState()
+  const { fetchAdmin } = useStore.getState()
+  const session = GetSession()
   const data = { adminInfo : JSON.stringify(await fetchAdmin(session?._id)) };
   return (
     <div className='flex flex-col gap-4 md:p-4 w-full'>

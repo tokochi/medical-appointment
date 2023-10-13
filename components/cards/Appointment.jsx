@@ -8,7 +8,7 @@ import "moment/locale/ar-dz";
 import { IconInput, SelectInput, TextInput, TextareaInput } from "@components/inputs";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import LoadingComponent from "@components/LoadingComponent";
+import LoadingComponent from "@components/utils/LoadingComponent";
 import { useState, useEffect } from "react";
 function Appointment({ doctor }) {
   moment().locale("ar-dz");

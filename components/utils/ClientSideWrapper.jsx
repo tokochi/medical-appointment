@@ -9,10 +9,12 @@ import { registerLicense } from "@syncfusion/ej2-base";
 registerLicense(
   "Ngo9BigBOggjHTQxAR8/V1NHaF5cXmpCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdgWH9edHVRRGVdWUBwVkY="
 );
+console.warn = () => {};
+console.error = () => { };
+console.log = () => { };
+
 function ClientSideWrapper({ children }) {
   const { closeModelAnywhere, darkTheme } = useStore();
-    console.warn = () => {};
-    console.error = () => {};
   const path = usePathname();
   useEffect(() => {
     const isDarkMode = JSON?.parse(localStorage?.getItem("theme")) === true;
@@ -22,7 +24,6 @@ function ClientSideWrapper({ children }) {
 
     // Check if a link element with the specified href exists
     const existingLinks = document.querySelectorAll('link[href*="https://cdn.syncfusion.com"]');
-
     if (existingLinks.length > 0) {
       // If the link element exists, update its href
       existingLinks.forEach((linkElement) => {

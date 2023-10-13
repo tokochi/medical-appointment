@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import { useStore } from "@context/store";
 function LoginForm() {
   const { errorInput, userInfo, handleInputChange, handleSubmitUserLogin } = useStore();
-  console.log("🚀 ~ userInfo:", userInfo)
   const router = useRouter();
 
   return (

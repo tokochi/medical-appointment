@@ -201,7 +201,7 @@ function AccountForm() {
              value={companyInfo?.address?.daira?.value}
              onChange={(e) => handleSelectInput(e, "companyInfo")}
              options={daira.filter(
-               (region) => region?.wilaya === companyInfo?.otherServices?.value
+               (region) => region?.wilaya === companyInfo?.address?.wilaya?.value
              )}
              option_value='value'
              option_text='text'
@@ -234,11 +234,11 @@ function AccountForm() {
              label='الشارع، الحي:'
            />
          </div>
-         <div className='text-center  flex flex-col gap-2'>
+         <div className='text-center   mx-auto'>
            <button
              type='submit'
              onClick={() => useStore.setState({ isLoading: true })}
-             className='bg-yellow-400 hover:bg-yellow-500  focus:ring-2 focus:ring-yellow-700 flex mt-2 gap-2  justify-center items-center text-lg w-full pr-5 p-2.5  dark:border-gray-600  dark:text-black'>
+             className='bg-yellow-400 rounded-xl hover:bg-yellow-500  focus:ring-2 focus:ring-yellow-700 flex mt-2 gap-2  justify-center items-center text-lg w-full pr-5 p-2.5  dark:border-gray-600  dark:text-black'>
              حفظ المعلومات
              {!isLoading ? (
                <Image

@@ -17180,6 +17180,17 @@ export const medicalSpecialties = [
   { text: "طب بيطري", value: "Veterinary Medicine" },
   { text: "الحساسية", value: "Allergy" },
 ];
+export const filterDefault = {
+  name: "",
+  speciality: { text: "", value: "" },
+  wilaya: { text: "", value: "" },
+  daira: { text: "", value: "" },
+  commune: { text: "", value: "" },
+  gender: { text: "", value: "" },
+  homeVisits: false,
+  insurance: false,
+  isFullTimeOpen: false,
+};
 export const relatedWorks = [
   { text: "مخطط كهربية الدماغ", value: "Brain Electrical Activity Mapping" },
   { text: "مخطط كهربية العضل", value: "Electromyogram" },
@@ -17200,6 +17211,7 @@ export const relatedWorks = [
   { text: "التدبير المكثف المستمر لحلقة من الجهاز الهضمي", value: "Continuous Intensive Management of a Digestive Loop" },
   { text: "ثقب خزعة العظام", value: "Bone Biopsy" },
   { text: "رأب القضيب (إطالة / تكبير القضيب)", value: "Penis Repair (Lengthening / Enlargement)" },
+ 
   { text: "التصوير بالرنين المغناطيسي", value: "Magnetic Resonance Imaging" },]
 export const specilatiyHosp = [
   { text: "الجراحة" },

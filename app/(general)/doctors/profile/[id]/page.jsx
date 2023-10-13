@@ -16,13 +16,13 @@ async function page({ params }) {
             <Link className='mb-1 grow shrink basis-[70%] min-w-[280px] flex gap-4' href='#'>
               <div id='avatar' className='flex flex-col gap-2'>
                 <Image
-                  className='rounded-xl w-auto h-auto'
+                  className='rounded-xl w-auto h-auto min-w-[100px]'
                   src={doctor?.avatar?.[0]}
                   width={120}
                   height={120}
                   alt='avatar'
                 />
-                <div className='flex flex-col items-center gap-2 rounded-xl bg-slate-200 dark:bg-slate-600 p-1'>
+                {/* <div className='flex flex-col items-center gap-2 rounded-xl bg-slate-200 dark:bg-slate-600 p-1'>
                   <Image
                     className='rounded-md p-1 w-auto h-auto'
                     src='/images/qr.webp'
@@ -31,7 +31,7 @@ async function page({ params }) {
                     alt='avatar'
                   />
                   <h2 className='text-sm font-semibold'>تابع نشاطاتي</h2>
-                </div>
+                </div> */}
               </div>
               <div id='title' className='flex flex-col gap-2'>
                 <h1 className='font-bold text-xl text-sky-500'>
@@ -78,7 +78,7 @@ async function page({ params }) {
                 )}
                 <h2 className='flex gap-2 text-blue-300  text-sm'>
                   <Image src='/images/location-png.webp' width={18} height={15} alt='location' />
-                  {doctor?.otherServices?.text + "، "}
+                  {doctor?.address?.wilaya?.text + "، "}
                   {doctor?.address?.daira?.text + "، "}
                   {doctor?.address?.commune?.text &&
                     doctor?.address?.commune?.text !== doctor?.address?.daira?.text &&
@@ -88,9 +88,9 @@ async function page({ params }) {
               </div>
             </Link>
             <div className='mb-1 flex flex-col  gap-2 grow shrink'>
-              <TakeAppointment doctor={doctor} />
+              <TakeAppointment data={JSON.stringify(doctor)} />
               <ShowPhoneNum phone={doctor?.phone} />
-              <SendMessage doctor={doctor} />
+              <SendMessage data={JSON.stringify(doctor)} />
               <div className='flex gap-8 justify-center items-center m-auto'>
                 {doctor?.facebook?.length > 0 && (
                   <Link href={doctor?.facebook}>

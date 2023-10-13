@@ -1,6 +1,6 @@
 "use client"
 import { create } from "zustand";
-import { wilaya, daira, commune, userDefault, bloodTypes, chronicDiseases, doctorDefault, pharmDefault, hospDefault, labDefault, relatedWorks, medicalSpecialties, specialities, titles, labs, pharms, hosp, visitArg, worksPharms, worksLabs, searchTabs, questions, specilatiyHosp, sectionWork } from "@utils/data.js";
+import { wilaya, daira, commune, filterDefault, userDefault, bloodTypes, chronicDiseases, doctorDefault, pharmDefault, hospDefault, labDefault, relatedWorks, medicalSpecialties, specialities, titles, labs, pharms, hosp, visitArg, worksPharms, worksLabs, searchTabs, questions, specilatiyHosp, sectionWork } from "@utils/data.js";
 export const useStore = create((set, get) => ({
   //************** General *************/
   darkTheme: true,
@@ -21,6 +21,7 @@ export const useStore = create((set, get) => ({
   },
 
   closeModelAnywhere: (e) => {
+
     if (get().modal.isOpen === true && e.target.getAttribute("name") == "modal") { set(({ modal: get().modalClosed })) }
     if (get().notification.isOpen === true && e.target.getAttribute("name") !== "notification") { set(({ notification: { isOpen: false } })) }
     if (get().inbox.isOpen === true && e.target.getAttribute("name") !== "inbox") { set(({ inbox: { isOpen: false } })) }
@@ -83,18 +84,36 @@ export const useStore = create((set, get) => ({
   //************** Genral Form *************/
 
   isRulesChecked: { first: false, seconde: false },
-  errorInput: { name: false, password: false, pinCode: false, email: false },
+  errorInput: { name: false, password: false, oldPassword: false, pinCode: false, email: false },
   loadingSppiner: {
     avatar: false,
     image: false,
+    examinations: false,
     officePics: false,
     proofPics: false,
   },
   uploadDone: {
     avatar: "",
+    examinations: "",
     image: "",
     officePics: "",
     proofPics: "",
+  },
+  filterDefault,
+  filterInfo: filterDefault,
+  handleFilterInfo: (array) => {
+    if (array?.length > 0) {
+      const fil = get().filterInfo
+      return array
+        .filter(item => fil?.gender?.text !== "" ? item.gender?.text === fil?.gender?.text : item)
+        .filter(item => fil?.name !== "" ? item?.name === fil?.name : item)
+        // .filter(item => fil?.speciality?.text === "" ? item.speciality?.text === fil?.specialty?.text : item)
+        .filter(item => fil?.speciality?.text !== "" ? [...item.specialities, item.speciality]?.some(specialty => specialty?.text === fil?.speciality?.text) : item)
+        .filter(item => fil?.wilaya?.text !== "" ? item.address?.wilaya?.text === fil?.wilaya.text : item)
+        .filter(item => fil?.homeVisits !== false ? item.otherServices?.homeVisits === fil?.homeVisits : item)
+        .filter(item => fil?.insurance !== false ? item.otherServices?.insurance === fil?.insurance : item)
+        .filter(item => fil?.isFullTimeOpen !== false ? item.otherServices?.isFullTimeOpen === fil?.isFullTimeOpen : item)
+    }
   },
   handleRulesCheckbox: (event) => {
     const nameAttribtue = event.target.getAttribute("name").split(".")
@@ -188,7 +207,7 @@ export const useStore = create((set, get) => ({
       });
   },
   handleInputChange: (event, keyValue) => {
-    set({ errorInput: { name: false, password: false, pinCode: false, email: false } })
+    set({ errorInput: { name: false, oldPassword: false, password: false, pinCode: false, email: false } })
     const nameAttribtue = event.target.getAttribute("name").split(".");
     nameAttribtue.length > 1
       ? set((state) => ({
@@ -403,22 +422,34 @@ export const useStore = create((set, get) => ({
       }));
     set({ addedAdmins: "" });
   },
-
-  addObjectItemToArray: (event, keyValue, type) => {
+  handleMultiselectAddButton: (event, keyValue, field, addField) => {
+    event.preventDefault();
     const clickedElement = event.target.getAttribute("name");
-    const selectedIndex = event.target.selectedIndex;
-    const selectedText = event.target.options[selectedIndex].text;
-    // const selectedValue = event.target.options[selectedIndex].value;
     set((state) => ({
       [keyValue]: {
         ...state[keyValue],
-        [type]: [
-          ...state[keyValue][type],
+        [field]: [
+          ...state[keyValue][field],
+          { text: clickedElement, value: clickedElement },
+        ],
+      },
+    }));
+    set({ [addField]: "", addedsurgery: { text: "", time: new Date(), hosp: "" } });
+  },
+  handleMultiselectAddOptions: (event, keyValue, field, addField) => {
+    event.preventDefault();
+    const selectedIndex = event.target.selectedIndex;
+    const selectedText = event.target.options[selectedIndex].text;
+    set((state) => ({
+      [keyValue]: {
+        ...state[keyValue],
+        [field]: [
+          ...state[keyValue][field],
           { text: selectedText, value: event.target.value },
         ],
       },
     }));
-    set({ [type]: "", addedsurgery: { name: "", time: new Date(), hosp: "" } });
+    // set({ [addField]: "" });
   },
   removeItemFromArray: (event, keyValue, type) => {
     event.preventDefault();
@@ -427,7 +458,7 @@ export const useStore = create((set, get) => ({
       if (typeof item === "string") {
         return item !== clickedElement;
       } else if (typeof item === "object") {
-        return (item.name === clickedElement || item.text === clickedElement) ? false : true;
+        return (item.text === clickedElement) ? false : true;
       }
       return true;
     });
@@ -438,7 +469,6 @@ export const useStore = create((set, get) => ({
       },
     }));
   },
-
   removeSelectAdmin: (event, keyValue) => {
     event.preventDefault();
     const clickedElement = event.target.getAttribute("name");
@@ -497,6 +527,17 @@ export const useStore = create((set, get) => ({
       [keyValue]: {
         ...state[keyValue],
         alergies: filtredArray,
+      },
+    }));
+  },
+  removeSelectExam: (event, keyValue) => {
+    event.preventDefault();
+    const clickedElement = event.target.getAttribute("name");
+    const filtredArray = get()[keyValue].examinations.filter((pic) => pic !== clickedElement);
+    set((state) => ({
+      [keyValue]: {
+        ...state[keyValue],
+        examinations: filtredArray,
       },
     }));
   },
@@ -604,7 +645,7 @@ export const useStore = create((set, get) => ({
     set({ isLoading: false })
   },
   clearInbox: async () => {
-    const response = await fetch(`/api/admins/${get().currentAdmin._id}`, {
+    const response = await fetch(`/api/admins/${get().session._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -616,22 +657,22 @@ export const useStore = create((set, get) => ({
     } else {
       // console.log("🚀 ~🚀 ~ فشلت عملية إضــافة التنبيه");
     }
-    get().fetchAdmin(get().currentAdmin._id)
+    get().fetchAdmin(get().session._id)
   },
   deleteMessage: async (id) => {
-    const response = await fetch(`/api/admins/${get().currentAdmin._id}`, {
+    const response = await fetch(`/api/admins/${get().session._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ notificationsList: get().currentAdmin?.notificationsList.filter(not => not._id !== id) }),
+      body: JSON.stringify({ notificationsList: get().session?.notificationsList.filter(not => not._id !== id) }),
     });
     if (response.ok) {
       // console.log("🚀 ~🚀 ~ تم إضــافة التنبيه بنجاح")
     } else {
       // console.log("🚀 ~🚀 ~ فشلت عملية إضــافة التنبيه");
     }
-    get().fetchAdmin(get().currentAdmin._id)
+    get().fetchAdmin(get().session._id)
   },
   //************** Notifications *************/
   notification: { isOpen: false },
@@ -663,7 +704,7 @@ export const useStore = create((set, get) => ({
 
   },
   clearNotifaction: async () => {
-    const response = await fetch(`/api/admins/${get().currentAdmin._id}`, {
+    const response = await fetch(`/api/admins/${get().session._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -675,22 +716,22 @@ export const useStore = create((set, get) => ({
     } else {
       // console.log("🚀 ~🚀 ~ فشلت عملية إضــافة التنبيه");
     }
-    get().fetchAdmin(get().currentAdmin._id)
+    get().fetchAdmin(get().session._id)
   },
   deleteNotifaction: async (id) => {
-    const response = await fetch(`/api/admins/${get().currentAdmin._id}`, {
+    const response = await fetch(`/api/admins/${get().session._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ notificationsList: get().currentAdmin?.notificationsList.filter(not => not._id !== id) }),
+      body: JSON.stringify({ notificationsList: get().session?.notificationsList.filter(not => not._id !== id) }),
     });
     if (response.ok) {
       // console.log("🚀 ~🚀 ~ تم إضــافة التنبيه بنجاح")
     } else {
       // console.log("🚀 ~🚀 ~ فشلت عملية إضــافة التنبيه");
     }
-    get().fetchAdmin(get().currentAdmin._id)
+    get().fetchAdmin(get().session._id)
   },
   //************** Company Form *************/
   companyInfo: {},
@@ -877,7 +918,6 @@ export const useStore = create((set, get) => ({
     author: "",
     details: { weight: 85, length: 180 },
   },
-
   handleSubmitQuestion: async (e, toast) => {
     e.preventDefault();
     const response = await fetch("/api/questions", {
@@ -902,10 +942,21 @@ export const useStore = create((set, get) => ({
     chrnoDiseases: [],
     alergies: [],
     surgeries: [],
-    bloodType:{},
+    inheritDiseases: [],
+    vaccinations: [],
+    examinations: [],
+    bloodType: {},
+    questions: {
+      ArticulationIssue: false,
+      hairLose: false,
+      skinDisease: false,
+      smoking: false,
+    },
   },
+  addedInheritDiseases: "",
   addedAlergy: "",
-  addedsurgery: { name: "", time: new Date(), hosp:""},
+  addedVaccination: { text: "", time: new Date(), hosp: "" },
+  addedsurgery: { text: "", time: new Date(), hosp: "" },
   account: { isOpen: false },
   userInfo: userDefault,
   handleSubmitUserSignup: async (e, toast, router, signIn) => {
@@ -935,7 +986,8 @@ export const useStore = create((set, get) => ({
             phone: "",
           }
         });
-        router.push("/user/dashboard");
+        router.push("/login");
+        router.refresh()
       } else {
         toast.error(response?.error);
       }
@@ -951,14 +1003,14 @@ export const useStore = create((set, get) => ({
       toast.success("تم تسجيل دخول المستخدم بنجاح");
       get().addActivity("دخول", "مستخدم", get().userInfo?.email, "تمت")
       set({ userInfo: { email: "", password: "" } });
+      router.push("/login");
       router.refresh()
-      router.push("/user");
     } else {
       get().addActivity("دخول", "مستخدم", get().userInfo?.email, "لم تتــم")
       toast.error(response?.error);
     }
   },
-  handleSubmitUserUpdate: async (e, toast, router, id) => {
+  handleSubmitUserUpdate: async (e, toast, id) => {
     e.preventDefault();
     // set({ isLoading: true })
     const response = await fetch(`/api/users/${id}`, {
@@ -968,14 +1020,34 @@ export const useStore = create((set, get) => ({
       },
       body: JSON.stringify(get().userInfo),
     });
+
     if (response.ok) {
       get().addActivity("تعـديل", "مستخدم", get().userInfo?.email, "تمت")
       toast.success("تم تعديل المستخدم بنجاح");
-      set({ isLoading: false })
-      router.refresh()
     } else {
       get().addActivity("تعـديل", "مستخدم", get().userInfo?.email, "لم تتــم")
       toast.error("فشلت عملية تسجيل المستخدم");
+    }
+    set({ isLoading: false })
+  },
+  submitUserUpdateHealthInfo: async (e, toast, router, id) => {
+    e.preventDefault();
+    // set({ isLoading: true })
+    const response = await fetch(`/api/users/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(get().healthInfo),
+    });
+    if (response.ok) {
+      get().addActivity("تعـديل", "مستخدم", "الملف الطبي", "تمت")
+      toast.success("تم تعديل الملف الطبي بنجاح");
+      set({ isLoading: false })
+      router.refresh()
+    } else {
+      get().addActivity("تعـديل", "مستخدم", "الملف الطبي", "لم تتــم")
+      toast.error("فشلت عملية تسجيل الملف الطبي");
     }
   },
   //************** Pharm Form *************/

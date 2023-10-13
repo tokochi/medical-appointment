@@ -17,9 +17,7 @@ function SecurityForm() {
 
  return (
    <div>
-     <div
-       id='personal-info'
-       className='card rounded-md '>
+     <div id='personal-info' className='card rounded-md '>
        <div className='font-semibold p-2 px-2 border-b-[1px] border-gray-300 dark:border-gray-700'>
          معلومات الحمــــــاية
        </div>
@@ -63,11 +61,11 @@ function SecurityForm() {
              </h2>
            )}
          </div>
-         <div className='text-center  flex flex-col gap-2'>
+         <div className='text-center  mx-auto'>
            <button
              type='submit'
              onClick={() => useStore.setState({ isLoading: true })}
-             className='bg-yellow-400 hover:bg-yellow-500  focus:ring-2 focus:ring-yellow-700 flex mt-2 gap-2  justify-center items-center text-lg w-full pr-5 p-2.5  dark:border-gray-600  dark:text-black'>
+             className='bg-yellow-400 rounded-xl hover:bg-yellow-500  focus:ring-2 focus:ring-yellow-700 flex mt-2 gap-2  justify-center items-center text-lg w-full pr-5 p-2.5  dark:border-gray-600  dark:text-black'>
              حفظ المعلومات
              {!isLoading ? (
                <Image

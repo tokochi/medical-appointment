@@ -2,8 +2,10 @@ import Labs from "@components/cards/Labs";
 import Provinces from "@components/cards/Provinces";
 import SearchLabsInPage from "@components/forms/searchs/SearchLabsInPage";
 import SearchFaqInPage from "@components/forms/searchs/SearchFaqInPage";
-
-function page() {
+import { useStore } from "@context/serverStore";
+async function page() {
+      const { fetchLabs } = useStore.getState();
+  const labs = await fetchLabs();
   return (
     <div className='bg-sky-50 dark:bg-primary'>
       <h1 id='title' className='font-bold text-clamp-2xl mx-2 p-2'>
@@ -19,7 +21,7 @@ function page() {
             <Provinces />
           </div>
           <div id='doct-cards' className='p-2 my-2'>
-            <Labs />
+            <Labs data={JSON.stringify(labs)} />
           </div>
         </div>
         <div className='grow shrink basis-[20%] min-w-[280px] p-2'>

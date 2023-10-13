@@ -32,7 +32,7 @@ function SignupInputsForm(props) {
     commune,
   } = useStore();
 console.log(addedAdmins);
-  const filtredspecialities = specialities.filter(
+  const filtredspecialities = medicalSpecialties.filter(
     (specialty) =>
       !hospInfo?.specialities?.some((addedspecialty) => addedspecialty.text === specialty.text)
   );
@@ -359,7 +359,7 @@ console.log(addedAdmins);
               name='address?.daira'
               value={hospInfo?.address?.daira?.value}
               onChange={(e) => handleSelectInput(e, "hospInfo")}
-              options={daira.filter((region) => region?.wilaya === hospInfo?.otherServices?.value)}
+              options={daira.filter((region) => region?.wilaya === hospInfo?.address?.wilaya?.value)}
               option_value='value'
               option_text='text'
               placeholder='الدائرة'
