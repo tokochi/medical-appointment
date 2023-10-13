@@ -1,5 +1,4 @@
 import { useStore } from "@context/serverStore";
-import Link from "next/link";
 import Image from "next/image";
 import moment from "moment";
 import "moment/locale/ar-dz";
@@ -11,16 +10,16 @@ async function page() {
   const appointmentsList = await fetchAppointments();
   const appointments = appointmentsList.filter(apoint => apoint?.user?.id === session?._id);
   return (
-    <div className='flex flex-col gap-4 w-full'>
+    <div className='flex flex-col gap-4 md:p-4 w-full'>
       {appointments.length === 0 && (
-        <div className='bg-sky-50 w-full dark:bg-primary m-1 md:m-4 rounded '>
+        <div className='bg-sky-50 w-full dark:bg-primary m-4 md:m-4 rounded '>
           <div className='card rounded-lg p-4  m-10 text-xl font-semibold'>
             لايوجد أي موعد طبي خاص بك
           </div>
         </div>
       )}
-      {appointments.map((appoint) => (
-        <div className=''>
+      {appointments.map((appoint, index) => (
+        <div key={index} className=''>
           <div className='font-semibold card rounded-md p-2 px-2 border-b-[1px] border-gray-300 dark:border-gray-700'>
             الموعد الطبي: {"#" + appoint?._doc._id.toString().substr(18)}
           </div>

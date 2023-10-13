@@ -557,11 +557,11 @@ export const useStore = create((set, get) => ({
   },
   handleSelectChrnoDiseases: (event, disease, keyValue) => {
     const isChecked = event.target.checked;
-    const currentDiseases = get().healthInfo.chrnoDiseases;
+    // const currentDiseases = get().healthInfo?.chrnoDiseases;
     if (isChecked) {
-      set(state => ({ healthInfo: { ...state.healthInfo, chrnoDiseases: [...currentDiseases, disease] } }));
+      set(state => ({ healthInfo: { ...state.healthInfo, chrnoDiseases: [...get().healthInfo?.chrnoDiseases, disease] } }));
     } else {
-      set(state => ({ healthInfo: { ...state.healthInfo, chrnoDiseases: currentDiseases.filter(item => item.value !== disease.value) } }));
+      set(state => ({ healthInfo: { ...state.healthInfo, chrnoDiseases: get().healthInfo?.chrnoDiseases?.filter(item => item.value !== disease.value) } }));
     }
     set(state => ({
       [keyValue]: {
@@ -622,25 +622,56 @@ export const useStore = create((set, get) => ({
   addedAdmins: "",
   //************** Inbox *************/
   inbox: { isOpen: false },
-  handleSubmitMessage: async (e, toast, id) => {
+  messageToSend: {
+    title: "",
+    text: "",
+    speciality: {},
+    response: "",
+    files:[],
+    author: "",
+    details: { weight: 85, length: 180 },
+  },
+  handleSubmitMessage: async (e, toast, id,type) => {
     e.preventDefault();
     set({ isLoading: true })
-    const response = await fetch(`/api/doctors/${id}`, {
+    const response = await fetch(`/api/${type}/inbox-add/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ message: { ...get().askQuestion } }),
+      body: JSON.stringify(get().messageToSend),
     });
     if (response.status === 203) {
-      toast.error("يرجى الانتظار قبل طرح سؤال آخر", response);
+      toast.error("يرجى الانتظار قبل إرســال رسالة آخر", response);
     } else if (response.ok) {
-      get().addActivity("إضــافة", "سؤال", get().askQuestion?.title, "تمت");
-      toast.success("تم تقديم سؤالك بنجاح");
+      get().addActivity("إضــافة", "رسالة", get().messageToSend?.title, "تمت");
+      toast.success("تم تقديم رسالتك بنجاح");
       set({ modal: get().modalClosed });
     } else {
-      get().addActivity("إضــافة", "سؤال", get().askQuestion?.title, "لم تتــم");
-      toast.error("حدث خطأ في تقديم سؤالك", response);
+      get().addActivity("إضــافة", "رسالة", get().messageToSend?.title, "لم تتــم");
+      toast.error("حدث خطأ في تقديم رسالتك", response);
+    }
+    set({ isLoading: false })
+  },
+  handleDeleteMessage: async (e, toast, id, type) => {
+    e.preventDefault();
+    set({ isLoading: true })
+    const response = await fetch(`/api/${type}/inbox-delete/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(get().messageToSend),
+    });
+    if (response.status === 203) {
+      toast.error("يرجى الانتظار قبل إرســال رسالة آخر", response);
+    } else if (response.ok) {
+      get().addActivity("إضــافة", "رسالة", get().messageToSend?.title, "تمت");
+      toast.success("تم تقديم رسالتك بنجاح");
+      set({ modal: get().modalClosed });
+    } else {
+      get().addActivity("إضــافة", "رسالة", get().messageToSend?.title, "لم تتــم");
+      toast.error("حدث خطأ في تقديم رسالتك", response);
     }
     set({ isLoading: false })
   },
@@ -651,21 +682,6 @@ export const useStore = create((set, get) => ({
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ notificationsList: [] }),
-    });
-    if (response.ok) {
-      // console.log("🚀 ~🚀 ~ تم إضــافة التنبيه بنجاح")
-    } else {
-      // console.log("🚀 ~🚀 ~ فشلت عملية إضــافة التنبيه");
-    }
-    get().fetchAdmin(get().session._id)
-  },
-  deleteMessage: async (id) => {
-    const response = await fetch(`/api/admins/${get().session._id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ notificationsList: get().session?.notificationsList.filter(not => not._id !== id) }),
     });
     if (response.ok) {
       // console.log("🚀 ~🚀 ~ تم إضــافة التنبيه بنجاح")
@@ -1038,7 +1054,7 @@ export const useStore = create((set, get) => ({
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(get().healthInfo),
+      body: JSON.stringify({ healthInfo: get().healthInfo }),
     });
     if (response.ok) {
       get().addActivity("تعـديل", "مستخدم", "الملف الطبي", "تمت")

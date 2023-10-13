@@ -1,6 +1,33 @@
-import { Schema, model, models } from 'mongoose';
+import { Schema, model, models, Types } from 'mongoose';
 
 // *********** Schema **********
+const messageSchema = new Schema({
+    id: {
+        type: Types.ObjectId,
+        default: Types.ObjectId,
+    },
+    date: { type: Date, default: Date.now },
+    title: String,
+    text: String,
+    files: [],
+    from: {
+        id: {
+            type: Schema.ObjectId,
+            ref: 'Doctor',
+        },
+        name: String,
+        title: {
+            text: String,
+            value: String
+        },
+        speciality: {
+            value: String,
+            text: String
+        }
+    },
+    // Other message fields
+});
+
 const userSchema = new Schema({
     name: String,
     birthDate: { type: Date, default: Date.now },
@@ -37,9 +64,43 @@ const userSchema = new Schema({
     facebook: String,
     instagram: String,
     whatsapp: String,
-    files: {},
-    healthInfo: {},
-    inbox: [],
+    healthInfo: {
+        age: String,
+        weight: String,
+        height: String,
+        chrnoDiseases: {
+            type: Array,
+            default: []
+        },
+        alergies: {
+            type: Array,
+            default: []
+        },
+        surgeries: {
+            type: Array,
+            default: []
+        },
+        inheritDiseases: {
+            type: Array,
+            default: []
+        },
+        vaccinations: {
+            type: Array,
+            default: []
+        },
+        examinations: {
+            type: Array,
+            default: []
+        },
+        bloodType: { text: String, value: String },
+        questions: {
+            ArticulationIssue: Boolean,
+            hairLose: Boolean,
+            skinDisease: Boolean,
+            smoking: Boolean,
+        },
+    },
+    inbox: [messageSchema],
     notifications: {
         users: Boolean,
         doctors: Boolean,
@@ -62,7 +123,7 @@ const userSchema = new Schema({
     },
     isVerified: {
         type: Boolean,
-        default: false 
+        default: false
     },
     forgotPasswordToken: String,
     forgotPasswordTokenExpiry: { type: Date },

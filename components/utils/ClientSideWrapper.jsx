@@ -9,9 +9,9 @@ import { registerLicense } from "@syncfusion/ej2-base";
 registerLicense(
   "Ngo9BigBOggjHTQxAR8/V1NHaF5cXmpCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdgWH9edHVRRGVdWUBwVkY="
 );
-console.warn = () => {};
-console.error = () => { };
-console.log = () => { };
+// console.warn = () => {};
+// console.error = () => { };
+// console.log = () => { };
 
 function ClientSideWrapper({ children }) {
   const { closeModelAnywhere, darkTheme } = useStore();

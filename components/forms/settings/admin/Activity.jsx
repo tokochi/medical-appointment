@@ -38,7 +38,7 @@ function Activity() {
           <tbody>
             {activity?.reverse()?.map((db, index) => (
               <tr
-                key={db._id}
+                key={index}
                 className={`${index & (1 === 1) && "bg-[#cbd5e1] dark:bg-slate-700"} `}>
                 <td className='text-center p-2 truncate'>#{index + 1}</td>
                 <td className='text-right p-2 max-w-[80px] truncate '>

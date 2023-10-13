@@ -2,9 +2,8 @@
 import { useStore } from "@context/store";
 import React from "react";
 
-function ShowPhoneNum({ phone }) {
-
-
+function ShowPhoneNum({ data }) {
+  const phone = JSON.parse(data)
   return (
     <button
       className='w-full btn3 px-4 py-2 flex gap-2 items-enter justify-center'

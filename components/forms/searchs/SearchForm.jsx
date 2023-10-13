@@ -22,9 +22,9 @@ function SearchForm() {
   return (
     <div className='relative'>
       <div id='tab-icons' className='flex  gap-2'>
-        {activeTab.map((tab) => (
+        {activeTab.map((tab, index) => (
           <button
-            key={tab.id}
+            key={index}
             onClick={(e) => handleActiveTab(e)}
             id={tab.id}
             className={`p-2 pl-4 text-clamp-sm mb-[-1px] flex gap-2 z-10 justify-center items-center rounded-tl-lg rounded-tr-lg ${

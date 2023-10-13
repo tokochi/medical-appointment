@@ -22,18 +22,31 @@ body {
   padding: 0;
   background-color: rgb(13, 49, 86);
 }
+/* Default styles for desktop */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 7px
+  width: 7px;
 }
+
 ::-webkit-scrollbar-thumb {
   background-color: rgb(25, 135, 163);
   border-radius: 30px;
+  width: 10px;
 }
+
 ::-webkit-scrollbar-track {
   background-color: transparent;
 }
 
+/* Narrower scrollbar styles for mobile devices */
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 4px; /* Adjust this value for narrowness */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    width: 3px; /* Adjust this value to make the thumb narrower */
+  }
+}
   /* .container {
     width: 100%;
     margin-left: auto;

@@ -5,7 +5,6 @@ import { storage } from "@utils/firebase";
 import { ref, uploadBytes, getDownloadURL, listAll } from "firebase/storage";
 import Image from "next/image";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import DatePicker from "@components/inputs/DatePicker";
 
@@ -25,7 +24,7 @@ function SignupInputsForm(props) {
     daira,
     commune,
   } = useStore();
-  const router = useRouter();
+
   useEffect(() => useStore.setState({ userInfo: session }), [session]);
 
   return (
@@ -35,7 +34,7 @@ function SignupInputsForm(props) {
           المعلومات الشخصية
         </div>
         <form
-          onSubmit={(e) => handleSubmitUserUpdate(e, toast, router, userInfo?._id)}
+          onSubmit={(e) => handleSubmitUserUpdate(e, toast,  userInfo?._id)}
           className='flex flex-wrap gap-2 items-start'>
           <div className='grow shrink basis-[45%] p-2 flex flex-col gap-2 justify-center'>
             <div id='gender' className=''>

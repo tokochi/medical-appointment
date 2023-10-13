@@ -1,5 +1,4 @@
 import { Schema, model, models } from 'mongoose';
-
 // *********** Schema **********
 const hospSchema = new Schema({
     title: {},

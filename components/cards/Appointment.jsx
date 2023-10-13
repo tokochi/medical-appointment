@@ -72,7 +72,7 @@ const maxDate = moment().add(8, "days").startOf("day").toISOString();
   //   );
   // }
   return (
-    <div id="time">
+    <div id='time'>
       <div className='flex flex-wrap gap-2 justify-start  p-2 sticky top-0 z-[1000] border-b-[1px] border-gray-300 dark:border-gray-700 bg-white rounded-xl shadow  dark:bg-slate-800'>
         <div className=''>
           <Image
@@ -99,13 +99,14 @@ const maxDate = moment().add(8, "days").startOf("day").toISOString();
       </div>
       <div className='flex flex-col p-1 gap-4'>
         <div className='card p-1 rounded-md '>
-          <div  className='font-semibold  flex gap-4  p-2 px-2 border-b-[1px] border-gray-300 dark:border-gray-700'>
+          <div className='font-semibold  flex gap-4  p-2 px-2 border-b-[1px] border-gray-300 dark:border-gray-700'>
             <p>تحديد الوقت</p>
           </div>
           <div className='flex justify-between '>
             <div className='p-4 flex gap-2 flex-wrap justify-center items-center'>
-              {times.map((time) => (
+              {times.map((time, index) => (
                 <button
+                  key={index}
                   name={time}
                   className={`p-1 md:p-2  border-[1px] relative shadow-md border-gray-200 dark:border-gray-700  grow rounded-md ${
                     appointInfo?.time === time ? "bg-sky-400" : "bg-white dark:bg-inputDark"
@@ -187,7 +188,7 @@ const maxDate = moment().add(8, "days").startOf("day").toISOString();
                   <LoadingComponent size={50} color='#0891b2' loading={isLoading} />
                 </div>
               ) : (
-                <div id="pinCode" className='mx-auto p-4 text-center'>
+                <div id='pinCode' className='mx-auto p-4 text-center'>
                   <TextInput
                     type='text'
                     name='pinCode'
@@ -246,7 +247,7 @@ const maxDate = moment().add(8, "days").startOf("day").toISOString();
               </button>
             )}
           </div>
-          <div id="modal-bottom" ></div>
+          <div id='modal-bottom'></div>
         </div>
       </div>
     </div>

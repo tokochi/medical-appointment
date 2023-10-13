@@ -1,30 +1,29 @@
 "use client";
 import Image from "next/image";
 import { useStore } from "@context/store";
-import Message from "@components/cards/Message";
+import Message from "@components/cards/mail/UserMessage";
 import LoginOrSignup from "../forms/user/LoginOrSignup";
 
-function SendMessage({ data }) {
-  const doctor = JSON.parse(data);
-const { session } = useStore();
+function DoctorSendMessage({ data }) {
+  const doctorId = JSON.parse(data);
+  const { session } = useStore();
   return (
     <button
       onClick={() => {
         useStore.setState({
           askQuestion: {
-            date:Date.now(),
+            date: Date.now(),
             title: "",
             text: "",
             files: [],
             author: session?._id,
-            doctor: doctor?._id,
-            details: { weight: 85, length: 180 },
+            doctor: doctorId,
           },
           modal: {
             isOpen: true,
             title: session ? "اطرح سؤال لطبيبك" : "لا يمكنك المواصلة يجب ان تسًّجل دوخلك",
             content: "",
-            children: session ? <Message doctor={doctor} /> : <LoginOrSignup />,
+            children: session ? <Message id={doctorId} /> : <LoginOrSignup />,
           },
         });
       }}
@@ -36,5 +35,5 @@ const { session } = useStore();
   );
 }
 
-export default SendMessage;
+export default DoctorSendMessage;
  

@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import ShowPhoneNum from "@components/buttons/ShowPhoneNum";
 import TakeAppointment from "@components/buttons/TakeAppointment";
-import SendMessage from "@components/buttons/SendMessage";
+import UserSendMessage from "@components/buttons/UserSendMessage";
 
 async function page({ params }) {
   const { fetchDoctor } = useStore.getState();
@@ -89,8 +89,8 @@ async function page({ params }) {
             </Link>
             <div className='mb-1 flex flex-col  gap-2 grow shrink'>
               <TakeAppointment data={JSON.stringify(doctor)} />
-              <ShowPhoneNum phone={doctor?.phone} />
-              <SendMessage data={JSON.stringify(doctor)} />
+              <ShowPhoneNum data={JSON.stringify(doctor?.phone)} />
+              <UserSendMessage data={JSON.stringify(doctor)} />
               <div className='flex gap-8 justify-center items-center m-auto'>
                 {doctor?.facebook?.length > 0 && (
                   <Link href={doctor?.facebook}>
@@ -254,7 +254,7 @@ async function page({ params }) {
               height={15}
               alt='location'
             />
-            {doctor?.otherServices?.text + "، "}
+            {doctor?.address?.wilaya?.text + "، "}
             {doctor?.address?.daira?.text + "، "}
             {doctor?.address?.commune?.text &&
               doctor?.address?.commune?.text !== doctor?.address?.daira?.text &&

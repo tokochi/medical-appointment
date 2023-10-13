@@ -13,9 +13,9 @@ function Doctors({ data }) {
 
   return (
     <div className='flex flex-col gap-4'>
-      {doctors.length === 0 && <NothingFound/>}
+      {doctors.length === 0 && <NothingFound />}
       {doctors.map((item, index) => (
-        <div key={item?._id} className=' p-2 card rounded-md'>
+        <div key={index} className=' p-2 card rounded-md'>
           <div
             id='header'
             className='p-2 flex flex-wrap justify-center items-start border-b-[1px] border-gray-600'>

@@ -31,8 +31,8 @@ async function page() {
             </tr>
           </thead>
           <tbody>
-            {doctors.map((doctor) => (
-              <tr key={doctor?._id} className='text-center p-2'>
+            {doctors.map((doctor, index) => (
+              <tr key={index} className='text-center p-2'>
                 <td className='text-center p-2  rounded-md '>
                   <div className='flex flex-wrap md:flex-nowrap items-start gap-4'>
                     <Image
@@ -85,8 +85,8 @@ async function page() {
             </tr>
           </thead>
           <tbody>
-            {users.slice(-4).map((doctor) => (
-              <tr key={doctor._id} className='text-center p-2'>
+            {users.slice(-4).map((doctor, index) => (
+              <tr key={index} className='text-center p-2'>
                 <td className='text-center p-2  rounded-md font-roboto'>
                   <div className='flex flex-wrap md:flex-nowrap items-start gap-4'>
                     <svg

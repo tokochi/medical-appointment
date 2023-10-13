@@ -46,10 +46,15 @@ function HealthInfoForm(props) {
     daira,
     commune,
   } = useStore();
+
   moment().locale("ar-dz");
   const router = useRouter();
   useEffect(
-    () => useStore.setState({ userInfo: session, healthInfo: session?.healthInfo }),
+    () =>
+      useStore.setState((state) => ({
+        userInfo: session,
+        healthInfo: session?.healthInfo || state.healthInfo,
+      })),
     [session]
   );
   return (
@@ -103,7 +108,7 @@ function HealthInfoForm(props) {
             <div id='blood-type' className=''>
               <SelectInput
                 name='bloodType'
-                value={healthInfo?.bloodType.value}
+                value={healthInfo?.bloodType?.value}
                 onChange={(e) => handleSelectInput(e, "healthInfo")}
                 options={bloodTypes}
                 option_value='value'
@@ -268,11 +273,13 @@ function HealthInfoForm(props) {
               الامراض المزمنة
             </div>
             <div id='chrono-disease' className='flex flex-wrap gap-2 '>
-              {chronicDiseases.map((disease) => (
-                <div className='gorw shrink basis-full md:basis-[45%] lg:basis-[27%] '>
+              {chronicDiseases.map((disease, index) => (
+                <div key={index} className='gorw shrink basis-full md:basis-[45%] lg:basis-[27%] '>
                   <CheckboxInput
                     name='healthInfo.chrnoDiseases'
-                    checked={healthInfo?.chrnoDiseases.find((item) => item.value === disease.value)}
+                    checked={healthInfo?.chrnoDiseases?.find(
+                      (item) => item.value === disease.value
+                    )}
                     onChange={(e) => handleSelectChrnoDiseases(e, disease, "userInfo")}
                     label={disease.text}
                   />
@@ -341,7 +348,7 @@ function HealthInfoForm(props) {
                   </div>
                   <div className='flex items-end gap-1 grow shrink basis-full md:basis-[27%]'>
                     <TextInput
-                      value={addedVaccination.hosp}
+                      value={addedVaccination?.hosp}
                       onChange={(e) =>
                         useStore.setState((state) => ({
                           addedVaccination: { ...state.addedVaccination, hosp: e.target.value },
@@ -519,8 +526,8 @@ function HealthInfoForm(props) {
                 label='آخر الفحوصات و تحاليل طبية:'
               />
               <div className='flex gap-2'>
-                {healthInfo?.examinations?.map((exam) => (
-                  <div className=' '>
+                {healthInfo?.examinations?.map((exam, index) => (
+                  <div key={index} className=' '>
                     <button name={exam} onClick={(e) => removeSelectExam(e, "healthInfo")}>
                       <svg
                         className='w-6 h-6 z-20 relative top-2 select-none pointer-events-none'

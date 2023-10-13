@@ -13,7 +13,7 @@ function SidebarUser() {
       <div className='flex flex-col gap-4 p-2 list-none dark:text-gray-100'>
         <li className={`mt-4 ${path === "/user" && "dark:bg-primary bg-cyan-500 "} rounded p-2`}>
           <Link
-           onClick={() => router.refresh()}
+            onClick={() => router.refresh()}
             href='/user'
             className={`flex gap-2 font-semibold `}>
             <svg
@@ -27,7 +27,7 @@ function SidebarUser() {
         </li>
         <li className={`${path === "/user/health" && "dark:bg-primary bg-cyan-500"} rounded p-2`}>
           <Link
-          onClick={() => router.refresh()}
+            onClick={() => router.refresh()}
             href='/user/health'
             className='flex gap-2 font-semibold'>
             <svg
@@ -54,6 +54,19 @@ function SidebarUser() {
               <path d='M10.5 6C7.468 6 5 8.468 5 11.5L5 36C5 39.309 7.691 42 11 42L24.074219 42C23.294219 40.79 22.713141 39.442 22.369141 38L11 38C9.897 38 9 37.103 9 36L9 16L39 16L39 22.605469C40.466 23.079469 41.813 23.809281 43 24.738281L43 11.5C43 8.468 40.532 6 37.5 6L10.5 6 z M 13.5 20 A 1.50015 1.50015 0 1 0 13.5 23L15.5 23 A 1.50015 1.50015 0 1 0 15.5 20L13.5 20 z M 21.5 20C20.672 20 20 20.671 20 21.5C20 22.329 20.672 23 21.5 23L29.998047 23C31.538047 22.357 33.227 22 35 22C35.302 22 35.597531 22.024922 35.894531 22.044922C35.960531 21.875922 36 21.693 36 21.5C36 20.671 35.328 20 34.5 20L21.5 20 z M 35 24C28.925 24 24 28.925 24 35C24 41.075 28.925 46 35 46C41.075 46 46 41.075 46 35C46 28.925 41.075 24 35 24 z M 13.5 26 A 1.50015 1.50015 0 1 0 13.5 29L15.5 29 A 1.50015 1.50015 0 1 0 15.5 26L13.5 26 z M 21.5 26C20.671 26 20 26.671 20 27.5C20 28.329 20.671 29 21.5 29L23.474609 29C24.049609 27.897 24.778813 26.889 25.632812 26L21.5 26 z M 34 28C34.552 28 35 28.448 35 29L35 35L40 35C40.552 35 41 35.448 41 36C41 36.552 40.552 37 40 37L34 37C33.448 37 33 36.552 33 36L33 29C33 28.448 33.448 28 34 28 z M 13.5 32 A 1.50015 1.50015 0 1 0 13.5 35L15.5 35 A 1.50015 1.50015 0 1 0 15.5 32L13.5 32 z M 21.5 32C20.671 32 20 32.671 20 33.5C20 34.329 20.671 35 21.5 35L22 35C22 33.966 22.133328 32.965 22.361328 32L21.5 32 z' />
             </svg>
             <p className={`hidden md:inline-block`}>مواعيد طبية</p>
+          </Link>
+        </li>
+        <li className={`${path === "/user/inbox" && "dark:bg-primary bg-cyan-500"} rounded p-2`}>
+          <Link
+            onClick={() => router.refresh()}
+            href='/user/inbox'
+            className='flex gap-2 font-semibold'>
+            <svg className='h-6 w-6 fill-gray-600 dark:fill-gray-400' viewBox='0 0 24 24'>
+              <path
+                d='M4 4C3.07 4 2.2923125 4.6429063 2.0703125 5.5039062L12 11.726562L21.935547 5.5214844C21.719547 4.6504844 20.937 4 20 4L4 4 z M 2 7.734375L2 18C2 19.103 2.897 20 4 20L20 20C21.103 20 22 19.103 22 18L22 7.7558594L12 14L2 7.734375 z'
+              />
+            </svg>
+            <p className={`hidden md:inline-block`}>رسـالاتي</p>
           </Link>
         </li>
         <li className={`${path === "/user/mycard" && "dark:bg-primary bg-cyan-500"} rounded p-2`}>

@@ -1,6 +1,27 @@
-import { Schema, model, models } from 'mongoose';
-
+import { Schema, model, models, Types } from 'mongoose';
+const { v4: uuidv4 } = require('uuid');
 // *********** Schema **********
+const messageSchema = new Schema({
+    id: {
+        type: Types.ObjectId,
+        default: Types.ObjectId,
+    },
+    date: { type: Date, default: Date.now },
+    title: String,
+    text: String,
+    files: [],
+    from: {
+        id: {
+            type: Schema.ObjectId,
+            ref: 'User',
+        },
+        name: String,
+        email: String,
+    },
+    // Other message fields
+});
+
+
 const doctorSchema = new Schema({
     avatar: {
         type: [String],
@@ -20,12 +41,13 @@ const doctorSchema = new Schema({
         text: String,
         value: String
     },
-    gender: {
+    speciality: {
         value: String,
         text: String
     },
-    speciality: {
-        // Define the appropriate type for "speciality" (e.g., String, Array, or Object) based on your data structure.
+    gender: {
+        value: String,
+        text: String
     },
     sessionAvrgTime: {
         // Define the appropriate type for "sessionAvrgTime" (e.g., Number, Object) based on your data structure.
@@ -103,7 +125,7 @@ const doctorSchema = new Schema({
     subscription: {},
     desc: String,
     linkdin: String,
-    inbox: [],
+    inbox: [messageSchema],
     notificationsList: [],
     date: {
         type: Date,

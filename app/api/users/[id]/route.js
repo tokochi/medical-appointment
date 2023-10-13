@@ -34,23 +34,18 @@ export async function PUT(req, { params }) {
             if (!user) {
                 return new Response('User not found', { status: 404 }); // Not Found
             }
-        
             const passwordMatch = await bcrypt.compare(data?.oldPassword, user?.password);
-            console.log("🚀 ~ passwordMatch:", passwordMatch)
             if (!passwordMatch) {
                 return new Response('Old password is incorrect', { status: 400 }); // Bad Request
             }
             const hashedPassword = await bcrypt.hash(data?.password, 10);
             const response = await User.updateOne({ _id: params?.id }, { $set: { password: hashedPassword } });
-          console.log("🚀 ~ response:", response)
-
             if (response.acknowledged === true && response.modifiedCount === 1) {
                 return new Response('User updated successfully', { status: 200 }); // OK
             } else {
                 return new Response('Failed to update user', { status: 500 }); // Internal Server Error
             }
         } else {
-            // If oldPassword and password are not provided, proceed with a regular update
             const response = await User.updateOne({ _id: params?.id }, { $set: data });
             if (response.acknowledged === true && response.modifiedCount === 1) {
                 return new Response("User Updated Successfully", { status: 200 }); // OK

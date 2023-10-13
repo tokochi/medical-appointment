@@ -13,7 +13,7 @@ function Hosps({ data }) {
     <div className='flex flex-col gap-4'>
       {hosps.length === 0 && <NothingFound />}
       {hosps.map((item, index) => (
-        <div key={item?._id} className='p-4 card rounded-md'>
+        <div key={index} className='p-4 card rounded-md'>
           <div
             id='header'
             className='flex flex-wrap justify-center items-start border-b-[1px] border-gray-600'>
@@ -89,7 +89,7 @@ function Hosps({ data }) {
             </div>
 
             <div className='mb-1 flex flex-col gap-2 grow shrink'>
-              <ShowPhoneNum phone={item?.phone} />
+              <ShowPhoneNum data={JSON.stringify(item?.phone)} />
             </div>
           </div>
           <div id='body' className='p-2'>
