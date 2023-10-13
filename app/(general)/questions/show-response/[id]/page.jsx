@@ -1,7 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useStore } from "@context/serverStore";
-import Rating from "@components/Rating";
+import Rating from "@components/utils/Rating";
+
 
 async function page({params}) {
   const { fetchQuestion } = useStore.getState();

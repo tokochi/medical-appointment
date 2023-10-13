@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import { useStore } from "@context/store";
-import Modal from "./Modal";
+import Modal from "@components/utils/Modal";
 import ToasterContext from "@context/ToasterContext";
 import { SessionProvider } from "next-auth/react";
 import { usePathname } from "next/navigation";
