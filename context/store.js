@@ -708,7 +708,7 @@ export const useStore = create((set, get) => ({
     const isChecked = e.target.checked;
     const updatedNotifications = new Set(get()[keyValue].notifications);
     if (isChecked) {
-      if (!get()[keyValue].notifications.includes(type)) {
+      if (!get()[keyValue].notifications?.includes(type)) {
         updatedNotifications.add(type);
       }
     } else {
@@ -722,7 +722,7 @@ export const useStore = create((set, get) => ({
   sendNotificationAdmins: async (data) => {
     const admins = await get().fetchAdmins()
     admins.forEach(async (admin) => {
-      const canAddNotification = admin.notifications.includes(data?.type)
+      const canAddNotification = admin.notifications?.includes(data?.type)
       if (canAddNotification) {
         const response = await fetch(`/api/admins/${admin?._id}`, {
           method: "PUT",
@@ -744,7 +744,7 @@ export const useStore = create((set, get) => ({
    sendNotificationDoctors: async (data) => {
       const doctors = await get().fetchDoctors()
       doctors.map(async doctor => {
-        const canAddNotification = doctor?.notifications.includes(data?.type)
+        const canAddNotification = doctor?.notifications?.includes(data?.type)
         if (canAddNotification && [...doctor.specialities, doctor.speciality].some(speciality => speciality?.text?.includes(get().askQuestion?.speciality.tag))) {
         await fetch(`/api/doctors/${doctor._id}`, {
           method: "PUT",
@@ -758,7 +758,7 @@ export const useStore = create((set, get) => ({
   },
   sendNotificationDoctor: async (data, id) => {
     const doctor = await get().fetchDoctor(id)
-    const canAddNotification = doctor?.notifications.includes(data?.type)
+    const canAddNotification = doctor?.notifications?.includes(data?.type)
     if (canAddNotification) {
       const response = await fetch(`/api/doctors/${id}`, {
         method: "PUT",
@@ -775,7 +775,7 @@ export const useStore = create((set, get) => ({
   },
   sendNotificationUser: async (data,id) => {
     const user = await get().fetchUser(id)
-    const canAddNotification = user?.notifications.includes(data?.type)
+    const canAddNotification = user?.notifications?.includes(data?.type)
     if (canAddNotification) {
       const response = await fetch(`/api/users/${id}`, {
         method: "PUT",

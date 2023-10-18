@@ -29,7 +29,7 @@ function NotificationForm() {
            </div>
            <ToggleInput
              name='notifications'
-             checked={adminInfo?.notifications.includes("مستخدم")}
+             checked={adminInfo?.notifications?.includes("مستخدم")}
              onChange={(e) => updateNotification(e, "مستخدم", "adminInfo")}
              type='text'
            />
@@ -42,7 +42,7 @@ function NotificationForm() {
            </div>
            <ToggleInput
              name='notifications'
-             checked={adminInfo?.notifications.includes("أطباء")}
+             checked={adminInfo?.notifications?.includes("أطباء")}
              onChange={(e) => updateNotification(e, "أطباء", "adminInfo")}
              type='text'
            />
@@ -55,7 +55,7 @@ function NotificationForm() {
            </div>
            <ToggleInput
              name='notifications'
-             checked={adminInfo?.notifications.includes("مقال")}
+             checked={adminInfo?.notifications?.includes("مقال")}
              onChange={(e) => updateNotification(e, "مقال", "adminInfo")}
              type='text'
            />
@@ -68,7 +68,7 @@ function NotificationForm() {
            </div>
            <ToggleInput
              name='notifications'
-             checked={aadminInfo?.notifications.includes("سؤال")}
+             checked={aadminInfo?.notifications?.includes("سؤال")}
              onChange={(e) => updateNotification(e, "سؤال", "adminInfo")}
              type='text'
            />

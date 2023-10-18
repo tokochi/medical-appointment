@@ -31,7 +31,7 @@ function page() {
             </div>
             <ToggleInput
               name='رسالة'
-              checked={userInfo?.notifications.includes("رسالة")}
+              checked={userInfo?.notifications?.includes("رسالة")}
               onChange={(e) => updateNotification(e, "رسالة", "userInfo")}
               type='text'
             />
@@ -44,7 +44,7 @@ function page() {
             </div>
             <ToggleInput
               name='سؤال'
-              checked={userInfo?.notifications.includes("سؤال")}
+              checked={userInfo?.notifications?.includes("سؤال")}
               onChange={(e) => updateNotification(e, "سؤال", "userInfo")}
               type='text'
             />
@@ -57,7 +57,7 @@ function page() {
             </div>
             <ToggleInput
               name='موعد'
-              checked={userInfo?.notifications.includes("موعد")}
+              checked={userInfo?.notifications?.includes("موعد")}
               onChange={(e) => updateNotification(e, "موعد", "userInfo")}
               type='text'
             />
@@ -70,7 +70,7 @@ function page() {
             </div>
             <ToggleInput
               name='تعليق'
-              checked={userInfo?.notifications.includes("تعليق")}
+              checked={userInfo?.notifications?.includes("تعليق")}
               onChange={(e) => updateNotification(e, "تعليق", "userInfo")}
               type='text'
             />
