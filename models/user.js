@@ -101,17 +101,12 @@ const userSchema = new Schema({
         },
     },
     inbox: [messageSchema],
-    notifications: {
-        users: Boolean,
-        doctors: Boolean,
-        posts: Boolean,
-        questions: Boolean
-    },
+    notifications: [String],
+    notificationsList: [],
     googleMap: {
         lat: Number,
         lng: Number
     },
-    notificationsList: [],
     isUser: {
         type: Boolean,
         default: true

@@ -7,7 +7,7 @@ import { storage } from "@utils/firebase";
 
 function DoctorMessage({ id }) {
   const {
-    askQuestion,
+    messageToSend,
     handleInputChange,
     loadingSppiner,
     uploadDone,
@@ -16,12 +16,14 @@ function DoctorMessage({ id }) {
   } = useStore();
   return (
     <div className='card p-4 flex flex-col gap-2'>
-      <form className='flex flex-col gap-2' onSubmit={(e) => handleSubmitMessage(e, toast, id)}>
+      <form
+        className='flex flex-col gap-2'
+        onSubmit={(e) => handleSubmitMessage(e, toast, id, "users")}>
         <h1 className='font-semibold p-2 text-center'>اكتب سؤالك</h1>
         <TextInput
           name='title'
-          value={askQuestion?.title}
-          onChange={(e) => handleInputChange(e, "askQuestion")}
+          value={messageToSend?.title}
+          onChange={(e) => handleInputChange(e, "messageToSend")}
           type='text'
           label='السؤال:'
           placeholder='عنوان لمشكلتك الصحية'
@@ -29,8 +31,8 @@ function DoctorMessage({ id }) {
         <TextareaInput
           name='text'
           rows={5}
-          value={askQuestion?.text}
-          onChange={(e) => handleInputChange(e, "askQuestion")}
+          value={messageToSend?.text}
+          onChange={(e) => handleInputChange(e, "messageToSend")}
           type='text'
           placeholder='أكتب سؤالك هنا'
         />
@@ -68,8 +70,8 @@ function DoctorMessage({ id }) {
               uploadBytes,
               getDownloadURL,
               storage,
-              `questions/${askQuestion?.title}/`,
-              "askQuestion"
+              `inbox/doctors-messages/${messageToSend?.title}/`,
+              "messageToSend"
             )
           }
           label='ملفات مرفقة:'

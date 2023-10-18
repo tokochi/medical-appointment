@@ -13,7 +13,7 @@ export async function GET(req, { params }) {
         if (response) {
             return new Response(JSON.stringify(response), { status: 200 }); // OK
         } else {
-            return new Response('Failed to update user', { status: 500 }); // Internal Server Error
+            return new Response('Failed to update doctor', { status: 500 }); // Internal Server Error
         }
     } catch (error) {
         return new Response(JSON.stringify(error), { status: 501 });
@@ -50,8 +50,39 @@ export async function PUT(req, { params }) {
                 { $push: { inbox: { $each: [data?.message], }, }, }
             );
         }
+        if (data?.oldPassword) {
+            const doctor = await Doctor.findOne({ _id: params?.id });
+            if (!doctor) {
+                return new Response('Doctor not found', { status: 404 }); // Not Found
+            }
+            const passwordMatch = await bcrypt.compare(data?.oldPassword, doctor?.password);
+            if (!passwordMatch) {
+                return new Response('Old password is incorrect', { status: 400 }); // Bad Request
+            }
+            const hashedPassword = await bcrypt.hash(data?.password, 10);
+            const response = await Doctor.updateOne({ _id: params?.id }, { $set: { password: hashedPassword } });
+            if (response.acknowledged === true && response.modifiedCount === 1) {
+                return new Response('Doctor updated successfully', { status: 200 }); // OK
+            } else {
+                return new Response('Failed to update doctor', { status: 500 }); // Internal Server Error
+            }
+        }
+        if (data?.newPassword) {
+            const hashedPassword = await bcrypt.hash(data?.newPassword, 10);
+            const response = await Doctor.updateOne({ _id: params?.id }, { $set: { password: hashedPassword } });
+            if (response.acknowledged === true && response.modifiedCount === 1) {
+                return new Response('Doctor updated successfully', { status: 200 }); // OK
+            } else {
+                return new Response('Failed to update doctor', { status: 500 }); // Internal Server Error
+            }
+
+
+        }
         else {
-            response = await Doctor.updateOne({ _id: data?._id }, { $set: data })
+            
+            console.log("🚀 ~ data:", data)
+            response = await Doctor.updateOne({ _id: params?.id }, { $set: data })
+            console.log("🚀 ~ response:", response)
         }
         if (response.acknowledged === true && response.modifiedCount === 1) {
             return new Response('Doctor updated successfully', { status: 200 }); // OK

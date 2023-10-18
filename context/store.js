@@ -1,5 +1,6 @@
 "use client"
 import { create } from "zustand";
+import { useRouter } from "next/navigation";
 import { wilaya, daira, commune, filterDefault, userDefault, bloodTypes, chronicDiseases, doctorDefault, pharmDefault, hospDefault, labDefault, relatedWorks, medicalSpecialties, specialities, titles, labs, pharms, hosp, visitArg, worksPharms, worksLabs, searchTabs, questions, specilatiyHosp, sectionWork } from "@utils/data.js";
 export const useStore = create((set, get) => ({
   //************** General *************/
@@ -84,7 +85,7 @@ export const useStore = create((set, get) => ({
   //************** Genral Form *************/
 
   isRulesChecked: { first: false, seconde: false },
-  errorInput: { name: false, password: false, oldPassword: false, pinCode: false, email: false },
+  errorInput: { name: false, password: false, title: false, text: false, speciality: false, verifyPassword: false, oldPassword: false, pinCode: false, email: false },
   loadingSppiner: {
     avatar: false,
     image: false,
@@ -101,6 +102,7 @@ export const useStore = create((set, get) => ({
   },
   filterDefault,
   filterInfo: filterDefault,
+  loginType: "user",
   handleFilterInfo: (array) => {
     if (array?.length > 0) {
       const fil = get().filterInfo
@@ -117,7 +119,6 @@ export const useStore = create((set, get) => ({
   },
   handleRulesCheckbox: (event) => {
     const nameAttribtue = event.target.getAttribute("name").split(".")
-
     set((state) => ({
       isRulesChecked: {
         ...state.isRulesChecked,
@@ -207,7 +208,9 @@ export const useStore = create((set, get) => ({
       });
   },
   handleInputChange: (event, keyValue) => {
-    set({ errorInput: { name: false, oldPassword: false, password: false, pinCode: false, email: false } })
+    set({
+      errorInput: { name: false, password: false, title: false, text: false, speciality: false, verifyPassword: false, oldPassword: false, pinCode: false, email: false },
+    })
     const nameAttribtue = event.target.getAttribute("name").split(".");
     nameAttribtue.length > 1
       ? set((state) => ({
@@ -229,8 +232,10 @@ export const useStore = create((set, get) => ({
       }));
   },
   handleSelectInput: (event, keyValue) => {
-    const selectedIndex = event.target.selectedIndex;
-    const selectedText = event.target.options[selectedIndex].text;
+    set({ errorInput: { speciality: false } })
+    const selectedIndex = event.target?.selectedIndex;
+    const selectedText = event.target?.options[selectedIndex]?.text;
+    const selectedTag = event.target?.options[selectedIndex]?.tag;
     const nameAttribtue = event.target.getAttribute("name").split(".");
     nameAttribtue.length > 1
       ? set((state) => ({
@@ -573,7 +578,7 @@ export const useStore = create((set, get) => ({
   removeSelectSpecialities: (event, keyValue) => {
     event.preventDefault();
     const clickedElement = event.target.getAttribute("name");
-    const filtredArray = get()[keyValue].specialities.filter(
+    const filtredArray = get()[keyValue].specialities?.filter(
       (speciality) => speciality?.text !== clickedElement
     );
     set((state) => ({
@@ -609,10 +614,15 @@ export const useStore = create((set, get) => ({
       }),
     }
     );
-
     if (response.ok) {
       const responseData = await response.json();
-      get().addNotifaction(responseData)
+      get().sendNotificationAdmins(responseData)
+      if (action === "إضــافة" && type === "سؤال" && status === "تمت") { get().sendNotificationDoctors(responseData) }
+      if (action === "إضــافة" && type === "رسالة" && status === "تمت") {
+        if (from.type === "doctors") { get().sendNotificationDoctor(responseData, from.id) }
+        if (from.type === "users") { get().sendNotificationUser(responseData, from.id) }
+      }
+      if (action === "إضــافة" && type === "موعد" && status === "تمت") { get().sendNotificationDoctor(responseData, id) }
       // Parse the response body as JSON
       // console.log("🚀 ~🚀 ~ Activity Added:", responseData);
     } else {
@@ -627,11 +637,11 @@ export const useStore = create((set, get) => ({
     text: "",
     speciality: {},
     response: "",
-    files:[],
+    files: [],
     author: "",
     details: { weight: 85, length: 180 },
   },
-  handleSubmitMessage: async (e, toast, id,type) => {
+  handleSubmitMessage: async (e, toast, id, type) => {
     e.preventDefault();
     set({ isLoading: true })
     const response = await fetch(`/api/${type}/inbox-add/${id}`, {
@@ -644,7 +654,8 @@ export const useStore = create((set, get) => ({
     if (response.status === 203) {
       toast.error("يرجى الانتظار قبل إرســال رسالة آخر", response);
     } else if (response.ok) {
-      get().addActivity("إضــافة", "رسالة", get().messageToSend?.title, "تمت");
+      get().addActivity("إضــافة", "رسالة", get().messageToSend?.title, "تمت", { id, type });
+
       toast.success("تم تقديم رسالتك بنجاح");
       set({ modal: get().modalClosed });
     } else {
@@ -653,7 +664,7 @@ export const useStore = create((set, get) => ({
     }
     set({ isLoading: false })
   },
-  handleDeleteMessage: async (e, toast, id, type) => {
+  handleDeleteMessage: async (e, toast, id, type,router) => {
     e.preventDefault();
     set({ isLoading: true })
     const response = await fetch(`/api/${type}/inbox-delete/${id}`, {
@@ -666,11 +677,12 @@ export const useStore = create((set, get) => ({
     if (response.status === 203) {
       toast.error("يرجى الانتظار قبل إرســال رسالة آخر", response);
     } else if (response.ok) {
-      get().addActivity("إضــافة", "رسالة", get().messageToSend?.title, "تمت");
+      get().addActivity("حذف", "رسالة", get().messageToSend?.title, "تمت");
       toast.success("تم تقديم رسالتك بنجاح");
       set({ modal: get().modalClosed });
+      router.refresh()
     } else {
-      get().addActivity("إضــافة", "رسالة", get().messageToSend?.title, "لم تتــم");
+      get().addActivity("حذف", "رسالة", get().messageToSend?.title, "لم تتــم");
       toast.error("حدث خطأ في تقديم رسالتك", response);
     }
     set({ isLoading: false })
@@ -692,15 +704,25 @@ export const useStore = create((set, get) => ({
   },
   //************** Notifications *************/
   notification: { isOpen: false },
-  addNotifaction: async (data) => {
+  updateNotification: (e, type, keyValue) => {
+    const isChecked = e.target.checked;
+    const updatedNotifications = new Set(get()[keyValue].notifications);
+    if (isChecked) {
+      if (!get()[keyValue].notifications.includes(type)) {
+        updatedNotifications.add(type);
+      }
+    } else {
+      // If the toggle is unchecked, remove the type from notifications.
+      updatedNotifications.delete(type);
+    }
+    set((state) => ({
+      [keyValue]: { ...state[keyValue], notifications: Array.from(updatedNotifications) },
+    }));
+  },
+  sendNotificationAdmins: async (data) => {
     const admins = await get().fetchAdmins()
     admins.forEach(async (admin) => {
-      const canAddNotification =
-        (data?.type === "مستخدم" && admin?.notifications?.users) ||
-        (data?.type === "طبيب" && admin?.notifications?.doctors) ||
-        (data?.type === "سؤال" && admin?.notifications?.questions) ||
-        (data?.type === "موعد" && admin?.notifications?.appointment) ||
-        (data?.type === "مقال" && admin?.notifications?.posts);
+      const canAddNotification = admin.notifications.includes(data?.type)
       if (canAddNotification) {
         const response = await fetch(`/api/admins/${admin?._id}`, {
           method: "PUT",
@@ -719,23 +741,72 @@ export const useStore = create((set, get) => ({
     })
 
   },
-  clearNotifaction: async () => {
-    const response = await fetch(`/api/admins/${get().session._id}`, {
+   sendNotificationDoctors: async (data) => {
+      const doctors = await get().fetchDoctors()
+      doctors.map(async doctor => {
+        const canAddNotification = doctor?.notifications.includes(data?.type)
+        if (canAddNotification && [...doctor.specialities, doctor.speciality].some(speciality => speciality?.text?.includes(get().askQuestion?.speciality.tag))) {
+        await fetch(`/api/doctors/${doctor._id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ notificationsList: [...doctor?.notificationsList, { ...data }] }),
+        })
+      }
+    })
+  },
+  sendNotificationDoctor: async (data, id) => {
+    const doctor = await get().fetchDoctor(id)
+    const canAddNotification = doctor?.notifications.includes(data?.type)
+    if (canAddNotification) {
+      const response = await fetch(`/api/doctors/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ notificationsList: [...doctor?.notificationsList, { ...data }] }),
+      });
+      if (response.ok) {
+        // get().fetchAdmin(admin?._id)
+      } else {
+      }
+    }
+  },
+  sendNotificationUser: async (data,id) => {
+    const user = await get().fetchUser(id)
+    const canAddNotification = user?.notifications.includes(data?.type)
+    if (canAddNotification) {
+      const response = await fetch(`/api/users/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ notificationsList: [...user?.notificationsList, { ...data }] }),
+      });
+      if (response.ok) {
+        // get().fetchAdmin(admin?._id)
+      } else {
+      }
+    }
+  },
+  clearNotifaction: async (keyValue) => {
+    const response = await fetch(`/api/${keyValue}/${get().session._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ notificationsList: [] }),
+      body: JSON.stringify({ notificationsList: get().session?.notificationsList.filter(not => not.type === "رسالة") }),
     });
     if (response.ok) {
       // console.log("🚀 ~🚀 ~ تم إضــافة التنبيه بنجاح")
     } else {
       // console.log("🚀 ~🚀 ~ فشلت عملية إضــافة التنبيه");
     }
-    get().fetchAdmin(get().session._id)
+    router.refresh()
   },
-  deleteNotifaction: async (id) => {
-    const response = await fetch(`/api/admins/${get().session._id}`, {
+  deleteNotifaction: async (id, router, keyValue) => {
+    const response = await fetch(`/api/${keyValue}/${get().session._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -747,7 +818,7 @@ export const useStore = create((set, get) => ({
     } else {
       // console.log("🚀 ~🚀 ~ فشلت عملية إضــافة التنبيه");
     }
-    get().fetchAdmin(get().session._id)
+    router.refresh()
   },
   //************** Company Form *************/
   companyInfo: {},
@@ -803,6 +874,17 @@ export const useStore = create((set, get) => ({
     if (!get().isRulesChecked.first && !get().isRulesChecked.seconde) {
       return toast.error("يرجى موافقة على الشروط");
     }
+    switch (true) {
+      case !get().userInfo?.password:
+        set({ isLoading: false, errorInput: { ...get().errorInput, password: true } });
+        return;
+      case !get().userInfo?.verifyPassword:
+        set({ isLoading: false, errorInput: { ...get().errorInput, verifyPassword: true } });
+        return;
+      case get().userInfo.verifyPassword !== get().userInfo.password:
+        set({ isLoading: false, errorInput: { ...get().errorInput, verifyPassword: true } });
+        return;
+    }
     const response = await fetch("/api/doctors", {
       method: "POST",
       headers: {
@@ -826,7 +908,7 @@ export const useStore = create((set, get) => ({
     }
     set({ doctorInfo: doctorDefault, isRulesChecked: { first: false, seconde: false } });
   },
-  handleSubmitDoctorUpdate: async (e, toast, id) => {
+  handleSubmitDoctorUpdate: async (e, toast, id, router, type) => {
     e.preventDefault();
     const response = await fetch(`/api/doctors/${id}`, {
       method: "PUT",
@@ -836,13 +918,56 @@ export const useStore = create((set, get) => ({
       body: JSON.stringify(get().doctorInfo),
     });
     if (response.ok) {
-      get().addActivity("تعـديل", "طبيب", get().doctorInfo?.email, "تمت")
-      toast.success("تم تعديل المستخدم بنجاح");
+      if (type === "new") {
+        get().addActivity("تأكيد التسجيل", "طبيب", get().doctorInfo?.email, "تمت")
+        toast.success("تم تأكيد التسجيل المستخدم بنجاح");
+        router.push("/login")
+      } else {
+        get().addActivity("تعـديل", "طبيب", get().doctorInfo?.email, "تمت")
+        toast.success("تم تعديل المستخدم بنجاح");
+      }
+
       set({ isLoading: false })
     } else {
       get().addActivity("تعـديل", "طبيب", get().doctorInfo?.email, "لم تتــم")
       toast.error("فشلت عملية تعديل المستخدم");
     }
+  },
+  handleSubmitDoctorLogin: async (e, toast, router, signIn) => {
+    e.preventDefault();
+    switch (true) {
+      case !get().userInfo?.password:
+        set({ isLoading: false, errorInput: { ...get().errorInput, password: true } });
+        return;
+      case !get().userInfo?.email:
+        set({ isLoading: false, errorInput: { ...get().errorInput, email: true } });
+        return;
+    }
+    const response = await signIn("doctor-login", { ...get().userInfo, type: "doctor", redirect: false });
+    if (response?.ok && !response?.error) {
+      toast.success("تم تسجيل دخول المستخدم بنجاح");
+      get().addActivity("دخول", "طبيب", get().userInfo?.email, "تمت")
+      set({ doctorInfo: { email: "", password: "" } });
+      router.refresh()
+      router.push("/doctor");
+    } else {
+      get().addActivity("دخول", "طبيب", get().userInfo?.email, "لم تتــم")
+      toast.error(response?.error);
+    }
+  },
+  handleDoctorConfirmation: async (e, toast, id, email) => {
+    e.preventDefault();
+    set({ isLoading: true })
+    const response = await fetch(`/api/sendToken/subscription?id=${id}&email=${email}`);
+    if (response.ok) {
+      toast.success("تم  تأكيد التسجيل المستخدم بنجاح");
+      console.log("✔ sending email from client Successfully")
+    } else {
+      console.log("⚠️ Error sending email from client...")
+      // get().addActivity("إضــافة", "موعد طبي", get().editedPost?.title, "لم تتــم")
+      toast.error("فشلت عملية إضــافة تأكيد التسجيل ");
+    }
+    set({ isLoading: false })
   },
   addedSpeciality: "",
   addedService: "",
@@ -858,6 +983,14 @@ export const useStore = create((set, get) => ({
   errorAdminKey: false,
   handleSubmitAdminLogin: async (e, toast, router, signIn) => {
     e.preventDefault();
+    switch (true) {
+      case !get().adminInfo?.email:
+        set({ isLoading: false, errorInput: { ...get().errorInput, email: true } });
+        return;
+      case !get().adminInfo?.password:
+        set({ isLoading: false, errorInput: { ...get().errorInput, password: true } });
+        return;
+    }
     const response = await signIn("admin-login", { ...get().adminInfo, type: "admin", redirect: false });
     if (response?.ok && !response?.error) {
       toast.success("تم تسجيل دخول المستخدم بنجاح");
@@ -872,8 +1005,16 @@ export const useStore = create((set, get) => ({
   },
   handleSubmitAdminSignup: async (e, toast, router, signIn) => {
     e.preventDefault();
-    if (!get().adminInfo.password || get().adminInfo.verifyPassword !== get().adminInfo.password) {
-      return set({ errorPassword: true });
+    switch (true) {
+      case !get().adminInfo?.password:
+        set({ isLoading: false, errorInput: { ...get().errorInput, password: true } });
+        return;
+      case !get().adminInfo?.verifyPassword:
+        set({ isLoading: false, errorInput: { ...get().errorInput, verifyPassword: true } });
+        return;
+      case get().adminInfo.verifyPassword !== get().adminInfo.password:
+        set({ isLoading: false, errorInput: { ...get().errorInput, verifyPassword: true } });
+        return;
     }
     const response = await fetch("/api/admins", {
       method: "POST",
@@ -934,8 +1075,19 @@ export const useStore = create((set, get) => ({
     author: "",
     details: { weight: 85, length: 180 },
   },
-  handleSubmitQuestion: async (e, toast) => {
+  handleSubmitQuestion: async (e, toast, router) => {
     e.preventDefault();
+    switch (true) {
+      case !get().askQuestion?.speciality?.value:
+        set({ isLoading: false, errorInput: { ...get().errorInput, speciality: true } });
+        return;
+      case !get().askQuestion?.title:
+        set({ isLoading: false, errorInput: { ...get().errorInput, title: true } });
+        return;
+      case !get().askQuestion?.text:
+        set({ isLoading: false, errorInput: { ...get().errorInput, text: true } });
+        return;
+    }
     const response = await fetch("/api/questions", {
       method: "POST",
       headers: {
@@ -947,12 +1099,52 @@ export const useStore = create((set, get) => ({
       get().addActivity("إضــافة", "سؤال", get().askQuestion?.title, "تمت")
       toast.success("  تم تقديم سؤالك بنجاح");
       set({ modal: get().modalClosed });
-      //   router.push("/questions");
+      router.refresh();
     } else {
       get().addActivity("إضــافة", "سؤال", get().askQuestion?.title, "لم تتــم")
       toast.error("حدث خطأ في تقديم سؤالك", response);
     }
   },
+  handleUpdateQuestion: async (e, toast,router, id) => {
+    e.preventDefault();
+    // set({ isLoading: true })
+    const response = await fetch(`/api/questions/response-add/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(get().askQuestion),
+    });
+    if (response.ok) {
+      get().addActivity("تعـديل", "سؤال", get().askQuestion?.title, "تمت")
+      toast.success("تم تعديل سؤال بنجاح");
+      router.refresh()
+    } else {
+      get().addActivity("تعـديل", "سؤال", get().askQuestion?.title, "لم تتــم")
+      toast.error("فشلت عملية سؤال المستخدم");
+    }
+    set({ isLoading: false })
+  },
+  handleSumbitComment: async (e, toast, router, responseId, id) => {
+  e.preventDefault();
+  // set({ isLoading: true })
+  const response = await fetch(`/api/questions/comment-add/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ comment: { text: get().askQuestion.comment, author:get().session?._id }, responseId }),
+  });
+  if (response.ok) {
+    get().addActivity("تعـديل", "سؤال", get().askQuestion?.title, "تمت")
+    toast.success("تم تعديل سؤال بنجاح");
+    router.refresh()
+  } else {
+    get().addActivity("تعـديل", "سؤال", get().askQuestion?.title, "لم تتــم")
+    toast.error("فشلت عملية سؤال المستخدم");
+  }
+  set({ isLoading: false })
+},
   //************** User Form *************/  
   healthInfo: {
     chrnoDiseases: [],
@@ -977,8 +1169,16 @@ export const useStore = create((set, get) => ({
   userInfo: userDefault,
   handleSubmitUserSignup: async (e, toast, router, signIn) => {
     e.preventDefault();
-    if (!get().userInfo.password || get().userInfo.verifyPassword !== get().userInfo.password) {
-      return set({ errorPassword: true });
+    switch (true) {
+      case !get().userInfo?.password:
+        set({ isLoading: false, errorInput: { ...get().errorInput, password: true } });
+        return;
+      case !get().userInfo?.verifyPassword:
+        set({ isLoading: false, errorInput: { ...get().errorInput, verifyPassword: true } });
+        return;
+      case get().userInfo.verifyPassword !== get().userInfo.password:
+        set({ isLoading: false, errorInput: { ...get().errorInput, verifyPassword: true } });
+        return;
     }
     const response = await fetch("/api/users", {
       method: "POST",
@@ -1014,6 +1214,14 @@ export const useStore = create((set, get) => ({
   },
   handleSubmitUserLogin: async (e, toast, router, signIn) => {
     e.preventDefault();
+    switch (true) {
+      case !get().userInfo?.email:
+        set({ isLoading: false, errorInput: { ...get().errorInput, email: true } });
+        return;
+      case !get().userInfo?.password:
+        set({ isLoading: false, errorInput: { ...get().errorInput, password: true } });
+        return;
+    }
     const response = await signIn("user-login", { ...get().userInfo, type: "user", redirect: false });
     if (response?.ok && !response?.error) {
       toast.success("تم تسجيل دخول المستخدم بنجاح");
@@ -1170,8 +1378,7 @@ export const useStore = create((set, get) => ({
     );
     if (response.ok) {
       const data = await response.json();
-
-      get().addActivity("إضــافة", "موعد طبي", get().appointInfo?.user?.email, "تمت")
+      get().addActivity("إضــافة", "موعد", get().appointInfo?.user?.email, "تمت", get().appointInfo?.doctor )
       toast.success("تم إضــافة موعد طبي بنجاح");
       set({
         modal: get().modalClosed,
@@ -1216,6 +1423,32 @@ export const useStore = create((set, get) => ({
     }
     set({ isLoading: false })
     get().scrollToElement("modal-bottom")
+  },
+  submitMessageSupport: async (e, toast) => {
+    e.preventDefault();
+    set({ isLoading: true })
+    switch (true) {
+      case !get().askQuestion?.email:
+        set({ isLoading: false, errorInput: { ...get().errorInput, email: true } });
+        return;
+    }
+    const response = await fetch(`/api/support`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(get().askQuestion),
+    }
+    );
+    if (response.ok) {
+      toast.success("  تم تقديم رسالتك بنجاح")
+      console.log("✔ sending email from client...")
+    } else {
+      console.log("⚠️ Error sending email from client...")
+      // get().addActivity("إضــافة", "موعد طبي", get().editedPost?.title, "لم تتــم")
+      // toast.error("فشلت عملية  إضــافة موعد طبي المستخدم");
+    }
+    set({ isLoading: false })
   },
   //************** Session *************/
   session: null,
@@ -1331,23 +1564,35 @@ export const useStore = create((set, get) => ({
     try {
       const questionsResponse = await fetch('/api/questions');
       const questionsData = await questionsResponse.json();
+      // Iterate through questions to fetch associated doctors for responses
+      const questionsWithDoctors = await Promise.all(
+        questionsData.map(async (question) => {
+          // Create a copy of the question to avoid modifying the original object
+          const questionCopy = { ...question };
 
-      // Fetch doctors for each question concurrently using Promise.all
-      const doctorPromises = questionsData.map(async (question) => {
-        const doctorResponse = await fetch(`/api/doctors/${question.doctorID}`);
-        const doctorData = await doctorResponse.json();
-        return { ...question, doctor: doctorData };
-      });
+          // Fetch doctors for each response
+          const responsePromises = questionCopy.responses.map(async (response) => {
+            const doctorResponse = await fetch(`/api/doctors/${response.doctorID}`);
+            const doctorData = await doctorResponse.json();
+            response.doctor = doctorData; // Attach the doctor object to the response
+          });
 
-      // Wait for all doctor fetches to complete
-      const questionsWithDoctors = await Promise.all(doctorPromises);
+          // Wait for all response doctor fetches to complete
+          await Promise.all(responsePromises);
+
+          return questionCopy;
+        })
+      );
+
+      // Now, questionsWithDoctors contains questions with responses, where each response has the doctor object attached
 
       set({ questions: questionsWithDoctors });
-      return { questions: questionsWithDoctors }
+      return { questions: questionsWithDoctors };
     } catch (error) {
-      console.error('🚀 ~Error fetching data:', error);
+      console.error('🚀 ~ Error fetching data:', error);
     }
   },
+
   fetchPosts: async () => {
     try {
       set({ isLoading: true });

@@ -12,7 +12,7 @@ function SectionBlog() {
   });
 
   return (
-    <div className='bg-sky-50 dark:bg-gray-800 w-full'>
+    <div className='bg-sky-100 dark:bg-gray-800 w-full'>
       <div className='p-5 flex justify-between items-center mx-auto md:max-w-[600px]'>
         <h1 className='font-bold text-clamp-2xl py-4 text-center'>المجلة الطبية</h1>
         <button className='btn px-4 py-2 whitespace-nowrap'> المزيد من المقالات</button>

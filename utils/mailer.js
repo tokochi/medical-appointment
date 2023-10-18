@@ -2,6 +2,7 @@ import nodemailer from "nodemailer"
 import bcrypt from 'bcrypt';
 import User from "@models/user";
 import { contactUsEmail, passwordReset, verficationCode, verficationEmail } from "@components/utils/EmailTemplate";
+import Doctor from "@models/doctor";
 
 export const sendEmail = async ({ email, type, userId, contactUsInfo }) => {
 
@@ -22,17 +23,18 @@ export const sendEmail = async ({ email, type, userId, contactUsInfo }) => {
     });
     try {
         const hashedToken = await bcrypt.hash(userId.toString(), 10)
-        const expireDate = Date.now() + 8000000
+        const expireDate = Date.now() + 8000000 // 2 hours
+        const expireDateLong = Date.now() + 864000000 // 10 days
         let hashedLink=null
         let mailOptions=null
         switch (type) {
             case "VERIFY":
-                await User.findByIdAndUpdate(userId, { verifyToken: hashedToken, verifyTokenExpiry: expireDate })
-                hashedLink = `${process.env.URL}/verifyToken/${hashedToken}`
+                await Doctor.findByIdAndUpdate(userId, { verifyToken: hashedToken, verifyTokenExpiry: expireDateLong })
+                hashedLink = `${process.env.URL}/api/verifyToken?token=${hashedToken}&id=${userId}`
                 mailOptions = {
                     from: '"Sehatitaji.com" <admin@sehatitaji.com>',
                     to: email,
-                    subject: "التحقق من البريد الإلكتروني"  ,
+                    subject: "تأكيد التسجيل"  ,
                     html: verficationEmail(hashedLink)
                 }
                 break;

@@ -9,7 +9,12 @@ function Footer() {
     <div className='mt-auto'>
       <div
         className={`bg-gray-50 ${
-          path.includes("/user") || path.includes("/login") ? "hidden" : ""
+          path.includes("/user") ||
+          path.includes("/login") ||
+          path.includes("/verifyToken") ||
+          path.includes("/doctor")
+            ? "hidden"
+            : ""
         } dark:bg-gray-900 flex flex-wrap p-4 gap-4`}>
         <div className='basis17 flex flex-col gap-2'>
           <div className='flex gap-2 items-center'>

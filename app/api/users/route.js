@@ -1,7 +1,6 @@
 import { connectToDB } from '@utils/database';
 import User from '@models/user';
 import bcrypt from 'bcrypt'
-import { sendEmail } from '@utils/mailer';
 
 // ****** Get All Data *********
 export async function GET(req) {
@@ -29,7 +28,6 @@ export async function POST(req) {
         const hashedPassword = await bcrypt.hash(data?.password, 10);
         const user = new User({ ...data, password: hashedPassword });
         await user.save();
-        // await sendEmail({ email: data?.email,emailType:"VERIFY", userId:user._id})
         return new Response(JSON.stringify(user), { status: 201 })
     } catch (error) {
         return new Response(JSON.stringify("failed to insert user to DB",error), { status: 500 });

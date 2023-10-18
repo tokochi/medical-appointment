@@ -5,12 +5,13 @@ import Image from "next/image";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useStore } from "@context/store";
+import RadioInput from "@components/inputs/RadioInput";
 function LoginForm() {
-  const { errorInput, userInfo, handleInputChange, handleSubmitUserLogin } = useStore();
+  const { errorInput,loginType, userInfo, handleInputChange,handleSubmitDoctorLogin, handleSubmitUserLogin } = useStore();
   const router = useRouter();
 
   return (
-    <div className='p-4 flex flex-col gap-4 justify-center text-gray-600 dark:text-gray-200'>
+    <div className='p-4 flex flex-col gap-2 justify-center text-gray-600 dark:text-gray-200'>
       {/* <button onClick={()=>signIn('facebook')} id="facebook" className="flex gap-2 items-center btnf">
               <svg className="h-10 w-10 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                   <path d="M19,3H5C3.895,3,3,3.895,3,5v14c0,1.105,0.895,2,2,2h7.621v-6.961h-2.343v-2.725h2.343V9.309 c0-2.324,1.421-3.591,3.495-3.591c0.699-0.002,1.397,0.034,2.092,0.105v2.43h-1.428c-1.13,0-1.35,0.534-1.35,1.322v1.735h2.7 l-0.351,2.725h-2.365V21H19c1.105,0,2-0.895,2-2V5C21,3.895,20.105,3,19,3z" fill="#E0E4E8" />
@@ -26,7 +27,26 @@ function LoginForm() {
         أو
         <div className='w-full border-b-2 border-gray-400 rounder-xl'></div>
       </div>
-      <form onSubmit={(e) => handleSubmitUserLogin(e, toast, router, signIn)}>
+      <div className="flex flex-wrap gap-4 ">
+        <RadioInput
+          name='loginType'
+          checked={loginType === "user"}
+          onChange={(e) => useStore.setState({ loginType: "user" })}
+          type='text'
+          label='مستخدم'
+        />
+        <RadioInput
+          name='loginType'
+          checked={loginType === "doctor"}
+          onChange={(e) => useStore.setState({ loginType: "doctor" })}
+          type='text'
+          label='مهني طبي'
+        />
+      </div>
+      <form onSubmit={(e) => {
+        if (loginType === "doctor") { handleSubmitDoctorLogin(e, toast, router, signIn); };
+        if (loginType === "user") { handleSubmitUserLogin(e, toast, router, signIn) };
+      }}>
         <TextInput
           type='text'
           name='email'
@@ -43,10 +63,10 @@ function LoginForm() {
           onChange={(e) => handleInputChange(e, "userInfo")}
           placeholder='كلمة السر'
         />
-        <p className='p-2 text-sm text-sky-500 font-semibold'>هل نسيت كلمة السر؟</p>
+        <button className='p-2 mb-2 text-xs text-sky-500 font-semibold'>هل نسيت كلمة السر؟</button>
         <button
           type='submit'
-          className='text-gray-100 shadow-sm dark:text-zinc-900 font-bold bg-cyan-600 hover:bg-cyan-500 focus:ring-2 focus:outline-none focus:ring-cyan-300 rounded-lg  p-4 text-center'>
+          className='text-gray-100 mx-auto w-full shadow-sm dark:text-zinc-900 font-bold bg-cyan-600 hover:bg-cyan-500 focus:ring-2 focus:outline-none focus:ring-cyan-300 rounded-lg  p-2.5 text-center'>
           تسجيل
         </button>
       </form>

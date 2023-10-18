@@ -1,3 +1,4 @@
+import Question from '@models/question';
 import { connectToDB } from '@utils/database';
 
 

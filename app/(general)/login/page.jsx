@@ -35,12 +35,12 @@ function page() {
         className='hidden  md:flex w-24 h-24 rounded-full z-10 mx-[-48px] my-auto  items-center justify-center bg-white dark:bg-gray-900'>
         <div className='w-12 h-12 rounded-full  flex items-center justify-center bg-primary'></div>
       </div>
-      <div id='form' className='p-10  h-full overflow-y-auto grow flex-1 text-white  bg-primary'>
+      <div id='form' className='p-2  h-full overflow-y-auto grow flex-1 text-white  bg-primary'>
         <div className='flex-col flex  justify-center items-center'>
           <div>
-            <Image src='/images/logo.webp' width={150} height={150} alt='cancel' />
+            <Image src='/images/logo.webp' width={120} height={120} alt='cancel' />
           </div>
-          <h1 className='text-2xl text-center font-bold p-4'>هذه الصفحة خاصة لتسجيل الدخول</h1>
+          <h1 className='text-xl text-center font-bold p-4'>هذه الصفحة خاصة لتسجيل الدخول</h1>
           {session?.user? (
             <div className='flex flex-col justify-center items-center  gap-4'>
               <h1 className='font-semibold text-center p-2 border-b-[1px] border-dashed'>

@@ -7,7 +7,16 @@ import { IconInput, SelectInput } from "@components/inputs";
 import toast from "react-hot-toast";
 
 function page() {
-  const { doctorInfo, isRulesChecked, specialities,handleInputChange,errorInput,handleSelectInput, wilaya } = useStore();
+  const {
+    doctorInfo,
+    isRulesChecked,
+    handleRulesCheckbox,
+    specialities,
+    handleInputChange,
+    errorInput,
+    handleSelectInput,
+    wilaya,
+  } = useStore();
   const router = useRouter();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,7 +26,7 @@ function page() {
     router.push("/doctors/signup");
   };  
   return (
-    <div className='p-4 flex flex-wrap items-start gap-10 bg-gray-100 dark:bg-slate-900'>
+    <div className='p-4 flex flex-wrap items-start gap-10'>
       <div className='card rounded-md grow shrink basis-[30%] min-w-[280px]'>
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className='font-semibold p-2 px-2 border-b-[1px] border-gray-300 dark:border-gray-700'>
@@ -79,7 +88,7 @@ function page() {
                 option_value='value'
                 option_text='text'
                 placeholder='التخصص'
-                label='التخصص  الرئيسي:'
+                // label='التخصص  الرئيسي:'
               />
             </div>
             <div className=''>
@@ -91,15 +100,15 @@ function page() {
                 option_value='value'
                 option_text='text'
                 placeholder='الولاية'
-                label='الولاية:'
+                // label='الولاية:'
               />
             </div>
             <div className='flex items-center gap-2'>
               <input
-                id='default-checkbox'
-                name='checkbox'
-                checked={isRulesChecked}
-                onChange={(e) => handleCheckboxChange(e)}
+                id='isRulesChecked.first'
+                name='isRulesChecked.first'
+                checked={isRulesChecked?.first}
+                onChange={(e) => handleRulesCheckbox(e)}
                 type='checkbox'
                 className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
               />

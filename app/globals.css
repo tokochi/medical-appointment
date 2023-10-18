@@ -20,7 +20,6 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: rgb(13, 49, 86);
 }
 /* Default styles for desktop */
 ::-webkit-scrollbar {

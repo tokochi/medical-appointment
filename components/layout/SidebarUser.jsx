@@ -62,9 +62,7 @@ function SidebarUser() {
             href='/user/inbox'
             className='flex gap-2 font-semibold'>
             <svg className='h-6 w-6 fill-gray-600 dark:fill-gray-400' viewBox='0 0 24 24'>
-              <path
-                d='M4 4C3.07 4 2.2923125 4.6429063 2.0703125 5.5039062L12 11.726562L21.935547 5.5214844C21.719547 4.6504844 20.937 4 20 4L4 4 z M 2 7.734375L2 18C2 19.103 2.897 20 4 20L20 20C21.103 20 22 19.103 22 18L22 7.7558594L12 14L2 7.734375 z'
-              />
+              <path d='M4 4C3.07 4 2.2923125 4.6429063 2.0703125 5.5039062L12 11.726562L21.935547 5.5214844C21.719547 4.6504844 20.937 4 20 4L4 4 z M 2 7.734375L2 18C2 19.103 2.897 20 4 20L20 20C21.103 20 22 19.103 22 18L22 7.7558594L12 14L2 7.734375 z' />
             </svg>
             <p className={`hidden md:inline-block`}>رسـالاتي</p>
           </Link>
@@ -83,7 +81,26 @@ function SidebarUser() {
             <p className={`hidden md:inline-block`}>بطاقتي</p>
           </Link>
         </li>
-        <li className={`${path === "/user/security" && "dark:bg-primary bg-cyan-500"} rounded p-2`}>
+        <li
+          className={`${
+            path === "/user/notification" && "dark:bg-primary bg-cyan-500"
+          } rounded p-2`}>
+          <Link
+            //onClick={() => router.refresh()}
+            href='/user/notification'
+            className='flex gap-2 font-semibold'>
+            <svg className='h-6 w-6 fill-gray-600 dark:fill-gray-400' viewBox='0 0 48 48'>
+              <path
+                d='M3.4667969 3.9863281 A 1.50015 1.50015 0 0 0 2.5625 6.671875L7.5625 10.671875 A 1.5007322 1.5007322 0 1 0 9.4375 8.328125L4.4375 4.328125 A 1.50015 1.50015 0 0 0 3.4667969 3.9863281 z M 44.488281 3.9863281 A 1.50015 1.50015 0 0 0 43.5625 4.328125L38.5625 8.328125 A 1.5007322 1.5007322 0 1 0 40.4375 10.671875L45.4375 6.671875 A 1.50015 1.50015 0 0 0 44.488281 3.9863281 z M 24 4C15.729 4 9 10.729 9 19L9 27.185547L6.2382812 33.498047C5.8982812 34.273047 5.9745 35.159188 6.4375 35.867188C6.9005 36.576188 7.6822969 37 8.5292969 37L39.470703 37C40.317703 37 41.0995 36.576188 41.5625 35.867188C42.0265 35.159188 42.101719 34.273047 41.761719 33.498047L39 27.185547L39 19C39 10.729 32.271 4 24 4 z M 1.5 16 A 1.50015 1.50015 0 1 0 1.5 19L5.5 19 A 1.50015 1.50015 0 1 0 5.5 16L1.5 16 z M 42.5 16 A 1.50015 1.50015 0 1 0 42.5 19L46.5 19 A 1.50015 1.50015 0 1 0 46.5 16L42.5 16 z M 18.349609 39C19.175609 41.327 21.393 43 24 43C26.607 43 28.824391 41.327 29.650391 39L18.349609 39 z'
+              />
+            </svg>
+            <p className={`hidden md:inline-block`}>التنبيهات</p>
+          </Link>
+        </li>
+        <li
+          className={`${
+            path === "/user/notification" && "dark:bg-primary bg-cyan-500"
+          } rounded p-2`}>
           <Link
             //onClick={() => router.refresh()}
             href='/user/security'

@@ -5,6 +5,7 @@ import { useStore } from "@context/store";
 import AskQuestion from "../forms/question/AskQuestion";
 
 function FindYourAnswer() {
+  const {session} = useStore()
   return (
     <div className='card p-4 flex flex-col gap-4'>
       <h1 className='font-bold text-2xl text-center text-sky-500'>
@@ -17,6 +18,18 @@ function FindYourAnswer() {
         <button
           onClick={() =>
             useStore.setState({
+              errorInput: {
+                speciality: false,
+                title: false,
+                text: false,
+              },
+              askQuestion: {
+                title: "",
+                text: "",
+                speciality: {},
+                response: "",
+                author: session?._id,
+              },
               modal: {
                 isOpen: true,
                 title: "سؤالي الطبي",

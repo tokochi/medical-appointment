@@ -1,6 +1,6 @@
 import { connectToDB } from '@utils/database';
 import Doctor from '@models/doctor';
-
+import bcrypt from 'bcrypt'
 
 // ****** Get All Data *********
 export async function GET(req) {
@@ -19,8 +19,8 @@ export async function POST(req) {
     const doctorExists = await Doctor.findOne({ email: data?.email });
     if (doctorExists) { return new Response(JSON.stringify("Doctor already exist"), { status: 500 }); }
     try {
-        // const hashedPassword = await bcrypt.hash(data?.password, 10);
-        const doctor = new Doctor(data);
+        const hashedPassword = await bcrypt.hash(data?.password, 10);
+        const doctor = new Doctor({ ...data, password: hashedPassword });
         await doctor.save();
         return new Response(JSON.stringify(doctor), { status: 201 })
     } catch (error) {

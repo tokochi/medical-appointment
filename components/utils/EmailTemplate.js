@@ -66,7 +66,7 @@ export function verficationEmail(hash) {
 
   <!-- start preheader -->
   <div class="preheader" style="display: none; max-width: 0; max-height: 0; overflow: hidden; font-size: 1px; line-height: 1px; color: #fff; opacity: 0;">
-    رمز التحقق الخاص بك:${code}
+    الرجاء تأكيد التسجيل
   </div>
   <!-- end preheader -->
 
@@ -110,7 +110,7 @@ export function verficationEmail(hash) {
         <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
           <tr>
             <td align="right" bgcolor="#ffffff" style="padding: 36px 24px 0; font-family: 'Noto Kufi Arabic', Helvetica, Arial, sans-serif; border-top: 3px solid #d4dadf;">
-              <h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;">رمز التحقق الخاص بك</h1>
+              <h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;"> رابط تأكيد التسجيل الخاص بك</h1>
             </td>
           </tr>
         </table>
@@ -136,12 +136,12 @@ export function verficationEmail(hash) {
           <!-- start copy -->
           <tr>
             <td align="right" bgcolor="#ffffff" style="padding: 24px; font-family: 'Noto Kufi Arabic', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-               <p style="margin: 0;">أنت تتلقى هذا البريد الإلكتروني لأنه تم تقديم طلب للحصول على رمز لمرة واحدة يمكن استخدامه للمصادقة.<br>
-الرجاء إدخال الرمز التالي للتحقق:</p>
+               <p style="margin: 0;">أنت تتلقى هذا البريد الإلكتروني لأنه تم تقديم طلب التسجيل على موقع   sehatitaji.com </p>
+               <p style="margin: 0;"> لقد تم مراجعة طلبك و يمكنك لآن تسجيل دخولك، الرجاء إتباع الرابط و ادخال كلمة السر الخاص بك:</p>
             </td>
           </tr>
           <!-- end copy -->
-
+<br>
           <!-- start button -->
           <tr>
             <td align="left" bgcolor="#ffffff">
@@ -151,7 +151,7 @@ export function verficationEmail(hash) {
                     <table border="0" cellpadding="0" cellspacing="0">
                       <tr>
                         <td align="center" bgcolor="#1a82e2" style="border-radius: 6px;">
-                          <div  target="_blank" style="display: inline-block; padding: 16px 36px; font-family: 'Noto Kufi Arabic', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px;">${code}</div>
+                          <a href="${hash}" style="display: inline-block; padding: 16px 36px; font-family: 'Noto Kufi Arabic', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px;">تأكيد</a>
                         </td>
                       </tr>
                     </table>
@@ -596,7 +596,7 @@ export function contactUsEmail(data) {
           <!-- start copy -->
           <tr>
             <td align="right" bgcolor="#ffffff" style="padding: 24px; font-family: 'Noto Kufi Arabic', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-               <p style="margin: 0;">${data?.body}</p>
+               <p style="margin: 0;">${data?.text}</p>
             </td>
           </tr>
           <!-- end copy -->

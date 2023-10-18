@@ -12,7 +12,7 @@ function UserSendMessage({ data }) {
       onClick={() => {
         useStore.setState({
           messageToSend: {
-            titel: "",
+            title: "",
             files:[],
             text: "",
             from: {

@@ -38,12 +38,7 @@ const adminSchema = new Schema({
     whatsapp: String,
     files: {},
     inbox: [],
-    notifications: {
-        users: Boolean,
-        doctors: Boolean,
-        posts: Boolean,
-        questions: Boolean
-    },
+    notifications: [String],
     googleMap: {
         lat: Number,
         lng: Number

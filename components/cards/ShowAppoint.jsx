@@ -42,8 +42,8 @@ function ShowAppoint({ appointment, askQuestion, doctor, handleInputChange }) {
               y1='9.858'
               y2='38.142'
               gradientUnits='userSpaceOnUse'>
-              <stop offset='0' stop-color='#9dffce' />
-              <stop offset='1' stop-color='#50d18d' />
+              <stop offset='0' stopColor='#9dffce' />
+              <stop offset='1' stopColor='#50d18d' />
             </linearGradient>
             <path
               fill='url(#IMoH7gpu5un5Dx2vID39Ra)'
@@ -56,9 +56,9 @@ function ShowAppoint({ appointment, askQuestion, doctor, handleInputChange }) {
               y1='24.793'
               y2='24.793'
               gradientUnits='userSpaceOnUse'>
-              <stop offset='.824' stop-color='#135d36' />
-              <stop offset='.931' stop-color='#125933' />
-              <stop offset='1' stop-color='#11522f' />
+              <stop offset='.824' stopColor='#135d36' />
+              <stop offset='.931' stopColor='#125933' />
+              <stop offset='1' stopColor='#11522f' />
             </linearGradient>
             <path
               fill='url(#IMoH7gpu5un5Dx2vID39Rb)'

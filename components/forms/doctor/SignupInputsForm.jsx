@@ -1,9 +1,11 @@
+"use client";
 import { useStore } from "@context/store";
 import { useRef, useEffect } from "react";
 import Image from "next/image";
 import { CheckboxInput, DropInput, IconInput, SelectInput, TextInput } from "@components/inputs";
 import { storage } from "@utils/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 const LeafletMap = dynamic(() => import("@components/map/LeafletMap"), {
   ssr: false,
@@ -31,10 +33,11 @@ function SignupInputsForm(props) {
     daira,
     commune,
   } = useStore();
+  const path = usePathname();
 
-  const filtredspecialities = specialities.filter(
+  const filtredspecialities = specialities?.filter(
     (specialty) =>
-      !doctorInfo?.specialities.some((addedspecialty) => addedspecialty.text === specialty.text)
+      !doctorInfo?.specialities?.some((addedspecialty) => addedspecialty.text === specialty.text)
   );
   const personalInfo_ref = useRef(null);
   const workInfo_ref = useRef(null);
@@ -50,12 +53,13 @@ function SignupInputsForm(props) {
   }, [personalInfo_ref, workInfo_ref, geoInfo_ref, workSchedule_ref, documentsUpload_ref]);
 
   return (
-    <div>
+    <div className={`${path === "/doctor" ? "flex-wrap" : "flex-col"} flex  gap-4`}>
+      {/* {personal-info} */}
       <div
         id='personal-info'
         onClick={() => handleStepperButtonClick("btn_1")}
         ref={personalInfo_ref}
-        className='card rounded-md '>
+        className='card rounded-md grow shrink basis-[45%]'>
         <div className='font-semibold p-2 px-2 border-b-[1px] border-gray-300 dark:border-gray-700'>
           المعلومات الشخصية
         </div>
@@ -89,7 +93,7 @@ function SignupInputsForm(props) {
           </div>
           <div id='name' className=''>
             <IconInput
-              icon='/images/user.webp'
+              icon='/images/doctor.webp'
               name='name'
               value={doctorInfo?.name}
               onChange={(e) => handleInputChange(e, "doctorInfo")}
@@ -154,7 +158,7 @@ function SignupInputsForm(props) {
               label='واتساب:'
             />
           </div>
-          <div id='avatar' className='min-w-[250px]'>
+          <div id='avatar' className='flex gap-2 justify-center items-center min-w-[250px]'>
             <DropInput
               id='12'
               name='avatar'
@@ -168,20 +172,46 @@ function SignupInputsForm(props) {
                   uploadBytes,
                   getDownloadURL,
                   storage,
-                  `doctors/avatar/${doctorInfo?.email}/`,
+                  `doctors/avatar/${doctorInfo?._id}/`,
                   "doctorInfo"
                 )
               }
               label='الصورة الشخصية: '
             />
+            <div className='pt-4'>
+              <div className=''>
+                {doctorInfo?.avatar?.length > 1 && (
+                  <button
+                    name={doctorInfo?.avatar?.[0]}
+                    onClick={(e) => removeSelectAvatar(e, "doctorInfo")}>
+                    <svg
+                      className='w-6 h-6 z-20 relative top-2 select-none pointer-events-none'
+                      viewBox='0 0 24 24'>
+                      <path
+                        d='M12,2C6.47,2,2,6.47,2,12c0,5.53,4.47,10,10,10s10-4.47,10-10C22,6.47,17.53,2,12,2z M16.707,15.293 c0.391,0.391,0.391,1.023,0,1.414C16.512,16.902,16.256,17,16,17s-0.512-0.098-0.707-0.293L12,13.414l-3.293,3.293 C8.512,16.902,8.256,17,8,17s-0.512-0.098-0.707-0.293c-0.391-0.391-0.391-1.023,0-1.414L10.586,12L7.293,8.707 c-0.391-0.391-0.391-1.023,0-1.414s1.023-0.391,1.414,0L12,10.586l3.293-3.293c0.391-0.391,1.023-0.391,1.414,0 s0.391,1.023,0,1.414L13.414,12L16.707,15.293z'
+                        fill='#7D7D7D'
+                      />
+                    </svg>
+                  </button>
+                )}
+                <Image
+                  className='rounded-xl w-auto h-auto'
+                  src={doctorInfo?.avatar?.[0]}
+                  width={70}
+                  height={70}
+                  alt='avatar'
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
+      {/* {work-info} */}
       <div
         id='work-info'
         onClick={() => handleStepperButtonClick("btn_2")}
         ref={workInfo_ref}
-        className='card rounded-md my-4 '>
+        className='card rounded-md  grow shrink basis-[45%]'>
         <div className='font-semibold p-2 px-2 border-b-[1px] border-gray-300 dark:border-gray-700'>
           المعلومات المهنية
         </div>
@@ -325,8 +355,7 @@ function SignupInputsForm(props) {
             />
             <CheckboxInput
               name='otherServices?.isFullTimeOpen'
-              checked={doctorInfo?.
-                isFullTimeOpen}
+              checked={doctorInfo?.isFullTimeOpen}
               onChange={(e) => handleCheckbox(e, "doctorInfo")}
               label='عيادة مفتوحة 24/7'
               placeholder='&nbsp;'
@@ -378,11 +407,12 @@ function SignupInputsForm(props) {
           </div>
         </div>
       </div>
+      {/* {geo-info} */}
       <div
         id='geo-info'
         onClick={() => handleStepperButtonClick("btn_3")}
         ref={geoInfo_ref}
-        className='card rounded-md my-4'>
+        className='card rounded-md  grow shrink basis-[45%]'>
         <div className='font-semibold p-2 px-2 border-b-[1px] border-gray-300 dark:border-gray-700'>
           الموقع الجغرافي
         </div>
@@ -491,11 +521,12 @@ function SignupInputsForm(props) {
           </div>
         </div>
       </div>
+      {/* {work-schedule} */}
       <div
         id='work-schedule'
         onClick={() => handleStepperButtonClick("btn_4")}
         ref={workSchedule_ref}
-        className='card rounded-md my-4'>
+        className='card rounded-md  grow shrink basis-[45%]'>
         <div className='font-semibold p-2 px-2 border-b-[1px] border-gray-300 dark:border-gray-700'>
           برنماج العمل
         </div>
@@ -583,11 +614,12 @@ function SignupInputsForm(props) {
           </table>
         </div>
       </div>
+      {/* {documents-upload} */}
       <div
         id='documents-upload'
         onClick={() => handleStepperButtonClick("btn_5")}
         ref={documentsUpload_ref}
-        className='card rounded-md my-4'>
+        className='card rounded-md  grow shrink basis-[45%]'>
         <div className='font-semibold p-2 px-2 border-b-[1px] border-gray-300 dark:border-gray-700'>
           تحميل وثائق
         </div>
@@ -614,7 +646,7 @@ function SignupInputsForm(props) {
               label='صور العيادة: (10 صور حد اقصى):'
             />
           </div>
-          <div id='proofPics' className='min-w-[250px]'>
+          <div id='proofPics' className={`${path === "/doctor" && "hidden"} min-w-[250px]`}>
             <h3 className='text-sm'>الكفائة مهنية:</h3>
             <DropInput
               id='14'

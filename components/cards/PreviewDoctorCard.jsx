@@ -122,7 +122,7 @@ const { doctorInfo  } = useStore();
             <div id='specialities' className=''>
               <h1 className='font-bold text-[18px] text-sky-500'>التخصصات</h1>
               <div className='flex flex-wrap gap-2 p-2'>
-                {doctorInfo?.specialities.map((specialitie, index) => (
+                {doctorInfo?.specialities?.map((specialitie, index) => (
                   <button
                     key={index}
                     className='p-1 px-2 bg-slate-200 text-sm rounded-[163px] text-gray-900 dark:text-gray-300 dark:bg-slate-700 hover:bg-slate-400 font-medium'>

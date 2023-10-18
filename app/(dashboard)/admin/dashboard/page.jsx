@@ -4,22 +4,28 @@ import Doctors from "@components/cards/dashboard/Doctors";
 import Hospitals from "@components/cards/dashboard/Hospitals";
 import Labs from "@components/cards/dashboard/Labs";
 import Pharms from "@components/cards/dashboard/Pharms";
+import Users from "@components/cards/dashboard/Users";
+import ConfirmeDoctorSignup from "@components/buttons/ConfirmeDoctorSignup";
+
 
 async function page() {
   const { fetchUsers, fetchDoctors } = useStore.getState();
   const users = await fetchUsers();
   const doctors = await fetchDoctors();
   return (
-    <div className='bg-gray-200 dark:bg-slate-900 p-2 flex flex-wrap gap-2 justify-center'>
+    <div className=' p-2 flex flex-wrap gap-2 justify-center'>
       <div
         id='cards'
         className='grow shrink basis-full gap-2 flex flex-wrap justify-around items-center'>
         <Doctors />
+        <Users />
         <Hospitals />
         <Labs />
         <Pharms />
       </div>
-      <div id='doctors-sumbit' className='grow shrink basis-1/3  md:w-auto card p-2 rounded-xl'>
+      <div
+        id='doctors-sumbit'
+        className='grow shrink basis-1/3  md:w-auto card p-2 rounded-xl '>
         <h1 className='font-bold md:text-xl text-sky-500 my-2 text-center'>طلبات تسجيل الأطباء</h1>
         <table className='w-full text-sm md:text-base'>
           <thead>
@@ -31,46 +37,41 @@ async function page() {
             </tr>
           </thead>
           <tbody>
-            {doctors.map((doctor, index) => (
-              <tr key={index} className='text-center p-2'>
-                <td className='text-center p-2  rounded-md '>
-                  <div className='flex flex-wrap md:flex-nowrap items-start gap-4'>
-                    <Image
-                      className='rounded-xl min-w-[50px] '
-                      src={doctor?.avatar?.[0]}
-                      width={50}
-                      height={50}
-                      alt='avatar'
-                    />
-                    <div
-                      id='avatar'
-                      className='text-right md:whitespace-nowrap flex flex-col gap-2'>
-                      <h1 className='font-bold text-sm text-sky-500'>
-                        {doctor?.title?.text + " "}
-                        {doctor?.name}
-                      </h1>
-                      <h2 className='text-sm'>{doctor?.speciality?.text}</h2>
+            {doctors
+              .filter((doctor) => doctor?.isVerified === false)
+              .map((doctor, index) => (
+                <tr key={index} className='text-center p-2'>
+                  <td className='text-center p-2  rounded-md '>
+                    <div className='flex flex-wrap md:flex-nowrap items-start gap-4'>
+                      <Image
+                        className='rounded-xl min-w-[50px] '
+                        src={doctor?.avatar?.[0]}
+                        width={50}
+                        height={50}
+                        alt='avatar'
+                      />
+                      <div
+                        id='avatar'
+                        className='text-right md:whitespace-nowrap flex flex-col gap-2'>
+                        <h1 className='font-bold text-sm text-sky-500'>
+                          {doctor?.title?.text + " "}
+                          {doctor?.name}
+                        </h1>
+                        <h2 className='text-sm'>{doctor?.speciality?.text}</h2>
+                      </div>
                     </div>
-                  </div>
-                </td>
-                <td>{doctor?.date?.toISOString()?.substring(0, 10)}</td>
-                <td>
-                  <button>
-                    <svg
-                      className='h-6 w-6 fill-yellow-400'
-                      xmlns='http://www.w3.org/2000/svg'
-                      viewBox='0 0 24 24'>
-                      <path d='M20,6h-8l-1.414-1.414C10.211,4.211,9.702,4,9.172,4H4C2.9,4,2,4.9,2,6v12c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V8 C22,6.9,21.1,6,20,6z' />
-                    </svg>
-                  </button>
-                </td>
-                <td>
-                  <div className='p-1.5 rounded-2xl bg-red-100'>
-                    <p className='text-red-600 text-sm md:whitespace-nowrap'>قيد الانتظار</p>
-                  </div>
-                </td>
-              </tr>
-            ))}
+                  </td>
+                  <td>{doctor?.date?.toISOString()?.substring(0, 10)}</td>
+                  <td>
+                    <ConfirmeDoctorSignup data={JSON.stringify(doctor)} />
+                  </td>
+                  <td>
+                    <div className='p-1.5 rounded-2xl bg-red-100'>
+                      <p className='text-red-600 text-sm md:whitespace-nowrap'>قيد الانتظار</p>
+                    </div>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

@@ -1,4 +1,4 @@
-"use client";;
+"use client";
 import { useStore } from "@context/store";
 import Image from "next/image";
 import toast from "react-hot-toast";
@@ -7,6 +7,7 @@ import ToggleInput from "@components/inputs/ToggleInput";
 function NotificationForm() {
   const {
     adminInfo,
+    updateNotification,
     handleSubmitAdminUpdate,
     isLoading,
     handleCheckbox,
@@ -27,9 +28,9 @@ function NotificationForm() {
              <span className='text-sm'>تلقي التنبيهـــات الخاصة يتسجيــل المستخدميـن</span>
            </div>
            <ToggleInput
-             name='notifications.users'
-             checked={adminInfo?.notifications?.users}
-             onChange={(e) => handleCheckbox(e, "adminInfo")}
+             name='notifications'
+             checked={adminInfo?.notifications.includes("مستخدم")}
+             onChange={(e) => updateNotification(e, "مستخدم", "adminInfo")}
              type='text'
            />
          </div>
@@ -40,9 +41,9 @@ function NotificationForm() {
              <span className='text-sm'>تلقي التنبيهـــات الخاصة يتسجيــل الأطبـــاء</span>
            </div>
            <ToggleInput
-             name='notifications.doctors'
-             checked={adminInfo?.notifications?.doctors}
-             onChange={(e) => handleCheckbox(e, "adminInfo")}
+             name='notifications'
+             checked={adminInfo?.notifications.includes("أطباء")}
+             onChange={(e) => updateNotification(e, "أطباء", "adminInfo")}
              type='text'
            />
          </div>
@@ -53,9 +54,9 @@ function NotificationForm() {
              <span className='text-sm'>تلقي التنبيهـــات عند نشر المقالات</span>
            </div>
            <ToggleInput
-             name='notifications.posts'
-             checked={adminInfo?.notifications?.posts}
-             onChange={(e) => handleCheckbox(e, "adminInfo")}
+             name='notifications'
+             checked={adminInfo?.notifications.includes("مقال")}
+             onChange={(e) => updateNotification(e, "مقال", "adminInfo")}
              type='text'
            />
          </div>
@@ -66,9 +67,9 @@ function NotificationForm() {
              <span className='text-sm'>تلقي التنبيهـــات عند نشر الأسلة الطبية</span>
            </div>
            <ToggleInput
-             name='notifications.questions'
-             checked={adminInfo?.notifications?.questions}
-             onChange={(e) => handleCheckbox(e, "adminInfo")}
+             name='notifications'
+             checked={aadminInfo?.notifications.includes("سؤال")}
+             onChange={(e) => updateNotification(e, "سؤال", "adminInfo")}
              type='text'
            />
          </div>

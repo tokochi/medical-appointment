@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 function IconInput({ icon, label, type, name, id, error, placeholder, helper, ...rest }) {

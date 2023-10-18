@@ -3,6 +3,7 @@ import Image from "next/image";
 
 
 function DoctorQuestion({ doctor }) {
+
   return (
     <div>
       <Link

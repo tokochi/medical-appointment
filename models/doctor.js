@@ -126,14 +126,23 @@ const doctorSchema = new Schema({
     desc: String,
     linkdin: String,
     inbox: [messageSchema],
+    notifications: [String],
     notificationsList: [],
+    isVerified: {
+        type: Boolean,
+        default: false
+    },
     date: {
         type: Date,
         default: Date.now
     },
-    lastLogin: {
-        type: Date
-    }
+    forgotPasswordToken: String,
+    forgotPasswordTokenExpiry: { type: Date },
+    verifyToken: String,
+    verifyTokenExpiry: { type: Date },
+    verifyPinCode: Number,
+    verifyPinCodeExpiry: { type: Date },
+    lastLogin: { type: Date },
 })
 const Doctor = models?.doctor || model("doctor", doctorSchema);
 export default Doctor;

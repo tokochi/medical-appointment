@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { wilaya, daira, commune, relatedWorks, medicalSpecialties, specialities, titles, labs, pharms, hosp, visitArg, worksPharms, worksLabs, searchTabs, questions, specilatiyHosp, sectionWork } from "@utils/data.js";
+import { wilaya, daira, commune, relatedWorks, sectionDoctors, medicalSpecialties, specialities, titles, labs, pharms, hosp, visitArg, worksPharms, worksLabs, searchTabs, questions, specilatiyHosp, sectionWork } from "@utils/data.js";
 import { connectToDB } from '@utils/database';
 import Admin from '@models/admin';
 import Post from '@models/post';
@@ -19,6 +19,7 @@ export const useStore = create((set, get) => ({
   dir: "rtl",
   //************** Static Data *************/
   medicalSpecialties,
+  sectionDoctors,
   specialities,
   relatedWorks,
   specilatiyHosp,
@@ -165,12 +166,24 @@ export const useStore = create((set, get) => ({
     try {
       if (id) {
         const question = await Question.findOne({ _id: id });
-        const doctorData = await Doctor.findOne({ _id: question.doctorID });
-        set({ selectedQuestion: { ...question, doctor: doctorData } });
-        return { ...question._doc, doctor: doctorData }
+
+        if (question) {
+          const responsePromises = question.responses.map(async (response) => {
+            const responseDoctorData = await Doctor.findOne({ _id: response.doctorID });
+            return { ...response._doc, doctor: responseDoctorData };
+          });
+
+          const responsesWithDoctors = await Promise.all(responsePromises);
+
+          const doctorData = await Doctor.findOne({ _id: question.doctorID });
+          const questionWithDoctors = { ...question._doc, responses: responsesWithDoctors, doctor: doctorData };
+
+          set({ selectedQuestion: questionWithDoctors });
+          return questionWithDoctors;
+        }
       }
     } catch (error) {
-      console.error('🚀 ~Error fetching data:', error);
+      console.error('🚀 ~ Error fetching data:', error);
     }
   },
   fetchUsers: async () => {
@@ -198,19 +211,36 @@ export const useStore = create((set, get) => ({
     await connectToDB();
     try {
       const response = await Question.find();
-      // Fetch doctors for each question concurrently using Promise.all
+
+      // Define a helper function to fetch a doctor by ID
+      const fetchDoctorById = async (doctorID) => {
+        return await Doctor.findOne({ _id: doctorID });
+      };
+
+      // Map questions and fetch doctor objects for each question and its responses concurrently
       const doctorPromises = response.map(async (question) => {
-        const doctorData = await Doctor.findOne({ _id: question?.doctorID });
-        return { ...question._doc, doctor: doctorData }
+        // Map responses and fetch doctor objects for each response concurrently
+        const responsePromises = question.responses.map(async (response) => {
+          const responseDoctorData = await fetchDoctorById(response.doctorID);
+          return { ...response._doc, doctor: responseDoctorData };
+        });
+
+        // Wait for all response doctor fetches to complete
+        const responsesWithDoctors = await Promise.all(responsePromises);
+
+        return { ...question._doc, responses: responsesWithDoctors };
       });
+
       // Wait for all doctor fetches to complete
       const questionsWithDoctors = await Promise.all(doctorPromises);
+
       set({ questions: questionsWithDoctors });
-      return questionsWithDoctors
+      return questionsWithDoctors;
     } catch (error) {
-      console.error('🚀 ~Error fetching data:', error);
+      console.error('🚀 ~ Error fetching data:', error);
     }
   },
+
   fetchPosts: async () => {
     await connectToDB();
     try {

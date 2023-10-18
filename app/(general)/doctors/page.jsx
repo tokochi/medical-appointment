@@ -9,7 +9,7 @@ async function page() {
   const { fetchDoctors} = useStore.getState();
    const doctors = await fetchDoctors();
   return (
-    <div className='bg-sky-50 dark:bg-primary'>
+    <div className='bg-sky-100 dark:bg-primary'>
       <h1 id='title' className='font-bold text-clamp-2xl mx-2 p-2'>
         إبحث عن طبيب في ولايتك
       </h1>

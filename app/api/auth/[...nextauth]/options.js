@@ -35,17 +35,16 @@ export const options = {
             },
             async authorize(credentials, req) {
                 await connectToDB();
-                if (!credentials?.email || !credentials?.password) { throw new Error('empty credentials!! ') }
                 const user = await User.findOne({ email: credentials?.email });
                 if (!user || !user?.password) {
-                    throw new Error('User not Found in db !! ')
+                    throw new Error('لايوجد مستخدم يوافق المعلومات المسجلة', { duration: 5000 })
                 }
                 const isCorrectPassword = await bcrypt.compare(
                     credentials.password,
                     user.password
                 )
                 if (!isCorrectPassword) {
-                    throw new Error('Invalid Password');
+                    throw new Error('معلومات التسجيل خاطأة', { duration: 5000 });
                 }
               await User.updateOne({ email: credentials?.email }, { $set: { lastLogin: Date.now() } })
                 return user
@@ -60,17 +59,16 @@ export const options = {
             },
             async authorize(credentials, req) {
                 await connectToDB();
-                if (!credentials?.email || !credentials?.password) { throw new Error('empty credentials!! ') }
                 const user = await Admin.findOne({ email: credentials?.email });
                 if (!user || !user?.password) {
-                    throw new Error('User not Found in db !! ')
+                    throw new Error('لايوجد مشرف يوافق المعلومات المسجلة', { duration: 5000 })
                 }
                 const isCorrectPassword = await bcrypt.compare(
                     credentials.password,
                     user.password
                 )
                 if (!isCorrectPassword) {
-                    throw new Error('Invalid Password');
+                    throw new Error('معلومات التسجيل خاطأة', { duration: 5000 });
                 }
                 await Admin.updateOne({ email: credentials?.email }, { $set: { lastLogin: Date.now() } })
                 return user
@@ -85,10 +83,16 @@ export const options = {
             },
             async authorize(credentials, req) {
                 await connectToDB();
-                if (!credentials?.email || !credentials?.password) { throw new Error('empty credentials!! ') }
                 const user = await Doctor.findOne({ email: credentials?.email });
-                if (!user) {
-                    throw new Error('User not Found in db !! ')
+                if (!user || !user?.password) {
+                    throw new Error('لايوجد مهني طبي يوافق المعلومات المسجلة',{duration:5000})
+                }
+                const isCorrectPassword = await bcrypt.compare(
+                    credentials.password,
+                    user.password
+                )
+                if (!isCorrectPassword) {
+                    throw new Error('معلومات التسجيل خاطأة', { duration: 5000 });
                 }
                 await Doctor.updateOne({ email: credentials?.email }, { $set: { lastLogin: Date.now() } })
                 return user

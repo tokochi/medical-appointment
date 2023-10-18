@@ -16,7 +16,9 @@ function UserMessage({ id }) {
   } = useStore();
   return (
     <div className='card p-4 flex flex-col gap-2'>
-      <form className='flex flex-col gap-2' onSubmit={(e) => handleSubmitMessage(e, toast, id,"doctors")}>
+      <form
+        className='flex flex-col gap-2'
+        onSubmit={(e) => handleSubmitMessage(e, toast, id, "doctors")}>
         <h1 className='font-semibold p-2 text-center'>اكتب رسالتك</h1>
         <TextInput
           name='title'
@@ -48,7 +50,7 @@ function UserMessage({ id }) {
               uploadBytes,
               getDownloadURL,
               storage,
-              `questions/${messageToSend?.title}/`,
+              `inbox/users-messages/${messageToSend?.title}/`,
               "messageToSend"
             )
           }

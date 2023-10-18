@@ -3,27 +3,27 @@ import { IconInput, TextareaInput } from "@components/inputs";
 import Image from "next/image";
 import { useStore } from "@context/store";
 import toast from "react-hot-toast";
+import { useEffect } from "react";
 
 function page() {
-  const { askQuestion } = useStore();
-  function handleInputChange(event) {
-    const nameAttribtue = event.target.getAttribute("name");
-    useStore.setState((state) => ({
-      askQuestion: {
-        ...state.askQuestion,
-        [nameAttribtue]: event.target.value,
-      },
-    }));
-  }
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    toast.success("  تم تقديم رسالتك بنجاح");
-  };
+  const { askQuestion, handleInputChange,errorInput, submitMessageSupport } = useStore();
+ useEffect(
+   () =>
+     useStore.setState({
+       askQuestion: {
+         email: "",
+         text: "",
+         phone: "",
+         name: "",
+       },
+     }),
+   []
+ );
   return (
     <div className='card p-4 flex flex-wrap justify-center items-center '>
       <form
         className='basis-[60%] grow shrink min-w-[300px] flex flex-col gap-2'
-        onSubmit={(e) => handleSubmit(e)}>
+        onSubmit={(e) => { submitMessageSupport(e, toast); }}>
         <h1 className='font-semibold text-2xl p-2 text-center'>اتصل بنا</h1>
         <h2 className='p-2'>اقتراح، مشكلة فنية، ملاحظة</h2>
         <h2 className='p-2'>
@@ -34,7 +34,7 @@ function page() {
             icon='/images/user.webp'
             name='name'
             value={askQuestion.name}
-            onChange={(e) => handleInputChange(e)}
+            onChange={(e) => handleInputChange(e, "askQuestion")}
             type='text'
             placeholder='الإسم كامل بالعربية'
             label='الإسم كامل بالعربية:'
@@ -44,8 +44,9 @@ function page() {
           <IconInput
             icon='/images/email.webp'
             name='email'
+            error={errorInput?.email}
             value={askQuestion.email}
-            onChange={(e) => handleInputChange(e)}
+            onChange={(e) => handleInputChange(e, "askQuestion")}
             type='email'
             placeholder='البريد الإلكتروني '
             label='البريد الإلكتروني:'
@@ -56,7 +57,7 @@ function page() {
             icon='/images/phone.webp'
             name='phone'
             value={askQuestion.phone}
-            onChange={(e) => handleInputChange(e)}
+            onChange={(e) => handleInputChange(e, "askQuestion")}
             type='phone'
             placeholder='رقم الجوال'
             label='رقم الجوال:'
@@ -67,7 +68,7 @@ function page() {
             name='text'
             rows='4'
             value={askQuestion?.text}
-            onChange={(e) => handleInputChange(e)}
+            onChange={(e) => handleInputChange(e, "askQuestion")}
             type='text'
             placeholder='أكتب رسالتك هنا'
           />

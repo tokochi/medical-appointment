@@ -41,7 +41,7 @@ function page() {
                     <h2 className='text-sm'>{message?.from?.speciality?.text}</h2>
                   </div>
                 </td>
-                <td className='text-center p-2 cursor-pointer'>{message?.titel}</td>
+                <td className='text-center p-2 cursor-pointer'>{message?.title}</td>
                 <td className='text-center p-2'>{moment(message.date).format("LLLL") + " 🕒 "}</td>
                 <td className='text-center p-2'>
                   <div className='flex flex-col gap-1'>
@@ -50,7 +50,7 @@ function page() {
                         useStore.setState({
                           askQuestion: {
                             date: Date.now(),
-                            title: `الرد عل :${message?.titel}`,
+                            title: `الرد عل :${message?.title}`,
                             text: "",
                             files: [],
                             author: session?._id,
@@ -92,8 +92,7 @@ function page() {
                             textBtn_1: "موافقة",
                             textBtn_2: "إلغـــــاء",
                             onClickBtn_1: (e) => {
-                              handleDeleteMessage(e, toast, session._id, "users");
-                              router.refresh();
+                              handleDeleteMessage(e, toast, session._id, "users", router);
                             },
                             onClickBtn_2: (e) => {
                               useStore.setState((state) => ({ modal: state.modalClosed }));

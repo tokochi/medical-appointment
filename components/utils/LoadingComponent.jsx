@@ -1,10 +1,10 @@
 "use client"
 import React from 'react'
-import { PushSpinner } from "react-spinners-kit";
+import ClipLoader from "react-spinners/ClipLoader";
 
 
 function LoadingComponent({ loading, size }) {
-  return <PushSpinner size={size} color='#686769' loading={loading} />;
+  return <ClipLoader size={size} color='#004563' loading={loading} />;
 }
 
 export default LoadingComponent

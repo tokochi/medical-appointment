@@ -15,7 +15,7 @@ export const Metadata = {
 export default async function RootLayout({ children }) {
   return (
     <html lang='ar' dir="rtl"  >
-      <body className='text-gray-900 bg-gray-200 dark:bg-slate-800 dark:text-gray-100 w-full ' >
+      <body className='text-gray-900 bg-gray-200 dark:bg-slate-900 dark:text-gray-100 w-full ' >
         <ClientSideWrapper>
           {children}
         </ClientSideWrapper>

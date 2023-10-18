@@ -1,7 +1,7 @@
 import Image from "next/image";
 function SectionWhyUs() {
   return (
-    <div className='bg-sky-50 dark:bg-gray-900'>
+    <div className='bg-sky-100 dark:bg-gray-900'>
       <div className='py-2'>
         
         <h1 className='font-bold text-clamp-2xl  py-4 text-center'>

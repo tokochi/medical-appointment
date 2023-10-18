@@ -11,7 +11,7 @@ function SectionWorks() {
     useStore.setState({ sectionWork: updatedTab });
   }
   return (
-    <div className='bg-sky-50 dark:bg-transparent'>
+    <div className='bg-sky-100 dark:bg-transparent'>
       <div className='py-5'>
         <h1 className='font-bold text-clamp-2xl py-4 text-center'>إستشارات طبية</h1>
         <div className='flex gap-4 justify-center items-center'>

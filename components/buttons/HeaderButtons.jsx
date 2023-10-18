@@ -50,6 +50,9 @@ const { session, closeModelAnywhere } = useStore();
           }));
         }}
         className='rounded-xl  card p-1'>
+        {session?.notificationsList?.filter((not) => not.type === "رسالة").length > 0 && (
+          <div className='absolute top-0 right-[-3px] bg-red-600 animate-pulse rounded-full w-3 h-3'></div>
+        )}
         <svg
           className='h-6 w-6 fill-gray-600 pointer-events-none  dark:fill-gray-400'
           xmlns='http://www.w3.org/2000/svg'
@@ -66,7 +69,7 @@ const { session, closeModelAnywhere } = useStore();
           }));
         }}
         className='relative rounded-xl card p-1 z-10'>
-        {session?.notificationsList?.length > 0 && (
+        {session?.notificationsList?.filter((not) => not.type !== "رسالة").length > 0 && (
           <div className='absolute top-0 right-[-3px] bg-red-600 animate-pulse rounded-full w-3 h-3'></div>
         )}
         <svg

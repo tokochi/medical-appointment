@@ -7,7 +7,7 @@ async function page() {
     const { fetchPharms } = useStore.getState();
   const pharms = await fetchPharms();
   return (
-    <div className='bg-sky-50 dark:bg-primary'>
+    <div className='bg-sky-100 dark:bg-primary'>
       <h1 id='title' className='font-bold text-clamp-2xl mx-2 p-2'>
         إبحث عن الصيدلية الأقرب إليك
       </h1>
