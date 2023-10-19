@@ -25,7 +25,7 @@ function SelectInput({
         {...rest}
         className={`bg-gray-50 border ${
           error ? "border-red-600 dark:border-red-600" : "border-gray-300 dark:border-gray-600"
-        }  text-gray-900 text-sm  font-semibold   block w-full p-1 dark:bg-gray-700   dark:text-gray-200`}>
+        }  text-gray-900 text-sm  font-semibold  block w-full  dark:bg-gray-700   dark:text-gray-200`}>
         <option style={{ display: "none" }}>{placeholder}</option>
         {options.map((option, index) => (
           <option key={index} tag={option.tag} value={option[option_value]}>

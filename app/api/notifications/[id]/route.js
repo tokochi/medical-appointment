@@ -1,5 +1,5 @@
 import { connectToDB } from '@utils/database';
-import Activity from '@models/activity';
+import Notification from '@models/notification';
 import bcrypt from 'bcrypt';
 // ****** Get one Data *********
 export async function GET(req,{params}) {
@@ -8,7 +8,7 @@ export async function GET(req,{params}) {
         if (!params?.id) {
             return new Response('Missing ID parameter', { status: 400 }); // Bad Request
         }
-        const response = await Activity.findOne({ _id: params?.id });
+        const response = await Notification.findOne({ _id: params?.id });
         if (response.ok) {
             return new Response(JSON.stringify(response), { status: 200 }); // OK
         } else {
@@ -27,7 +27,7 @@ export async function DELETE(req, { params }) {
         if (!params?.id) {
             return new Response('Missing ID parameter', { status: 400 }); // Bad Request
         }
-        const response = await Activity.deleteOne({ _id: params?.id })
+        const response = await Notification.deleteOne({ _id: params?.id })
         if (response.acknowledged === true && response.deletedCount === 1) {
             return new Response(JSON.stringify(response), { status: 200 }); // OK
         } else {

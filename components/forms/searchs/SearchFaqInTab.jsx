@@ -15,7 +15,7 @@ function SearchFaq() {
         <div className='grow shrink basis-1/4 min-w-[280px]  lg:min-w-[100px]'>
           <button
             type='button'
-            className='bg-yellow-500 hover:bg-yellow-400  focus:ring-2 focus:ring-yellow-700 flex mt-2 gap-2 text-w justify-center items-center text-lg w-full pr-5 p-1  dark:border-gray-600  dark:text-white'>
+            className='bg-yellow-500 hover:bg-yellow-400  focus:ring-2 focus:ring-yellow-700 flex mt-2 gap-2 text-w justify-center items-center text-lg w-full pr-5 h-[32px] dark:border-gray-600  dark:text-white'>
             بحث
             <Image
               className='w-auto h-auto'

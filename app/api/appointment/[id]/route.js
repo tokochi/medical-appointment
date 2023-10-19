@@ -9,7 +9,7 @@ export async function GET(req,{params}) {
             return new Response('Missing ID parameter', { status: 400 }); // Bad Request
         }
         const response = await Appointment.findOne({
-            $or: [{ _id: params?.id }, { email: params?.id }],
+            $or: [{ _id: params?.id }, { _id: params?.id }],
         });
 ;
         if (response) {

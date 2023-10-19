@@ -64,7 +64,7 @@ function Activity() {
                 </td>
                 <td className='text-center p-2 max-w-[120px] truncate capitalize'>{db?.source}</td>
                 <td className='text-center p-2 w-1/8 truncate capitalize'>
-                  {db?.from || "المستخدم"}
+                  {db?.from?.name || "المستخدم"}
                 </td>
                 <td className='text-center p-2  truncate'>
                   {db?.status === "لم تتــم" && (

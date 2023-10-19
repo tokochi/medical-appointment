@@ -9,7 +9,7 @@ export async function GET(req, { params }) {
         if (!params?.id) {
             return new Response('Missing ID parameter', { status: 400 }); // Bad Request
         }
-        const response = await Doctor.findOne({ email: params?.id });
+        const response = await Doctor.findOne({ _id: params?.id });
         if (response) {
             return new Response(JSON.stringify(response), { status: 200 }); // OK
         } else {
@@ -79,10 +79,7 @@ export async function PUT(req, { params }) {
 
         }
         else {
-            
-            console.log("🚀 ~ data:", data)
             response = await Doctor.updateOne({ _id: params?.id }, { $set: data })
-            console.log("🚀 ~ response:", response)
         }
         if (response.acknowledged === true && response.modifiedCount === 1) {
             return new Response('Doctor updated successfully', { status: 200 }); // OK

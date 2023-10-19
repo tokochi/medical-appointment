@@ -7,7 +7,7 @@ function SearchDoctorInTab() {
 
   return (
     <div className='p-4'>
-      <div className='flex flex-wrap '>
+      <div className='flex flex-wrap'>
         <div className='basis17  lg:min-w-[180px] '>
           <SearchName placeholder='ابحث عن طبيب' />
         </div>
@@ -21,7 +21,7 @@ function SearchDoctorInTab() {
           <Link
             href='/doctors'
             type='button'
-            className='bg-yellow-400 hover:bg-yellow-500  focus:ring-2 focus:ring-yellow-700 flex mt-2 gap-2 text-w justify-center items-center text-lg w-full pr-5 p-1  dark:border-gray-600  dark:text-black'>
+            className='bg-yellow-400 h-[32px] hover:bg-yellow-500  focus:ring-2 focus:ring-yellow-700 flex mt-2 gap-2 text-w justify-center items-center text-lg w-full pr-5  dark:border-gray-600  dark:text-black'>
             بحث
             <Image
               className='w-auto h-auto'

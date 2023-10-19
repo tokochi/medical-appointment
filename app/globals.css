@@ -93,6 +93,14 @@ body {
       max-width: 15036px;
     }
   }  */
+select,option, input {
+  /* Add specific padding and alignment styles as needed */
+  min-height: 32px;
+  padding: 0;
+ margin: 0;
+  vertical-align: middle; /* To adjust vertical alignment if necessary */
+  /* Other select styles */
+}
 input:focus,
 textarea:focus,
 select:focus {

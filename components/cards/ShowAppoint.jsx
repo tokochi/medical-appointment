@@ -1,11 +1,19 @@
-import React from "react";
+"use client"
+import { useStore } from "@context/store";
 import moment from "moment";
 import "moment/locale/ar-dz";
 import Image from "next/image";
 import { TextareaInput } from "@components/inputs";
+import toast from "react-hot-toast";
 moment().locale("ar-dz");
 
-function ShowAppoint({ appointment, askQuestion, doctor, handleInputChange }) {
+function ShowAppoint({ data }) {
+  const {appointment, doctor} = JSON.parse(data)
+    const {
+      messageToSend,
+      handleInputChange,
+      handleSubmitMessage,
+    } = useStore();
   return (
     <div id='doct-cards' className='p-4 card rounded-md flex flex-col  gap-6'>
       <div id='title' className='flex flex-col  gap-6'>
@@ -75,16 +83,14 @@ function ShowAppoint({ appointment, askQuestion, doctor, handleInputChange }) {
         <h1 className='text-sky-500 my-4 text-lg font-semibold'>لا تتردد في الاتصال بطبيبك</h1>
         <TextareaInput
           name='text'
-          rows='4'
-          //   value={askQuestion?.text}
-          //   onChange={(e) => handleInputChange(e)}
+          rows={5}
+          value={messageToSend?.text}
+          onChange={(e) => handleInputChange(e, "messageToSend")}
           type='text'
           placeholder='أكتب رسالتك هنا'
         />
         <button
-          //   onClick={() => {
-          //      sendMessage();
-          //   }}
+          onClick={(e) => handleSubmitMessage(e, toast, doctor._id, "doctors")}
           className='grow-0 font-semibold bg-cyan-400 rounded-lg hover:bg-cyan-500  focus:ring-2 focus:ring-cyan-700 flex mt-2 gap-2 text-w justify-center items-center  pr-5 p-1  dark:border-gray-600  dark:text-black'>
           إرسل
           <Image

@@ -41,7 +41,7 @@ function Doctors({ data }) {
                     {item?.name}
                   </h1>
                   <h2 className='font-semibold'>{item?.speciality?.text}</h2>
-                  <div className='border-b-[1px] border-gray-400 dark:border-gray-100 w-full m-1' />
+                  <div className='border-b-[1px] border-gray-400 dark:border-gray-100 w-[80%] m-1' />
                   {item?.otherServices?.isFullTimeOpen && (
                     <h2 className='flex items-start gap-2 pt-1 text-cyan-400 text-sm'>
                       <Image
@@ -102,13 +102,9 @@ function Doctors({ data }) {
                 <button
                   id='call-btn'
                   className='w-full btn px-4 py-2 flex gap-2 items-enter justify-center'>
-                  <Image
-                    className='w-auto h-auto'
-                    src='/images/view.webp'
-                    width={20}
-                    height={10}
-                    alt='avatar'
-                  />
+                  <svg className='w-5 h-5 fill-gray-900' viewBox='0 0 24 24'>
+                    <path d='M5 3C3.897 3 3 3.897 3 5L3 19C3 20.103 3.897 21 5 21L19 21C20.103 21 21 20.103 21 19L21 5C21 3.897 20.103 3 19 3L5 3 z M 12 8C16 8 18 12 18 12C18 12 16 16 12 16C8 16 6 12 6 12C6 12 8 8 12 8 z M 12 10 A 2 2 0 0 0 10 12 A 2 2 0 0 0 12 14 A 2 2 0 0 0 14 12 A 2 2 0 0 0 12 10 z' />
+                  </svg>
                   <p className='font-semibold text-sm'>عرض الملف</p>
                 </button>
               </Link>

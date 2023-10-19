@@ -6,7 +6,7 @@ const activitySchema = new Schema({
     type: String,
     source: String,
     status: String,
-    from: String,
+    from: {},
     date: { type: Date, default: Date.now },
 
 })

@@ -8,7 +8,6 @@ export const useStore = create((set, get) => ({
   dir: "rtl",
   modal: { isOpen: false, title: "", content: "", children: null, textBtn_1: "", textBtn_2: "", onClickBtn_1: null, onClickBtn_2: null },
   modalClosed: { isOpen: false, title: "", content: "", children: null, onClickBtn_1: null, onClickBtn_2: null },
-
   sidebarOpen: false,
   activeTab: searchTabs,
   currentTab: 0,
@@ -20,7 +19,6 @@ export const useStore = create((set, get) => ({
   editedPost: {
     text: "", image: "/images/logo.webp", speciality: {}, title: ""
   },
-
   closeModelAnywhere: (e) => {
 
     if (get().modal.isOpen === true && e.target.getAttribute("name") == "modal") { set(({ modal: get().modalClosed })) }
@@ -310,7 +308,7 @@ export const useStore = create((set, get) => ({
     }
 
     if (response.ok) {
-      get().addActivity("إضــافة", type, email || name, "تمت", "المشرف")
+      get().addActivity("إضــافة", type, email || name, "تمت", {name:"المشرف"})
       toast.success("تم تسجيل المستخدم بنجاح", { duration: 3000 });
       get().fetchToGrid(url)
     } else {
@@ -360,7 +358,7 @@ export const useStore = create((set, get) => ({
         break;
     }
     if (response.ok) {
-      get().addActivity("حـــذف", type, email || name, "تمت", "المشرف")
+      get().addActivity("حـــذف", type, email || name, "تمت", { name: "المشرف" })
       toast.success("تم حذف المستخدم بنجاح", { duration: 5000 });
       get().fetchToGrid(url)
     } else {
@@ -402,7 +400,7 @@ export const useStore = create((set, get) => ({
         break;
     }
     if (response.ok) {
-      get().addActivity("تعـديل", type, email || name, "تمت", "المشرف")
+      get().addActivity("تعـديل", type, email || name, "تمت", { name: "المشرف" })
       toast.success("تم تعديل المستخدم بنجاح", { duration: 5000 });
       get().fetchToGrid(url)
     } else {
@@ -619,10 +617,11 @@ export const useStore = create((set, get) => ({
       get().sendNotificationAdmins(responseData)
       if (action === "إضــافة" && type === "سؤال" && status === "تمت") { get().sendNotificationDoctors(responseData) }
       if (action === "إضــافة" && type === "رسالة" && status === "تمت") {
-        if (from.type === "doctors") { get().sendNotificationDoctor(responseData, from.id) }
-        if (from.type === "users") { get().sendNotificationUser(responseData, from.id) }
+        const { id, type } = from
+        if (type === "doctors") { get().sendNotificationDoctor(responseData, id) }
+        if (type === "users") { get().sendNotificationUser(responseData, id) }
       }
-      if (action === "إضــافة" && type === "موعد" && status === "تمت") { get().sendNotificationDoctor(responseData, id) }
+      if (action === "إضــافة" && type === "موعد" && status === "تمت") { get().sendNotificationDoctor(responseData, from.id) }
       // Parse the response body as JSON
       // console.log("🚀 ~🚀 ~ Activity Added:", responseData);
     } else {
@@ -639,7 +638,6 @@ export const useStore = create((set, get) => ({
     response: "",
     files: [],
     author: "",
-    details: { weight: 85, length: 180 },
   },
   handleSubmitMessage: async (e, toast, id, type) => {
     e.preventDefault();
@@ -655,7 +653,6 @@ export const useStore = create((set, get) => ({
       toast.error("يرجى الانتظار قبل إرســال رسالة آخر", response);
     } else if (response.ok) {
       get().addActivity("إضــافة", "رسالة", get().messageToSend?.title, "تمت", { id, type });
-
       toast.success("تم تقديم رسالتك بنجاح");
       set({ modal: get().modalClosed });
     } else {
@@ -732,7 +729,7 @@ export const useStore = create((set, get) => ({
           body: JSON.stringify({ notificationsList: [...admin?.notificationsList, { ...data }] }),
         });
         if (response.ok) {
-          get().fetchAdmin(admin?._id)
+          // get().fetchAdmin(admin?._id)
           // console.log("🚀 ~🚀 ~ تم إضــافة التنبيه بنجاح")
         } else {
           // console.log("🚀 ~🚀 ~ فشلت عملية إضــافة التنبيه");
@@ -1025,7 +1022,7 @@ export const useStore = create((set, get) => ({
     });
     if (response.ok) {
       toast.success("تم تسجيل المستخدم بنجاح");
-      get().addActivity("تسجيل", "مشرف", get().adminInfo?.email, "تمت",)
+      get().addActivity("تسجيل", "مشرف", get().adminInfo?.email, "تمت")
       const response = await signIn("admin-login", { ...get().adminInfo, type: "admin", redirect: false });
       if (response?.ok && !response?.error) {
         set({
@@ -1378,7 +1375,7 @@ export const useStore = create((set, get) => ({
     );
     if (response.ok) {
       const data = await response.json();
-      get().addActivity("إضــافة", "موعد", get().appointInfo?.user?.email, "تمت", get().appointInfo?.doctor )
+      get().addActivity("إضــافة", "موعد", get().appointInfo?.user?.email, "تمت", { id:get().appointInfo?.doctor } )
       toast.success("تم إضــافة موعد طبي بنجاح");
       set({
         modal: get().modalClosed,

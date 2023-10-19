@@ -20,7 +20,7 @@ async function page({ params }) {
           <RelatedWoks />
         </div>
         <div className='grow shrink basis-[50%] min-w-[280px]'>
-          <ShowAppoint appointment={appointment} doctor={doctor} />
+          <ShowAppoint data={JSON.stringify({ appointment, doctor })} />
         </div>
         <div className='grow shrink basis-[20%] min-w-[280px] p-2'>
           <div>

@@ -33,7 +33,7 @@ function Labs({ data }) {
                   {item?.name}
                 </h1>
                 <h2 className='font-semibold'>{item?.speciality?.text}</h2>
-                <div className='border-b-[1px] border-gray-400 dark:border-gray-100  m-1' />
+                <div className='border-b-[1px] border-gray-400 dark:border-gray-100 w-[80%] m-1' />
                 {item?.otherServices?.isFullTimeOpen && (
                   <h2 className='flex items-start gap-2 pt-1 text-cyan-400 text-sm'>
                     <Image

@@ -17,9 +17,9 @@ function IconInput({ icon, label, type, name, id, error, placeholder, helper, ..
           type={type}
           id={id}
           name={name}
-          className={`bg-gray-50 border placeholder:font-noto placeholder-gray-400  placeholder:font-semibold ${
+          className={`bg-gray-50 border  placeholder-gray-400  placeholder:font-semibold ${
             error ? "border-red-600 dark:border-red-600" : "border-gray-300 dark:border-gray-600"
-          }  text-gray-900 text-sm  focus:ring-gray-500 focus:border-gray-500 block w-full pr-10 p-1  dark:bg-gray-700   dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500`}
+          }  text-gray-900 text-sm  focus:ring-gray-500 focus:border-gray-500 block w-full pr-10  dark:bg-gray-700  dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500`}
           placeholder={placeholder}
           {...rest}
         />
