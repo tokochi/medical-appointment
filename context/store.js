@@ -792,8 +792,8 @@ export const useStore = create((set, get) => ({
       get().sendNotificationAdmins(responseData)
       if (action === "إضــافة" && type === "سؤال" && status === "تمت") { get().sendNotificationDoctors({ ...responseData, title: "سؤال طبي في تخصصك", text: "تم طرح سؤال طبي جديد من طرف أحد المستخدمين حول تخصصك الطبي، يمكنك المشاركة و الإجابة و تلقي ردود و تعليقات" }) }
       if (action === "إضــافة" && type === "رسالة" && status === "تمت") { get().sendNotification({ ...responseData, title: "تلقيت رسالة", text: "" }, from?.id, from?.type) }
-      if (action === "إضــافة" && type === "موعد" && status === "تمت") { get().sendNotificationDoctor({ ...responseData, title: "لديك موعد طبي", text: "" }, from?.id, "doctors") }
-      if (type === "إشتراك" && status === "تمت") { get().sendNotificationDoctor({ ...responseData, title: "اشتراك", text: "" }, from?.id, "doctors") }
+      if (action === "إضــافة" && type === "موعد" && status === "تمت") { get().sendNotification({ ...responseData, title: "لديك موعد طبي", text: "" }, from?.id, "doctors") }
+      if (type === "إشتراك" && status === "تمت") { get().sendNotification({ ...responseData, title: "اشتراك", text: "" }, from?.id, "doctors") }
       // Parse the response body as JSON
       // console.log("🚀 ~🚀 ~ Activity Added:", responseData);
     } else {
