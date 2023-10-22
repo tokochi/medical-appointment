@@ -17,7 +17,10 @@ const appointmentSchema = new Schema({
         ref: 'Doctor',
     },
     status: "string",
-    visitArg: "string",
+    visitArg: {
+        text: String,
+        value: String
+    },
     desc: "string",
     expiryDate: {
         type: Date,
