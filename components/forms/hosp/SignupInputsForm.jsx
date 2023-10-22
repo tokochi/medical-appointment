@@ -31,7 +31,6 @@ function SignupInputsForm(props) {
     daira,
     commune,
   } = useStore();
-console.log(addedAdmins);
   const filtredspecialities = medicalSpecialties.filter(
     (specialty) =>
       !hospInfo?.specialities?.some((addedspecialty) => addedspecialty.text === specialty.text)

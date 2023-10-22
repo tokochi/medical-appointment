@@ -7,12 +7,12 @@ import { useRouter } from "next/navigation";
 import { useStore } from "@context/store";
 
 function LoginAdmin() {
-const { adminInfo, handleInputChange, pathNameLogin, handleSubmitAdminLogin, errorPassword } =
+const { adminInfo, handleInputChange, pathNameLogin,errorInput, handleSubmitAdminLogin, errorPassword } =
   useStore();
 const router = useRouter();
   return (
-    <div>
-      <div className='flex gap-4 '>
+    <div className='flex flex-col justify-center items-center  bg-gradient-to-r from-gray-100 to-gray-300 dark:from-slate-800 dark:to-slate-900'>
+      <div className='flex gap-4 p-2 justify-center items-center w-full'>
         <button
           onClick={() => useStore.setState({ pathNameLogin: "login" })}
           className={`font-bold p-4 border-b-4 ${
@@ -28,7 +28,8 @@ const router = useRouter();
           إنشاء حساب
         </button>
       </div>
-      <div id='login' className='mx-auto'>
+
+      <div id='login' className='w-full'>
         {pathNameLogin === "login" && (
           <form
             className='p-4 flex flex-col gap-2  justify-center items-center'
@@ -36,6 +37,7 @@ const router = useRouter();
             <TextInput
               type='email'
               name='email'
+              error={errorInput.email}
               value={adminInfo?.email}
               onChange={(e) => handleInputChange(e, "adminInfo")}
               placeholder='البريد الإلكتروني'
@@ -44,6 +46,7 @@ const router = useRouter();
             <TextInput
               type='password'
               name='password'
+              error={errorInput.password}
               value={adminInfo?.password}
               onChange={(e) => handleInputChange(e, "adminInfo")}
               placeholder='كلمة السر'
@@ -54,7 +57,9 @@ const router = useRouter();
                 يرجى تحقق من كلمة السر او البريد الإلكتروني
               </h2>
             )}
-            <p className='p-2 text-sky-500 font-semibold'>هل نسيت كلمة السر؟</p>
+            <button className='p-2 mb-2 text-xs text-sky-500 font-semibold'>
+              هل نسيت كلمة السر؟
+            </button>
             <button
               type='submit'
               className='text-gray-100 shadow-sm dark:text-zinc-900 font-bold bg-cyan-600 hover:bg-cyan-500 focus:ring-2 focus:outline-none focus:ring-cyan-300 rounded-lg px-2 p-2 text-center'>

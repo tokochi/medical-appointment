@@ -7,17 +7,15 @@ import Account from "@components/dropdown/Account";
 
 
 function HeaderButtons() {
-const { session, closeModelAnywhere } = useStore();
+const { session, closeModelAnywhere, setDropDowns } = useStore();
   return (
     <div
       onClick={(e) => closeModelAnywhere(e)}
       className=' mr-auto flex items-start justify-center gap-2'>
       <button
         name='account'
-        onClick={(e) => {
-          useStore.setState((state) => ({
-            account: { isOpen: !state.account.isOpen },
-          }));
+        onClick={() => {
+         setDropDowns("account");
         }}
         className='flex justify-center  items-center gap-1 rounded-xl card p-1'>
         <p className='hidden md:flex pointer-events-none'>
@@ -44,10 +42,8 @@ const { session, closeModelAnywhere } = useStore();
       </button>
       <button
         name='inbox'
-        onClick={(e) => {
-          useStore.setState((state) => ({
-            inbox: { isOpen: !state.inbox.isOpen },
-          }));
+        onClick={() => {
+         setDropDowns("inbox");
         }}
         className='rounded-xl  card p-1'>
         {session?.notificationsList?.filter((not) => not.type === "رسالة").length > 0 && (
@@ -64,11 +60,9 @@ const { session, closeModelAnywhere } = useStore();
       <button
         name='notification'
         onClick={(e) => {
-          useStore.setState((state) => ({
-            notification: { isOpen: !state.notification.isOpen },
-          }));
+         setDropDowns("notification");
         }}
-        className='relative rounded-xl card p-1 z-10'>
+        className='relative  rounded-xl card p-1 z-10'>
         {session?.notificationsList?.filter((not) => not.type !== "رسالة").length > 0 && (
           <div className='absolute top-0 right-[-3px] bg-red-600 animate-pulse rounded-full w-3 h-3'></div>
         )}

@@ -541,7 +541,7 @@ function SignupInputsForm(props) {
               </tr>
             </thead>
             <tbody>
-              {doctorInfo?.workTime.map((date, index) => (
+              {doctorInfo?.workTime?.map((date, index) => (
                 <tr key={index} className='text-center p-2'>
                   <td className='text-center p-2  rounded-md '>{date?.dayAR}</td>
                   <td>

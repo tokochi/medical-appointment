@@ -1,6 +1,41 @@
-import { Schema, model, models } from 'mongoose';
+import { Schema, model, models, Types } from 'mongoose';
 
 // *********** Schema **********
+const messageSchema = new Schema({
+    id: {
+        type: Types.ObjectId,
+        default: Types.ObjectId,
+    },
+    date: { type: Date, default: Date.now },
+    title: String,
+    text: String,
+    files: [],
+    status: {
+        type: Boolean,
+        default: false
+    },
+    from: {
+        id: {
+            type: Schema.ObjectId,
+            ref: 'User',
+        },
+        name: String,
+        email: String,
+    },
+    // Other message fields
+});
+const notificationSchema = new Schema({
+    action: String,
+    type: String,
+    source: String,
+    text: String,
+    title: String,
+    id: {
+        type: Types.ObjectId,
+        default: Types.ObjectId,
+    },
+    date: { type: Date, default: Date.now },
+})
 const adminSchema = new Schema({
     name: String,
     gender: {
@@ -43,7 +78,7 @@ const adminSchema = new Schema({
         lat: Number,
         lng: Number
     },
-    notificationsList: [],
+    notificationsList: [notificationSchema],
     isAdmin: {
         type: Boolean,
         default: true
@@ -57,6 +92,7 @@ const adminSchema = new Schema({
         type: Boolean,
         default: false
     },
+    inbox: [messageSchema],
     forgotPasswordToken: String,
     forgotPasswordTokenExpiry: { type: Date },
     verifyToken: String,

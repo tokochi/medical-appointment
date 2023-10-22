@@ -1,6 +1,5 @@
 "use client";
 import SearchName from "@components/inputs/search/SearchName";
-import SearchSpeciality from "@components/inputs/search/SearchSpeciality";
 import SearchWilayaFull from "@components/inputs/search/SearchWilayaFull";
 import SearchInssurance from "@components/inputs/search/SearchInssurance";
 import SearchFullTime from "@components/inputs/search/SearchFullTime";

@@ -27,7 +27,7 @@ function page() {
         className='hidden md:flex items-end justify-end flex-1 bg-white dark:bg-gray-900'>
         <div className='flex whitespace-nowrap font-semibold items-center gap-2 text-[#999999]'>
           <p className='m-2'>صحــة و رعــــاية</p>
-          <img className='w-[450px]' src='/images/hexa-bg.webp' alt='cancel' />
+          <img className='w-[450px] min-w-[150px]' src='/images/hexa-bg.webp' alt='cancel' />
         </div>
       </div>
       <div
@@ -41,7 +41,7 @@ function page() {
             <Image src='/images/logo.webp' width={120} height={120} alt='cancel' />
           </div>
           <h1 className='text-xl text-center font-bold p-4'>هذه الصفحة خاصة لتسجيل الدخول</h1>
-          {session?.user? (
+          {session?.user ? (
             <div className='flex flex-col justify-center items-center  gap-4'>
               <h1 className='font-semibold text-center p-2 border-b-[1px] border-dashed'>
                 مرحبا بك في منصة صحتي تاجي، أنت الآن مسًّجل للدخول
@@ -51,7 +51,12 @@ function page() {
               <button
                 onClick={() => {
                   router.refresh();
-                  router.push("/user");
+                  if (session?.user?._doc?.isUser) {
+                    router.push("/user");
+                  }
+                  if (session?.user?._doc?.isDoctor) {
+                    router.push("/doctor");
+                  }
                 }}
                 className='font-semibold p-2 px-2 btn2'>
                 الذهاب الى حسـابي

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import {
   GridComponent,
   ColumnsDirective,
@@ -17,12 +17,14 @@ import {
   Filter,
 } from "@syncfusion/ej2-react-grids";
 import { useEffect, useRef, useState } from "react";
+import moment from "moment";
 import toast from "react-hot-toast";
 import { useStore } from "@context/store";
 import Localization from "../../utils/Localization";
 import Status from "@components/table/templates/doctors/DoctorStatus";
 import DoctorsGridName from "@components/table/templates/doctors/DoctorName";
 import SignupInputsForm from "@components/forms/doctor/SignupInputsForm";
+import DoctorSub from "@components/cards/DoctorSub";
 
 function DoctorsTable() {
   // ******** Get Doctors List  ********
@@ -33,10 +35,12 @@ function DoctorsTable() {
   // ******** Grid Table  ********
   const [active, setActive] = useState({ all: true, sub: false });
   const gridRef = useRef(null);
-  const { doctors,handleAddGrid, handleDeleteGrid, handleEditGrid } = useStore();
-  const doctorsData = useStore((state) => state.doctors).filter((doctor) => filterDoctor(doctor));
+  const { doctors, handleAddGrid, handleDeleteGrid, handleEditGrid, handleSubGrid } = useStore();
+  const doctorsData = useStore((state) => state.doctors)
+    .filter((doctor) => filterDoctor(doctor))
+    ;
   const SubscribedDoctors = useStore((state) => state.doctors).filter(
-    (doctor) => doctor.subscription != null
+    (doctor) => doctor?.subscription != null
   );
   function filterDoctor(doctor) {
     if (active.all === true) {
@@ -47,6 +51,7 @@ function DoctorsTable() {
     }
   }
   const toolbarOptions = [
+    { text: "إشتراك", tooltipText: "إشتراك", prefixIcon: "e-timeline-agenda", id: "sub" },
     { text: "إضافة", tooltipText: "إضافة", prefixIcon: "e-add", id: "add" },
     { text: "تعديل", tooltipText: "تعديل", prefixIcon: "e-edit", id: "edit" },
     { text: "حذف", tooltipText: "حذف", prefixIcon: "e-delete", id: "delete" },
@@ -94,6 +99,54 @@ function DoctorsTable() {
           },
         });
         break;
+      case args.item.id.includes("sub"):
+        const selectedDoctor = gridRef?.current?.getSelectedRecords()[0];
+        if (selectedDoctor) {
+          useStore.setState({
+            doctorInfo:
+              selectedDoctor.subscription == null
+                ? {
+                    _id: gridRef?.current?.getSelectedRecords()[0]._id,
+                    subscription: {
+                      startDate: moment().format("YYYY-MM-DDTHH:mm:ss.SSSZ"),
+                      endDate: moment().add(1, "years").format("YYYY-MM-DDTHH:mm:ss.SSSZ"),
+                    },
+                  }
+                : selectedDoctor,
+            modal: {
+              isOpen: true,
+              title: "إضافة إشتراك",
+              content: "",
+              children: <DoctorSub doctor={gridRef?.current?.getSelectedRecords()[0]} />,
+              textBtn_1: "موافقة",
+              textBtn_2: "إلغـــــاء",
+              onClickBtn_1: (e) => {
+                handleSubGrid(
+                  e,
+                  toast,
+                  `/api/doctors/${gridRef?.current?.getSelectedRecords()[0]._id}`,
+                  "doctorInfo",
+                  selectedDoctor.subscription == null ? "إضافة" : "تعديل",
+                  gridRef?.current?.getSelectedRecords()[0]._id
+                );
+                // gridRef?.current?.refresh();
+              },
+              onClickBtn_2: (e) => {
+                useStore.setState((state) => ({ modal: state.modalClosed }));
+              },
+            },
+          });
+        } else {
+          useStore.setState({
+            modal: {
+              isOpen: true,
+              title: "⚠️ خطأ في التعديل",
+              content: " يرجى تحديد السطر المراد تعديله، لم يتم الظغط على أي سطر للتعديل",
+            },
+          });
+        }
+        break;
+
       case args.item.id.includes("edit"):
         if (gridRef?.current?.getSelectedRecords()?.length > 0) {
           useStore.setState({
@@ -193,7 +246,7 @@ function DoctorsTable() {
               onClick={() => {
                 setActive((state) => ({ all: false, sub: true }));
               }}>
-              المشتركين <span className='ml-1  text-sky-600'>{SubscribedDoctors.length}</span>
+              المشتركين <span className='ml-1  text-green-600'>{SubscribedDoctors.length}</span>
             </button>
           </li>
         </ul>
@@ -204,7 +257,7 @@ function DoctorsTable() {
       <div className=''>
         <GridComponent
           ref={gridRef}
-          dataSource={doctorsData}
+          dataSource={active.sub ? SubscribedDoctors : doctorsData}
           enableHover={false}
           allowPaging
           allowExcelExport

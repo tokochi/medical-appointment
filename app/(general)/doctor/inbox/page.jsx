@@ -6,19 +6,23 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import moment from "moment";
 import "moment/locale/ar-dz";
+import ShowInboxMessage from "@components/cards/ShowInboxMessage";
 moment().locale("ar-dz");
 function page() {
-  const { session, handleDeleteMessage, messageToSend } = useStore();
+  const { session, handleDeleteMessage, handleUpdateMessage } = useStore();
   const router = useRouter();
-  if(session?.inbox?.length === 0) return <div className='bg-sky-50 w-full dark:bg-primary m-1 md:m-4 rounded '>
-          <div className='card rounded-lg p-4  m-10 text-xl font-semibold'>
-            لايوجد أي رسالة خاص بك
-          </div>
+  if (session?.inbox?.length === 0)
+    return (
+      <div className='bg-sky-50 w-full dark:bg-primary m-1 md:m-4 rounded '>
+        <div className='card rounded-lg p-4  m-10 text-xl font-semibold'>
+          لايوجد أي رسالة خاص بك
         </div>
+      </div>
+    );
   return (
     <div className='flex flex-col gap-4 overflow-x-auto w-full md:m-10'>
       <div className='card p-4 rounded-md overflow-x-auto w-full'>
-        <table className=' text-sm md:text-base min-w-[600px] w-full'>
+        <table className='text-sm whitespace-nowrap md:text-base min-w-[600px] w-full'>
           <thead>
             <tr>
               <th className='w-1/4 text-center text-yellow-600 p-2'>من طرف</th>
@@ -28,39 +32,65 @@ function page() {
             </tr>
           </thead>
           <tbody>
-            {session?.inbox?.map((message, index) => (
+            {session?.inbox?.reverse()?.map((message, index) => (
               <tr
                 key={index}
-                className={`text-center hover:bg-sky-500/50 ${!message.status && "font-bold"} p-2`}>
-                <td className='text-center p-2 cursor-pointer'>
-                  <div id='avatar' className='text-right md:whitespace-nowrap flex flex-col'>
-                    <h1 className='text-sm text-sky-500'>
-                      {/* {message?.from?.title?.text + " "} */}
-                      {message?.from?.name}
-                    </h1>
-                    <h2 className='text-sm'>{message?.from?.email}</h2>
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (!message.status) {
+                    handleUpdateMessage(message?._id, session?._id, "doctors");
+                  }
+                  useStore.setState((state) => ({
+                    session: {
+                      ...state.session,
+                      inbox: [...state.session.inbox].map((item) =>
+                        item._id === message._id ? { ...item, status: true } : item
+                      ),
+                    },
+                    modal: {
+                      isOpen: true,
+                      title: message?.title || "(بدون عنوان)",
+                      content: <ShowInboxMessage message={message} />,
+                    },
+                  }));
+                }}
+                className={`text-center cursor-pointer text-sm  border-b border-gray-300 dark:border-gray-600 hover:bg-sky-500/50 ${
+                  !message.status && "font-bold dark:text-slate-300 text-slate-700  "
+                } p-2`}>
+                <td className='text-center p-2'>
+                  <div id='avatar' className='text-right font-roboto flex flex-col'>
+                    <h1 className=' text-sky-500'>{message?.from?.name}</h1>
+                    <h2 className=''>{message?.from?.email}</h2>
                   </div>
                 </td>
-                <td className='text-center p-2 cursor-pointer'>{message?.title}</td>
-                <td className='text-center p-2'>{moment(message.date).format("LLLL") + " 🕒 "}</td>
                 <td className='text-center p-2'>
-                  <div className='flex flex-col gap-1'>
+                  <div className='flex gap-2 justify-center'>
+                    <p>{message?.title || " (بدون عنوان) "}</p>
+                    <p className='truncate font-thin max-w-[120px]'>{message?.text}</p>
+                  </div>
+                </td>
+                <td className='text-center p-2'>{moment(message.date).format("LL - HH:MM")}</td>
+                <td className='text-center p-2'>
+                  <div className='flex gap-2'>
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation();
                         useStore.setState({
                           messageToSend: {
-                            date: Date.now(),
-                            title: `الرد عل :${message?.title}`,
+                            title: `الرد على :${message?.title.replace("الرد على", "")}`,
                             text: "",
-                            files: [],
-                            author: session?._id,
-                            doctor: message?.from?.id,
-                            details: { weight: 85, length: 180 },
+                            from: {
+                              id: session?._id,
+                              name: session?.name,
+                              email: session?.email,
+                              title: session?.title,
+                              speciality: session?.speciality,
+                            },
                           },
                           modal: {
                             isOpen: true,
                             title: session
-                              ? "اطرح سؤال لطبيبك"
+                              ? "الرد على الرسالة"
                               : "لا يمكنك المواصلة يجب ان تسًّجل دوخلك",
                             content: "",
                             children: session ? (
@@ -71,7 +101,7 @@ function page() {
                           },
                         });
                       }}
-                      className='flex justify-around bg-green-300 dark:bg-green-700 p-1 text-xs rounded-xl gap-1'>
+                      className='flex z-50 justify-around bg-green-300/50 hover:bg-green-300 dark:bg-green-600/50 hover:dark:bg-green-600 p-1 text-xs rounded-md gap-1'>
                       الـرد
                       <svg className='w-4 h-4' width='48' height='48' viewBox='0 0 48 48'>
                         <path fill='#00BCD4' d='M5 19L19 30 19 8z' />
@@ -82,9 +112,10 @@ function page() {
                       </svg>
                     </button>
                     <button
-                      onClick={() =>
-                        useStore.setState({
-                          messageToSend:message,
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        useStore.setState((state) => ({
+                          messageToSend: message,
                           modal: {
                             isOpen: true,
                             title: "حذف رسالة",
@@ -92,15 +123,30 @@ function page() {
                             textBtn_1: "موافقة",
                             textBtn_2: "إلغـــــاء",
                             onClickBtn_1: (e) => {
-                              handleDeleteMessage(e, toast, session._id, "doctors", router);
+                              useStore.setState((state) => ({
+                                session: {
+                                  ...state.session,
+                                  inbox: [...state.session.inbox].filter(
+                                    (item) => item._id !== message._id
+                                  ),
+                                },
+                              }));
+                              handleDeleteMessage(
+                                e,
+                                toast,
+                                session._id,
+                                "doctors",
+                                message._id,
+                                router
+                              );
                             },
                             onClickBtn_2: (e) => {
                               useStore.setState((state) => ({ modal: state.modalClosed }));
                             },
                           },
-                        })
-                      }
-                      className='flex justify-around dark:bg-red-600 bg-red-300 p-1 text-xs rounded-xl gap-1'>
+                        }));
+                      }}
+                      className='flex z-50 justify-around dark:bg-red-500/50 hover:dark:bg-red-500 hover:bg-red-300 bg-red-300/50 p-1 text-xs rounded-md gap-1'>
                       حـذف
                       <svg className='w-4 h-4' viewBox='0 0 48 48'>
                         <path

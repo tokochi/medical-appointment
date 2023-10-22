@@ -1,6 +1,5 @@
 import Image from "next/image";
 import SearchName from "@components/inputs/search/SearchName";
-import SearchSpeciality from "@components/inputs/search/SearchSpeciality";
 import SearchWilaya from "@components/inputs/search/SearchWilaya";
 import Link from "next/link";
 

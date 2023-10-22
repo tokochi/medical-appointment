@@ -1,8 +1,6 @@
 "use client";
 import { useStore } from "@context/store";
 import { TextInput, IconInput } from "@components/inputs";
-import { storage } from "@utils/firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Image from "next/image";
 import toast from "react-hot-toast";
 

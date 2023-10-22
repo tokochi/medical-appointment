@@ -5,16 +5,17 @@ import GetSession from "@components/session/GetSession";
 import RespondQuestion from "@components/buttons/RespondQuestion";
  moment().locale("ar-dz");
 async function page() {
-  const { fetchQuestions } = useStore.getState();
-   const session = await GetSession();
+  const { fetchQuestions, fetchDoctor } = useStore.getState();
+  const session = await GetSession();
+  const doctor = await fetchDoctor(session?._id);
   const questionsList = await fetchQuestions();
   const questions = questionsList
-    .filter((question) =>
-    [...session?.specialities, session?.speciality].some((speciality) =>
-      speciality?.text?.includes(question.speciality.tag)
+    ?.filter((question) =>
+      [...doctor?.specialities, doctor?.speciality].some((speciality) =>
+        speciality?.text?.includes(question.speciality.tag)
+      )
     )
-  ).filter(question => question.responses.every(res => res.docotorID === session._id));
-
+    ?.filter((question) => question.responses.every((res) => res.docotorID === session._id));
   return (
     <div className='flex flex-col gap-4 md:p-4 w-full'>
       {questions.length === 0 && (

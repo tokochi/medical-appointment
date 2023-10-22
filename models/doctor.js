@@ -9,6 +9,10 @@ const messageSchema = new Schema({
     date: { type: Date, default: Date.now },
     title: String,
     text: String,
+    status: {
+        type: Boolean,
+        default: false
+    },
     files: [],
     from: {
         id: {
@@ -20,8 +24,18 @@ const messageSchema = new Schema({
     },
     // Other message fields
 });
-
-
+const notificationSchema = new Schema({
+    action: String,
+    type: String,
+    source: String,
+    text: String,
+    title: String,
+    id: {
+        type: Types.ObjectId,
+        default: Types.ObjectId,
+    },
+    date: { type: Date, default: Date.now },
+})
 const doctorSchema = new Schema({
     avatar: {
         type: [String],

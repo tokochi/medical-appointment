@@ -7,7 +7,6 @@ import SidebarToggle from "@components/buttons/SidebarToggle";
 import DarkModeToggle from "@components/buttons/DarkModeToggle";
 import HeaderButtons from "@components/buttons/HeaderButtons";
 
-
 function Header({ data }) {
   const session = JSON.parse(data)
   const { isSidebarOpen, closeModelAnywhere, filterDefault } = useStore();

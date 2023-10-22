@@ -28,14 +28,14 @@ async function page({ params }) {
             </div>
           </div>
           <div id='body' className='mt-2'>
-            {selectedQuestion.responses.length > 0 ? (
+            {selectedQuestion?.responses?.length > 0 ? (
               <h2 className='font-semibold text-sm mb-2 text-green-500'>أجاب على هذا السؤال:</h2>
             ) : (
               <h2 className='font-semibold text-sm mb-2 text-orange-500'>
                 السؤال في انتظار إجابات:
               </h2>
             )}
-            {selectedQuestion.responses.map((response, index) => (
+            {selectedQuestion?.responses?.map((response, index) => (
               <div key={index}>
                 <div className=''>
                   <DoctorQuestion doctor={response?.doctor} />

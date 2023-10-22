@@ -8,6 +8,7 @@ async function GetSession() {
   while (retryCount < maxRetries && session === null) {
     try {
       session = await getServerSession(options);
+      
     } catch (error) {
         // Handle any errors if needed
         console.error("Error fetching session:", error);

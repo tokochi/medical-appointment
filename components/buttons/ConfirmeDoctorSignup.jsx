@@ -2,7 +2,6 @@
 import ShowSignupConfirmation from '@components/forms/doctor/ShowSignupConfirmation';
 import { useStore } from "@context/store";
 
-
 function ConfirmeDoctorSignup({ data }) {
     const doctor = JSON.parse(data);
   return (

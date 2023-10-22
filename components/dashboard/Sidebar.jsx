@@ -140,7 +140,6 @@ function Sidebar() {
               signOut();
               router.push("/admin");
               router.refresh();
-              console.log("refreshed")
             }}
             href='/admin'
             className='flex gap-2 cursor-pointer font-semibold'>

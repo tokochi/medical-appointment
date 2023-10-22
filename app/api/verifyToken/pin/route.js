@@ -9,6 +9,7 @@ export async function POST(req) {
     try {
 
         const data = await req.json()
+      
         if (!data) {
             return new Response('Empty request body', { status: 400 }); // Bad Request
         }
@@ -19,9 +20,12 @@ export async function POST(req) {
             console.log("🚀 ~  Token code expired")
             return NextResponse.json({ message: "Token code expired", success: false }, { status: 500 });
         }
-        if (user?.verifyPinCode === Number.parseInt(data?.pinCode)) {
-            const appointment = new Appointment(data);
-            await appointment.save();
+       if (Number.parseInt(user?.verifyPinCode) === Number.parseInt(data?.pinCode)) {
+           const appointment = new Appointment(data);
+           console.log("🚀 ~ appointmen:", appointment)
+           
+            const response = await appointment.save();
+            console.log("🚀 ~ response:", response)
             return NextResponse.json(appointment, { status: 201 })
         } else {
             console.log("🚀 ~  token code Incorrect")

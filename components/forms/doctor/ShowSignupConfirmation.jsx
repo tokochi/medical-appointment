@@ -37,6 +37,7 @@ const { handleDoctorConfirmation,isLoading } = useStore();
                   {doctor?.name}
                 </h1>
                 <h2 className='font-semibold'>{doctor?.speciality?.text}</h2>
+                <h2 className='font-roboto'>{doctor?.email}</h2>
                 <div className='border-b-[1px] border-gray-400 m-1 dark:border-gray-100 w-full' />
                 {doctor?.otherServices?.isFullTimeOpen && (
                   <h2 className='flex items-start gap-2 py-1 text-cyan-400 text-sm'>
@@ -389,7 +390,7 @@ const { handleDoctorConfirmation,isLoading } = useStore();
           )}
         </button>
         <button
-          onClick={(e) => handleDoctorConfirmation(e, toast, doctor._id)}
+          // onClick={(e) => handleDoctorConfirmation(e, toast, doctor._id)}
           className='bg-sky-400 rounded-xl hover:bg-sky-500  focus:ring-2 focus:ring-sky-700 flex mt-2 gap-2  justify-center items-center text-lg w-full pr-5 p-2.5  dark:border-gray-600  dark:text-black'>
           إرسال رسالة
           {!isLoading ? (

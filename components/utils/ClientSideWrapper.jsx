@@ -6,6 +6,7 @@ import ToasterContext from "@context/ToasterContext";
 import { SessionProvider } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { registerLicense } from "@syncfusion/ej2-base";
+import Cookies from "js-cookie";
 registerLicense(
   "Ngo9BigBOggjHTQxAR8/V1NHaF5cXmpCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdgWH9edHVRRGVdWUBwVkY="
 );
@@ -17,7 +18,16 @@ function ClientSideWrapper({ children }) {
   const { closeModelAnywhere, darkTheme } = useStore();
   const path = usePathname();
   useEffect(() => {
-    const isDarkMode = JSON?.parse(localStorage?.getItem("theme")) === true;
+    const getCookie = Cookies.get("darkTheme");
+    let isDarkMode = null;
+    if (!getCookie) {
+      Cookies.set("darkTheme", "false", { expires: 365 });
+      isDarkMode = false;
+    } else if (getCookie === "false") {
+      isDarkMode = false;
+    } else {
+      isDarkMode = true;
+    }
     const stylesheetUrl = isDarkMode
       ? "https://cdn.syncfusion.com/ej2/material-dark.css"
       : "https://cdn.syncfusion.com/ej2/material.css";
@@ -39,11 +49,11 @@ function ClientSideWrapper({ children }) {
       document.head.appendChild(newLinkElement);
     }
     // Add or remove the "dark" class based on the theme
-    if (isDarkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
+    // if (isDarkMode) {
+    //   document.documentElement.classList.add("dark");
+    // } else {
+    //   document.documentElement.classList.remove("dark");
+    // }
   }, [darkTheme, path]);
   return (
     <div onClick={(e) => closeModelAnywhere(e)}>

@@ -17147,6 +17147,7 @@ export const pharmDefault = {
   name: "",
   title: { text: "صيديلة", value: "pharmacy" },
   admins: [],
+  avatar: ["/images/pharm-logo.webp"],
   address: {
     street: "",
     wilaya: { value: "Alger", text: "الجزائر" },
@@ -17154,7 +17155,7 @@ export const pharmDefault = {
     commune: {},
   },
   phone: { line1: "", line2: "", mobile: "" },
-  avatar: ["/images/pharm-logo.webp"],
+
   payment: { cash: true, card: false, check: false },
   otherServices: {
     isFullTimeOpen: false,
@@ -17168,7 +17169,7 @@ export const pharmDefault = {
   instagram: "",
   whatsapp: "",
   googleMap: { lat: 36.7539, lng: 3.0589 },
-  email: "",
+ 
 }
 export const hospDefault = {
   name: "",
@@ -17195,7 +17196,7 @@ export const hospDefault = {
   instagram: "",
   whatsapp: "",
   googleMap: { lat: 36.7539, lng: 3.0589 },
-  email: "",
+
 }
 export const labDefault = {
   name: "",
@@ -17208,7 +17209,7 @@ export const labDefault = {
     commune: {},
   },
   phone: { line1: "", line2: "", mobile: "" },
-  avatar: ["/images/labo.webp"],
+  avatar: ["/images/lab-logo.webp"],
   payment: { cash: true, card: false, check: false },
   otherServices: {
     isFullTimeOpen: false,
@@ -17222,13 +17223,15 @@ export const labDefault = {
   instagram: "",
   whatsapp: "",
   googleMap: { lat: 36.7539, lng: 3.0589 },
-  email: "",
 }
 export const userDefault = {
   avatar: ["/images/user-logo.webp"],
   email: "",
   password: "",
   verifyPassword: "",
+  oldPassword: "",
+  adminKey: "",
+  notifications: [],
   name: "",
   gender: { value: "female", text: "إمرأة" },
   address: {
@@ -17238,8 +17241,6 @@ export const userDefault = {
     commune: {},
   },
   phone: { line1: "", line2: "", mobile: "" },
-  notifications: { users: false, doctors: false, posts: false, questions: false },
-
   googleMap: { lat: 36.7539, lng: 3.0589 },
   files: {},
   facebook: "",
@@ -17270,6 +17271,9 @@ export const doctorDefault = {
   avatar: ["/images/avatar-doctor-male.webp", "/images/avatar-doctor-female.webp"],
   email: "",
   name: "",
+  password: "",
+  verifyPassword: "",
+  oldPassword: "",
   title: { text: "الدكتورة", value: "doctor" },
   gender: { value: "female", text: "إمرأة" },
   speciality: {},
@@ -17291,6 +17295,7 @@ export const doctorDefault = {
   specialities: [],
   services: [],
   officePics: [],
+  subscription: { startDate: new Date(), endDate: new Date(),plan:"",price:0},
   proofPics: [],
   facebook: "",
   instagram: "",

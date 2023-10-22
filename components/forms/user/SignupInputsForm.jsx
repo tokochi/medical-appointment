@@ -2,7 +2,7 @@
 import { useStore } from "@context/store";
 import { DropInput, IconInput, SelectInput } from "@components/inputs";
 import { storage } from "@utils/firebase";
-import { ref, uploadBytes, getDownloadURL, listAll } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL, } from "firebase/storage";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import { useEffect } from "react";

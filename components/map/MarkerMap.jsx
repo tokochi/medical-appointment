@@ -1,8 +1,9 @@
+"use client";
 import React from "react";
 import { useMap, Marker } from "react-leaflet";
 import { Icon } from "leaflet";
 import { useStore } from "@context/store";
-import { useState, useEffect } from "react";
+import {  useEffect } from "react";
 
 function MarkerMap() {
   const wilaya = useStore((state) => state.wilaya);
@@ -32,12 +33,12 @@ function MarkerMap() {
         position={{ lat: doctorInfo?.googleMap.lat, lng: doctorInfo?.googleMap.lng }}
         eventHandlers={{
           dragend: (e) => {
-                useStore.setState((state) => ({
-                  doctorInfo: {
-                    ...state.doctorInfo,
-                    googleMap: e.target._latlng,
-                  },
-                }));
+            useStore.setState((state) => ({
+              doctorInfo: {
+                ...state.doctorInfo,
+                googleMap: e.target._latlng,
+              },
+            }));
           },
         }}
         draggable={true}></Marker>

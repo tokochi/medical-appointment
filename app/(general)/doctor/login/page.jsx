@@ -2,7 +2,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import LoginDoctor from "@components/forms/doctor/LoginDoctor";
-import { useStore } from "@context/store";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import LoadingComponent from "@components/utils/LoadingComponent";
@@ -42,7 +41,7 @@ function page() {
             <button
               onClick={() => {
                 router.refresh();
-                router.push("doctor/dashboard");
+                router.push("doctor");
               }}
               className='font-semibold p-2 px-2 btn2'>
               الذهاب الى الواجهة

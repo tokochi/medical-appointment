@@ -46,7 +46,8 @@ export const options = {
                 if (!isCorrectPassword) {
                     throw new Error('معلومات التسجيل خاطأة', { duration: 5000 });
                 }
-              await User.updateOne({ email: credentials?.email }, { $set: { lastLogin: Date.now() } })
+                await User.updateOne({ email: credentials?.email }, { $set: { lastLogin: Date.now() } })
+
                 return user
             }
         }),
@@ -59,7 +60,7 @@ export const options = {
             },
             async authorize(credentials, req) {
                 await connectToDB();
-                const user = await Admin.findOne({ email: credentials?.email });
+                const user = await Admin.findOne({ email: credentials?.email }).select('-notificationsList -inbox');;
                 if (!user || !user?.password) {
                     throw new Error('لايوجد مشرف يوافق المعلومات المسجلة', { duration: 5000 })
                 }
@@ -71,7 +72,7 @@ export const options = {
                     throw new Error('معلومات التسجيل خاطأة', { duration: 5000 });
                 }
                 await Admin.updateOne({ email: credentials?.email }, { $set: { lastLogin: Date.now() } })
-                return user
+     return user
             }
         }),
         CredentialsProvider({
@@ -83,9 +84,9 @@ export const options = {
             },
             async authorize(credentials, req) {
                 await connectToDB();
-                const user = await Doctor.findOne({ email: credentials?.email });
+                const user = await Doctor.findOne({ email: credentials?.email }).select('-notificationsList -inbox');
                 if (!user || !user?.password) {
-                    throw new Error('لايوجد مهني طبي يوافق المعلومات المسجلة',{duration:5000})
+                    throw new Error('لايوجد مهني طبي يوافق المعلومات المسجلة', { duration: 5000 })
                 }
                 const isCorrectPassword = await bcrypt.compare(
                     credentials.password,
@@ -95,6 +96,7 @@ export const options = {
                     throw new Error('معلومات التسجيل خاطأة', { duration: 5000 });
                 }
                 await Doctor.updateOne({ email: credentials?.email }, { $set: { lastLogin: Date.now() } })
+             
                 return user
             }
         }),
@@ -144,8 +146,8 @@ export const options = {
                 }
             }
             if (credentials) {
-                
-                
+
+
                 return credentials
             }
         },

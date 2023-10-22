@@ -13,10 +13,9 @@ export async function PUT(req, { params }) {
         if (!data) {
             return new Response('Empty request body', { status: 400 }); // Bad Request
         }
-        const response = await User.findByIdAndUpdate(
-            params?.id,
+        const response = await User.updateOne(
+            { _id: params?.id },
             { $push: { inbox: data } },
-            { new: true }
         );
         //    const response = await User.updateOne({ _id: data?._id }, { $set: data })
         if (response) {

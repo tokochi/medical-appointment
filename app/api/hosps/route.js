@@ -19,11 +19,18 @@ export async function POST(req) {
     const hospExists = await Hosp.findOne({ name: data?.name });
     if (hospExists) { return new Response(JSON.stringify("Hosp already exist"), { status: 500 }); }
     try {
-        // const hashedPassword = await bcrypt.hash(data?.password, 10);
         const hosp = new Hosp(data);
-        await hosp.save();
-        return new Response(JSON.stringify(hosp), { status: 201 })
+        const response = await hosp.save();
+  return new Response(JSON.stringify(hosp), { status: 201 });
     } catch (error) {
-        return new Response(JSON.stringify("failed to insert hosp to DB", error), { status: 500 });
+        // Log the error details to the console for debugging
+        console.error("Failed to insert lab to DB:", error);
+
+        // You can also log specific error messages if available
+        if (error.message) {
+            console.error("Error Message:", error.message);
+        }
+
+        return new Response(JSON.stringify("Failed to insert pharm to DB", error), { status: 500 });
     }
 }

@@ -30,9 +30,8 @@ function SignupInputsForm(props) {
     daira,
     commune,
   } = useStore();
-    console.log("🚀 ~ pharmInfo:", pharmInfo?.services);
-  const filtredservices = worksPharms.filter(
-    (service) => !pharmInfo?.services.some((addedservices) => addedservices.text === service.text)
+const filtredservices = worksPharms?.filter(
+    (service) => !pharmInfo?.services?.some((addedservices) => addedservices?.text === service?.text)
   );
 
   return (
@@ -47,7 +46,7 @@ function SignupInputsForm(props) {
         <div className='p-2 flex flex-col gap-2 justify-center'>
           <div id='name' className=''>
             <IconInput
-              icon='/images/user.png'
+              icon='/images/user.webp'
               name='name'
               value={pharmInfo?.name}
               onChange={(e) => handleInputChange(e, "pharmInfo")}
@@ -67,18 +66,18 @@ function SignupInputsForm(props) {
                 placeholder='الدكتور عصام شاهر، البروفيسور أحمد منير....'
               />
               <button className='mt-auto py-1' onClick={(e) => addSelectAdmin(e, "pharmInfo")}>
-                <Image src='/images/add.png' width={30} height={25} alt='cancel' />
+                <Image src='/images/add.webp' width={30} height={25} alt='cancel' />
               </button>
             </div>
             <div className='flex flex-wrap  gap-2 py-2'>
-              {pharmInfo?.admins.map((service, index) => (
+              {pharmInfo?.admins?.map((service, index) => (
                 <div
                   key={index}
                   className='p-1 px-2 flex gap-1 justify-between bg-slate-200 text-sm rounded-[163px] text-gray-900 dark:text-gray-300 dark:bg-slate-700 hover:bg-slate-400 font-medium'>
                   <button name={service} onClick={(e) => removeSelectAdmin(e, "pharmInfo")}>
                     <Image
                       name={service?.text}
-                      src='/images/cancel.png'
+                      src='/images/cancel.webp'
                       width={20}
                       height={15}
                       alt='cancel'
@@ -91,7 +90,7 @@ function SignupInputsForm(props) {
           </div>
           <div id='phone' className=''>
             <IconInput
-              icon='/images/phone.png'
+              icon='/images/phone.webp'
               name='phone.mobile'
               value={pharmInfo?.phone?.mobile}
               onChange={(e) => handleInputChange(e, "pharmInfo")}
@@ -102,7 +101,7 @@ function SignupInputsForm(props) {
           </div>
           <div id='phone' className=''>
             <IconInput
-              icon='/images/phone.png'
+              icon='/images/phone.webp'
               name='phone.line2'
               value={pharmInfo?.phone?.line2}
               onChange={(e) => handleInputChange(e, "pharmInfo")}
@@ -213,18 +212,18 @@ function SignupInputsForm(props) {
                     }));
                   useStore.setState({ addedService: "" });
                 }}>
-                <Image src='/images/add.png' width={30} height={25} alt='cancel' />
+                <Image src='/images/add.webp' width={30} height={25} alt='cancel' />
               </button>
             </div>
             <div className='flex flex-wrap  gap-2 py-2'>
-              {pharmInfo?.services.map((service, index) => (
+              {pharmInfo?.services?.map((service, index) => (
                 <div
                   key={index}
                   className='p-1 px-2 flex gap-1 justify-between bg-slate-200 text-sm rounded-[163px] text-gray-900 dark:text-gray-300 dark:bg-slate-700 hover:bg-slate-400 font-medium'>
                   <button name={service?.text} onClick={(e) => removeSelectService(e, "pharmInfo")}>
                     <Image
                       name={service?.text}
-                      src='/images/cancel.png'
+                      src='/images/cancel.webp'
                       width={20}
                       height={15}
                       alt='cancel'
@@ -262,7 +261,7 @@ function SignupInputsForm(props) {
                     }));
                   useStore.setState({ addedService: "" });
                 }}>
-                <Image src='/images/add.png' width={30} height={25} alt='cancel' />
+                <Image src='/images/add.webp' width={30} height={25} alt='cancel' />
               </button>
             </div>
             <div className='flex flex-wrap  gap-2 py-2'>
@@ -273,7 +272,7 @@ function SignupInputsForm(props) {
                   <button name={service?.text} onClick={(e) => removeSelectService(e, "pharmInfo")}>
                     <Image
                       name={service?.text}
-                      src='/images/cancel.png'
+                      src='/images/cancel.webp'
                       width={20}
                       height={15}
                       alt='cancel'
@@ -357,7 +356,7 @@ function SignupInputsForm(props) {
               name='address.daira'
               value={pharmInfo?.address?.daira?.value}
               onChange={(e) => handleSelectInput(e, "pharmInfo")}
-              options={daira.filter(
+              options={daira?.filter(
                 (region) => region?.wilaya === pharmInfo?.address?.wilaya?.value
               )}
               option_value='value'
@@ -382,7 +381,7 @@ function SignupInputsForm(props) {
           </div>
           <div id='street' className=''>
             <IconInput
-              icon='/images/map.png'
+              icon='/images/map.webp'
               name='address.street'
               value={pharmInfo?.address?.street}
               onChange={(e) => handleInputChange(e, "pharmInfo")}
@@ -391,7 +390,7 @@ function SignupInputsForm(props) {
               label='الشارع، الحي:'
             />
           </div>
-          <h3 className='text-sm'>علِّم موقعك الجغرافي على الخريطة ليتم تحديد الوجهة :</h3>
+          {/* <h3 className='text-sm'>علِّم موقعك الجغرافي على الخريطة ليتم تحديد الوجهة :</h3>
           <div id='map' className='min-w-[260px] h-[300px] lg:h-[500px]'>
             <LeafletMap />
           </div>
@@ -416,7 +415,7 @@ function SignupInputsForm(props) {
                 type='text'
               />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

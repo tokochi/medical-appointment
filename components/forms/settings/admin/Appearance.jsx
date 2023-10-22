@@ -1,4 +1,4 @@
-"use client";;
+"use client";
 import { useStore } from "@context/store";
 import RadioInput from "@components/inputs/RadioInput";
 

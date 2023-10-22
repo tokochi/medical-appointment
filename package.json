@@ -23,6 +23,7 @@
     "bcrypt": "^5.1.1",
     "cldr-data": "^36.0.1",
     "firebase": "^10.3.1",
+    "js-cookie": "^3.0.5",
     "keen-slider": "^6.8.6",
     "leaflet": "1.9.4",
     "loadash": "^1.0.0",

@@ -3,16 +3,11 @@ import { useStore } from "@context/store";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import ToggleInput from "@components/inputs/ToggleInput";
+import { useEffect } from "react";
 
 function NotificationForm() {
-  const {
-    adminInfo,
-    updateNotification,
-    handleSubmitAdminUpdate,
-    isLoading,
-    handleCheckbox,
-  } = useStore();
-
+  const { adminInfo, updateNotification, handleSubmitAdminUpdate, isLoading, session } = useStore();
+ useEffect(() => useStore.setState({ adminInfo: session }), [session]);
  return (
    <div>
      <div id='personal-info' className='card rounded-md '>
@@ -42,7 +37,7 @@ function NotificationForm() {
            </div>
            <ToggleInput
              name='notifications'
-             checked={adminInfo?.notifications?.includes("أطباء")}
+             checked={adminInfo?.notifications?.includes("طبيب")}
              onChange={(e) => updateNotification(e, "أطباء", "adminInfo")}
              type='text'
            />
@@ -68,7 +63,7 @@ function NotificationForm() {
            </div>
            <ToggleInput
              name='notifications'
-             checked={aadminInfo?.notifications?.includes("سؤال")}
+             checked={adminInfo?.notifications?.includes("سؤال")}
              onChange={(e) => updateNotification(e, "سؤال", "adminInfo")}
              type='text'
            />

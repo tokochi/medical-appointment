@@ -85,7 +85,7 @@ export function verficationEmail(hash) {
           <tr>
             <td align="center" valign="top" style="padding: 36px 24px;">
               <a href="https://www.sehatitaji.com" target="_blank" style="display: inline-block;">
-                <img src="https://firebasestorage.googleapis.com/v0/b/medical-app-397822.appspot.com/o/company%2Flogo-500px.png?alt=media&token=42fd03e3-c4e8-4c5c-af85-880fef9db3f7&_gl=1*4uodhl*_ga*NTMyMDYzOTIwLjE2OTQ1NDAzMzY.*_ga_CW55HF8NVT*MTY5NjYxODI3OC40MC4xLjE2OTY2MTg0MjMuMTQuMC4w" alt="Logo" border="0" width="48" style="display: block; width: 68px; max-width: 68px; min-width: 58px;">
+                <img src="https://firebasestorage.googleapis.com/v0/b/medical-app-397822.appspot.com/o/company%2Flogo-500px.webp?alt=media&token=42fd03e3-c4e8-4c5c-af85-880fef9db3f7&_gl=1*4uodhl*_ga*NTMyMDYzOTIwLjE2OTQ1NDAzMzY.*_ga_CW55HF8NVT*MTY5NjYxODI3OC40MC4xLjE2OTY2MTg0MjMuMTQuMC4w" alt="Logo" border="0" width="48" style="display: block; width: 68px; max-width: 68px; min-width: 58px;">
               </a>
             </td>
           </tr>
@@ -315,7 +315,7 @@ export function verficationCode(code) {
           <tr>
             <td align="center" valign="top" style="padding: 36px 24px;">
               <a href="https://www.sehatitaji.com" target="_blank" style="display: inline-block;">
-                <img src="https://firebasestorage.googleapis.com/v0/b/medical-app-397822.appspot.com/o/company%2Flogo-500px.png?alt=media&token=42fd03e3-c4e8-4c5c-af85-880fef9db3f7&_gl=1*4uodhl*_ga*NTMyMDYzOTIwLjE2OTQ1NDAzMzY.*_ga_CW55HF8NVT*MTY5NjYxODI3OC40MC4xLjE2OTY2MTg0MjMuMTQuMC4w" alt="Logo" border="0" width="48" style="display: block; width: 68px; max-width: 68px; min-width: 58px;">
+                <img src="https://firebasestorage.googleapis.com/v0/b/medical-app-397822.appspot.com/o/company%2Flogo-500px.webp?alt=media&token=42fd03e3-c4e8-4c5c-af85-880fef9db3f7&_gl=1*4uodhl*_ga*NTMyMDYzOTIwLjE2OTQ1NDAzMzY.*_ga_CW55HF8NVT*MTY5NjYxODI3OC40MC4xLjE2OTY2MTg0MjMuMTQuMC4w" alt="Logo" border="0" width="48" style="display: block; width: 68px; max-width: 68px; min-width: 58px;">
               </a>
             </td>
           </tr>
@@ -545,7 +545,7 @@ export function contactUsEmail(data) {
           <tr>
             <td align="center" valign="top" style="padding: 36px 24px;">
               <a href="https://www.sehatitaji.com" target="_blank" style="display: inline-block;">
-                <img src="https://firebasestorage.googleapis.com/v0/b/medical-app-397822.appspot.com/o/company%2Flogo-500px.png?alt=media&token=42fd03e3-c4e8-4c5c-af85-880fef9db3f7&_gl=1*4uodhl*_ga*NTMyMDYzOTIwLjE2OTQ1NDAzMzY.*_ga_CW55HF8NVT*MTY5NjYxODI3OC40MC4xLjE2OTY2MTg0MjMuMTQuMC4w" alt="Logo" border="0" width="48" style="display: block; width: 68px; max-width: 68px; min-width: 58px;">
+                <img src="https://firebasestorage.googleapis.com/v0/b/medical-app-397822.appspot.com/o/company%2Flogo-500px.webp?alt=media&token=42fd03e3-c4e8-4c5c-af85-880fef9db3f7&_gl=1*4uodhl*_ga*NTMyMDYzOTIwLjE2OTQ1NDAzMzY.*_ga_CW55HF8NVT*MTY5NjYxODI3OC40MC4xLjE2OTY2MTg0MjMuMTQuMC4w" alt="Logo" border="0" width="48" style="display: block; width: 68px; max-width: 68px; min-width: 58px;">
               </a>
             </td>
           </tr>
@@ -750,7 +750,7 @@ export function passwordReset(hash) {
           <tr>
             <td align="center" valign="top" style="padding: 36px 24px;">
               <a href="https://www.sehatitaji.com" target="_blank" style="display: inline-block;">
-                <img src="https://firebasestorage.googleapis.com/v0/b/medical-app-397822.appspot.com/o/company%2Flogo-500px.png?alt=media&token=42fd03e3-c4e8-4c5c-af85-880fef9db3f7&_gl=1*4uodhl*_ga*NTMyMDYzOTIwLjE2OTQ1NDAzMzY.*_ga_CW55HF8NVT*MTY5NjYxODI3OC40MC4xLjE2OTY2MTg0MjMuMTQuMC4w" alt="Logo" border="0" width="48" style="display: block; width: 68px; max-width: 68px; min-width: 58px;">
+                <img src="https://firebasestorage.googleapis.com/v0/b/medical-app-397822.appspot.com/o/company%2Flogo-500px.webp?alt=media&token=42fd03e3-c4e8-4c5c-af85-880fef9db3f7&_gl=1*4uodhl*_ga*NTMyMDYzOTIwLjE2OTQ1NDAzMzY.*_ga_CW55HF8NVT*MTY5NjYxODI3OC40MC4xLjE2OTY2MTg0MjMuMTQuMC4w" alt="Logo" border="0" width="48" style="display: block; width: 68px; max-width: 68px; min-width: 58px;">
               </a>
             </td>
           </tr>

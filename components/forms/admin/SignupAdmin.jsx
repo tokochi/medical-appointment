@@ -16,7 +16,7 @@ function SignupAdmin() {
 ;
   return (
     <form onSubmit={(e) => handleSubmitAdminSignup(e, toast, router, signIn)}>
-      <div className='p-4 flex flex-col gap-4  justify-center'>
+      <div className='p-4 flex flex-col gap-4'>
         <h1 className='text-center'>
           ــــــــــــــــ الرجاء إدخال البيانات الخاصة بك ــــــــــــــــ{" "}
         </h1>
@@ -28,14 +28,14 @@ function SignupAdmin() {
           placeholder='الإسم و اللقب'
           label='الإسم و اللقب'
         />
-        <TextInput
+        {/* <TextInput
           type='phone'
           name='phone.mobile'
           value={adminInfo?.phone?.mobile}
           onChange={(e) => handleInputChange(e, "adminInfo")}
           placeholder='الهاتف المحمول'
           label='الهاتف المحمول'
-        />
+        /> */}
         <TextInput
           type='email'
           name='email'

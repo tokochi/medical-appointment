@@ -12,15 +12,15 @@ function UserSendMessage({ data }) {
       onClick={() => {
         useStore.setState({
           messageToSend: {
-            title: "",
-            files:[],
+            title: `الرد على :${message?.title.replace("الرد على","")}`,
             text: "",
             from: {
               id: session?._id,
               name: session?.name,
               email: session?.email,
+              title: session?.title,
+              speciality: session?.speciality,
             },
-            status: false,
           },
           modal: {
             isOpen: true,

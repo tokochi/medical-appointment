@@ -107,7 +107,6 @@ function LabsTable() {
         }
         break;
       case args.item.id.includes("delete"):
-        console.log(gridRef?.current?.getSelectedRecords()[0]);
         if (gridRef?.current?.getSelectedRecords()?.length > 0) {
           useStore.setState({
             labInfo: gridRef?.current?.getSelectedRecords()[0],

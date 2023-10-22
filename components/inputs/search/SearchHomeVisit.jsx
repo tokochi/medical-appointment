@@ -1,6 +1,5 @@
 "use client";
 import { CheckboxInput } from "@components/inputs";
-import Image from "next/image";
 import { useStore } from "@context/store";
 
 function SearchHomeVisit() {

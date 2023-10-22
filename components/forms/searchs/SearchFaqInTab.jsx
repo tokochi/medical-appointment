@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { CheckboxInput, DropInput, IconInput, SelectInput, TextInput } from "@components/inputs";
+import {  IconInput,  } from "@components/inputs";
 
 function SearchFaq() {
   return (

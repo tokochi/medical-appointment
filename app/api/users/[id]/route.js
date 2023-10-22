@@ -9,7 +9,7 @@ export async function GET(req, { params }) {
             return new Response('Missing ID parameter', { status: 400 }); // Bad Request
         }
         const response = await User.findOne({ _id: params?.id });
-        if (response.ok) {
+        if (response) {
             return new Response(JSON.stringify(response), { status: 200 }); // OK
         } else {
             return new Response('Failed to update user', { status: 500 }); // Internal Server Error

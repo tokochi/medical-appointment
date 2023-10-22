@@ -1,4 +1,4 @@
-"use client";;
+"use client";
 import { IconInput, TextareaInput } from "@components/inputs";
 import Image from "next/image";
 import { useStore } from "@context/store";

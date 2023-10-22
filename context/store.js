@@ -19,12 +19,58 @@ export const useStore = create((set, get) => ({
   editedPost: {
     text: "", image: "/images/logo.webp", speciality: {}, title: ""
   },
+  dropDowns: {
+    notificationIsOpen: false,
+    inboxIsOpen: false,
+    accountIsOpen: false,
+  },
+  setDropDowns: (type) => {
+    switch (type) {
+      case "close":
+        set({
+          dropDowns: {
+            notificationIsOpen: false,
+            inboxIsOpen: false,
+            accountIsOpen: false,
+          }
+        })
+        break;
+      case "notification":
+        set({
+          dropDowns: {
+            notificationIsOpen: true,
+            inboxIsOpen: false,
+            accountIsOpen: false,
+          }
+        })
+        break;
+      case "account":
+        set({
+          dropDowns: {
+            notificationIsOpen: false,
+            inboxIsOpen: false,
+            accountIsOpen: true,
+          }
+        })
+        break;
+      case "inbox":
+        set({
+          dropDowns: {
+            notificationIsOpen: false,
+            inboxIsOpen: true,
+            accountIsOpen: false,
+          }
+        })
+        break;
+    }
+  },
   closeModelAnywhere: (e) => {
-
-    if (get().modal.isOpen === true && e.target.getAttribute("name") == "modal") { set(({ modal: get().modalClosed })) }
-    if (get().notification.isOpen === true && e.target.getAttribute("name") !== "notification") { set(({ notification: { isOpen: false } })) }
-    if (get().inbox.isOpen === true && e.target.getAttribute("name") !== "inbox") { set(({ inbox: { isOpen: false } })) }
-    if (get().account.isOpen === true && e.target.getAttribute("name") !== "account") { set(({ account: { isOpen: false } })) }
+    const D = get().dropDowns
+    const name = e.target.getAttribute("name")
+    if (get().modal.isOpen === true && name == "modal") { set(({ modal: get().modalClosed })) }
+    if ((D.notificationIsOpen === true && name !== "notification") ||
+      (D.inboxIsOpen === true && name !== "inbox") ||
+      (D.accountIsOpen === true && name !== "account")) { get().setDropDowns("close") }
   },
   scrollToElement: (id) => {
     if (typeof window !== "undefined") {
@@ -64,6 +110,33 @@ export const useStore = create((set, get) => ({
       ...parsedProps,
     }));
   },
+  //************** Session *************/
+  session: null,
+  currentUser: null,
+  currentDoctor: null,
+  currentAdmin: null,
+  selectedPost: {},
+  selectedDoctor: {},
+  selectedQuestion: {},
+  questions,
+  handleAddError: async (data, router) => {
+    set({ isLoading: true })
+    const response = await fetch(`/api/errors`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }
+    );
+    if (response.ok) {
+      get().addActivity("إضــافة", "مشكل", data?.title, "تمت")
+    } else {
+      get().addActivity("إضــافة", "مشكل", data?.title, "لم تتــم")
+    }
+    set({ isLoading: false })
+    router.push('/')
+  },
   //************** Static Data *************/
   medicalSpecialties,
   specialities,
@@ -81,9 +154,8 @@ export const useStore = create((set, get) => ({
   worksPharms,
   worksLabs,
   //************** Genral Form *************/
-
   isRulesChecked: { first: false, seconde: false },
-  errorInput: { name: false, password: false, title: false, text: false, speciality: false, verifyPassword: false, oldPassword: false, pinCode: false, email: false },
+  errorInput: { name: false, date: false, password: false, title: false, text: false, speciality: false, verifyPassword: false, oldPassword: false, pinCode: false, email: false },
   loadingSppiner: {
     avatar: false,
     image: false,
@@ -306,13 +378,12 @@ export const useStore = create((set, get) => ({
         type = "عيادة"
         break;
     }
-
     if (response.ok) {
-      get().addActivity("إضــافة", type, email || name, "تمت", {name:"المشرف"})
+      get().addActivity("إضــافة", type, email || name, "تمت", { name: "المشرف" })
       toast.success("تم تسجيل المستخدم بنجاح", { duration: 3000 });
       get().fetchToGrid(url)
     } else {
-      get().addActivity("إضــافة", type, email || name, "لم تتــم", "المشرف")
+      get().addActivity("إضــافة", type, email || name, "لم تتــم", { name: "المشرف" })
       toast.error("فشلت عملية تسجيل المستخدم", response);
     }
     set({
@@ -362,7 +433,7 @@ export const useStore = create((set, get) => ({
       toast.success("تم حذف المستخدم بنجاح", { duration: 5000 });
       get().fetchToGrid(url)
     } else {
-      get().addActivity("حـــذف", type, email || name, "لم تتــم", "المشرف")
+      get().addActivity("حـــذف", type, email || name, "لم تتــم", { name: "المشرف" })
       toast.error("فشلت عملية حذف المستخدم", { duration: 5000 });
     }
     set({ modal: get().modalClosed });
@@ -404,9 +475,38 @@ export const useStore = create((set, get) => ({
       toast.success("تم تعديل المستخدم بنجاح", { duration: 5000 });
       get().fetchToGrid(url)
     } else {
-      get().addActivity("تعـديل", type, email || name, "لم تتــم", "المشرف")
+      get().addActivity("تعـديل", type, email || name, "لم تتــم", { name: "المشرف" })
       toast.error("فشلت عملية تسجيل المستخدم", { duration: 5000 });
     }
+
+    set({
+      modal: get().modalClosed, doctorInfo: doctorDefault, uploadDone: {
+        avatar: "",
+        officePics: "",
+        proofPics: "",
+      },
+    });
+  },
+  handleSubGrid: async (e, toast, url, keyValue, type, id) => {
+    e.preventDefault();
+    const response = await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(get()[keyValue]),
+    });
+    const email = get()[keyValue]?.email
+    const name = get()[keyValue]?.name
+    if (response.ok) {
+      get().addActivity(type, "إشتراك", email || name, "تمت", { name: "المشرف", id })
+      toast.success(`تم ${type} اشتراك المستخدم بنجاح`, { duration: 5000 });
+      get().fetchToGrid(url)
+    } else {
+      get().addActivity(type, "إشتراك", email || name, "لم تتــم", { name: "المشرف", id })
+      toast.error("فشلت عملية اشتراك المستخدم", { duration: 5000 });
+    }
+
     set({
       modal: get().modalClosed, doctorInfo: doctorDefault, uploadDone: {
         avatar: "",
@@ -597,50 +697,29 @@ export const useStore = create((set, get) => ({
       },
     }));
   },
-  addActivity: async (action, type, source, status, from) => {
-    const response = await fetch("/api/activity", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        action,
-        type,
-        source,
-        status,
-        from,
-      }),
-    }
-    );
-    if (response.ok) {
-      const responseData = await response.json();
-      get().sendNotificationAdmins(responseData)
-      if (action === "إضــافة" && type === "سؤال" && status === "تمت") { get().sendNotificationDoctors(responseData) }
-      if (action === "إضــافة" && type === "رسالة" && status === "تمت") {
-        const { id, type } = from
-        if (type === "doctors") { get().sendNotificationDoctor(responseData, id) }
-        if (type === "users") { get().sendNotificationUser(responseData, id) }
-      }
-      if (action === "إضــافة" && type === "موعد" && status === "تمت") { get().sendNotificationDoctor(responseData, from.id) }
-      // Parse the response body as JSON
-      // console.log("🚀 ~🚀 ~ Activity Added:", responseData);
-    } else {
-      // console.log("🚀 ~🚀 ~ error adding activity:", response)
-    }
-  },
   addedAdmins: "",
   //************** Inbox *************/
-  inbox: { isOpen: false },
   messageToSend: {
     title: "",
     text: "",
-    speciality: {},
-    response: "",
-    files: [],
-    author: "",
+    from: {
+      id: get()?.session?._id,
+      name: get()?.session?.name,
+      email: get()?.session?.email,
+      title: get()?.session?.title,
+      speciality: get()?.session?.speciality
+    }
   },
   handleSubmitMessage: async (e, toast, id, type) => {
     e.preventDefault();
+    switch (true) {
+      case !get().messageToSend.title:
+        set({ isLoading: false, errorInput: { ...get().errorInput, title: true } });
+        return;
+      case !get().messageToSend.text:
+        set({ isLoading: false, errorInput: { ...get().errorInput, text: true } });
+        return;
+    }
     set({ isLoading: true })
     const response = await fetch(`/api/${type}/inbox-add/${id}`, {
       method: "PUT",
@@ -661,37 +740,30 @@ export const useStore = create((set, get) => ({
     }
     set({ isLoading: false })
   },
-  handleDeleteMessage: async (e, toast, id, type,router) => {
+  handleUpdateMessage: async (messageId, id, type) => {
+    const response = await fetch(`/api/${type}/inbox-update/${id}?inboxId=${messageId}`);
+    if (response.ok) {
+      get().addActivity("تعديل", "رسالة", get().messageToSend?.title, "تمت", { id, type });
+    } else {
+      get().addActivity("تعديل", "رسالة", get().messageToSend?.title, "لم تتــم");
+    }
+  },
+  handleDeleteMessage: async (e, toast, id, type, messageId) => {
     e.preventDefault();
     set({ isLoading: true })
-    const response = await fetch(`/api/${type}/inbox-delete/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(get().messageToSend),
-    });
-    if (response.status === 203) {
-      toast.error("يرجى الانتظار قبل إرســال رسالة آخر", response);
-    } else if (response.ok) {
-      get().addActivity("حذف", "رسالة", get().messageToSend?.title, "تمت");
-      toast.success("تم تقديم رسالتك بنجاح");
+    const response = await fetch(`/api/${type}/inbox-delete/${id}?inboxId=${messageId}`);
+    if (response.ok) {
+      get().addActivity("حذف", "رسالة", get().messageToSend?.title, "تمت", { id, type });
+      toast.success("تم حذف رسالتك بنجاح");
       set({ modal: get().modalClosed });
-      router.refresh()
     } else {
       get().addActivity("حذف", "رسالة", get().messageToSend?.title, "لم تتــم");
-      toast.error("حدث خطأ في تقديم رسالتك", response);
+      toast.error("حدث خطأ في حذف رسالتك", response);
     }
     set({ isLoading: false })
   },
-  clearInbox: async () => {
-    const response = await fetch(`/api/admins/${get().session._id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ notificationsList: [] }),
-    });
+  clearInbox: async (type) => {
+    const response = await fetch(`/api/${type}/inbox-clear/${id}`);
     if (response.ok) {
       // console.log("🚀 ~🚀 ~ تم إضــافة التنبيه بنجاح")
     } else {
@@ -699,8 +771,92 @@ export const useStore = create((set, get) => ({
     }
     get().fetchAdmin(get().session._id)
   },
-  //************** Notifications *************/
-  notification: { isOpen: false },
+  //************** Notifications *************/ 
+  addActivity: async (action, type, source, status, from) => {
+    const response = await fetch("/api/activity", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        action,
+        type,
+        source,
+        status,
+        from,
+      }),
+    }
+    );
+    if (response.ok) {
+      const responseData = await response.json();
+      get().sendNotificationAdmins(responseData)
+      if (action === "إضــافة" && type === "سؤال" && status === "تمت") { get().sendNotificationDoctors({ ...responseData, title: "سؤال طبي في تخصصك", text: "تم طرح سؤال طبي جديد من طرف أحد المستخدمين حول تخصصك الطبي، يمكنك المشاركة و الإجابة و تلقي ردود و تعليقات" }) }
+      if (action === "إضــافة" && type === "رسالة" && status === "تمت") { get().sendNotification({ ...responseData, title: "تلقيت رسالة", text: "" }, from?.id, from?.type) }
+      if (action === "إضــافة" && type === "موعد" && status === "تمت") { get().sendNotificationDoctor({ ...responseData, title: "لديك موعد طبي", text: "" }, from?.id, "doctors") }
+      if (type === "إشتراك" && status === "تمت") { get().sendNotificationDoctor({ ...responseData, title: "اشتراك", text: "" }, from?.id, "doctors") }
+      // Parse the response body as JSON
+      // console.log("🚀 ~🚀 ~ Activity Added:", responseData);
+    } else {
+      // console.log("🚀 ~🚀 ~ error adding activity:", response)
+    }
+  },
+  sendNotificationAdmins: async (data) => {
+    const admins = await get().fetchAdmins()
+    admins.map(async admin => {
+      await get().sendNotification(data, admin._id, "admins")
+    })
+
+  },
+  sendNotificationDoctors: async (data) => {
+    const doctors = await get().fetchDoctors()
+    doctors?.map(async doctor => {
+      await get().sendNotification(data, doctor._id, "doctors")
+    })
+  },
+  sendNotificationUsers: async (data) => {
+    const users = await get().fetchUsers()
+    users.map(async user => {
+      await get().sendNotification(data, user._id, "users")
+    })
+  },
+  sendNotification: async (data, id, type) => {
+    const response = await fetch(`/api/${type}/notification-add/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    if (response.ok) {
+      console.log("🚀 ~🚀 ~ تم إضــافة التنبيه بنجاح")
+    } else {
+      console.log("🚀 ~🚀 ~ فشلت عملية إضــافة التنبيه");
+    }
+  },
+  clearNotifaction: async (id, type) => {
+    const response = await fetch(`/api/${type}/notification-clear/${id}`);
+    if (response.ok) {
+      console.log("🚀 ~🚀 ~ تم إضــافة التنبيه بنجاح")
+    } else {
+      console.log("🚀 ~🚀 ~ فشلت عملية إضــافة التنبيه");
+    }
+  },
+  clearMessageNotifaction: async (id, type) => {
+    const response = await fetch(`/api/${type}/notification-clear/${id}`);
+    if (response.ok) {
+      console.log("🚀 ~🚀 ~ تم إضــافة التنبيه بنجاح")
+    } else {
+      console.log("🚀 ~🚀 ~ فشلت عملية إضــافة التنبيه");
+    }
+  },
+  deleteNotifaction: async (id, type, messageId) => {
+    const response = await fetch(`/api/${type}/notification-delete/${id}?messageId=${messageId}`);
+    if (response.ok) {
+      console.log("🚀 ~🚀 ~ تم حذف التنبيه بنجاح")
+    } else {
+      console.log("🚀 ~🚀 ~ فشلت عملية حذف التنبيه");
+    }
+  },
   updateNotification: (e, type, keyValue) => {
     const isChecked = e.target.checked;
     const updatedNotifications = new Set(get()[keyValue].notifications);
@@ -715,107 +871,6 @@ export const useStore = create((set, get) => ({
     set((state) => ({
       [keyValue]: { ...state[keyValue], notifications: Array.from(updatedNotifications) },
     }));
-  },
-  sendNotificationAdmins: async (data) => {
-    const admins = await get().fetchAdmins()
-    admins.forEach(async (admin) => {
-      const canAddNotification = admin.notifications?.includes(data?.type)
-      if (canAddNotification) {
-        const response = await fetch(`/api/admins/${admin?._id}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ notificationsList: [...admin?.notificationsList, { ...data }] }),
-        });
-        if (response.ok) {
-          // get().fetchAdmin(admin?._id)
-          // console.log("🚀 ~🚀 ~ تم إضــافة التنبيه بنجاح")
-        } else {
-          // console.log("🚀 ~🚀 ~ فشلت عملية إضــافة التنبيه");
-        }
-      }
-    })
-
-  },
-   sendNotificationDoctors: async (data) => {
-      const doctors = await get().fetchDoctors()
-      doctors.map(async doctor => {
-        const canAddNotification = doctor?.notifications?.includes(data?.type)
-        if (canAddNotification && [...doctor.specialities, doctor.speciality].some(speciality => speciality?.text?.includes(get().askQuestion?.speciality.tag))) {
-        await fetch(`/api/doctors/${doctor._id}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ notificationsList: [...doctor?.notificationsList, { ...data }] }),
-        })
-      }
-    })
-  },
-  sendNotificationDoctor: async (data, id) => {
-    const doctor = await get().fetchDoctor(id)
-    const canAddNotification = doctor?.notifications?.includes(data?.type)
-    if (canAddNotification) {
-      const response = await fetch(`/api/doctors/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ notificationsList: [...doctor?.notificationsList, { ...data }] }),
-      });
-      if (response.ok) {
-        // get().fetchAdmin(admin?._id)
-      } else {
-      }
-    }
-  },
-  sendNotificationUser: async (data,id) => {
-    const user = await get().fetchUser(id)
-    const canAddNotification = user?.notifications?.includes(data?.type)
-    if (canAddNotification) {
-      const response = await fetch(`/api/users/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ notificationsList: [...user?.notificationsList, { ...data }] }),
-      });
-      if (response.ok) {
-        // get().fetchAdmin(admin?._id)
-      } else {
-      }
-    }
-  },
-  clearNotifaction: async (keyValue) => {
-    const response = await fetch(`/api/${keyValue}/${get().session._id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ notificationsList: get().session?.notificationsList.filter(not => not.type === "رسالة") }),
-    });
-    if (response.ok) {
-      // console.log("🚀 ~🚀 ~ تم إضــافة التنبيه بنجاح")
-    } else {
-      // console.log("🚀 ~🚀 ~ فشلت عملية إضــافة التنبيه");
-    }
-    router.refresh()
-  },
-  deleteNotifaction: async (id, router, keyValue) => {
-    const response = await fetch(`/api/${keyValue}/${get().session._id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ notificationsList: get().session?.notificationsList.filter(not => not._id !== id) }),
-    });
-    if (response.ok) {
-      // console.log("🚀 ~🚀 ~ تم إضــافة التنبيه بنجاح")
-    } else {
-      // console.log("🚀 ~🚀 ~ فشلت عملية إضــافة التنبيه");
-    }
-    router.refresh()
   },
   //************** Company Form *************/
   companyInfo: {},
@@ -844,7 +899,7 @@ export const useStore = create((set, get) => ({
   setWorkTime: (e) =>
     set((state) => ({
       doctorInfo: {
-        ...state.doctorInfo, workTime: state.doctorInfo.workTime.map((date) =>
+        ...state.doctorInfo, workTime: state.doctorInfo?.workTime?.map((date) =>
           date.day === e.target.getAttribute("day")
             ? { ...date, [e.target.getAttribute("name")]: e.target.value }
             : date
@@ -868,6 +923,7 @@ export const useStore = create((set, get) => ({
   },
   handleSubmitDoctorsSignup: async (e, toast, router, signIn) => {
     e.preventDefault();
+    set({ isLoading: true })
     if (!get().isRulesChecked.first && !get().isRulesChecked.seconde) {
       return toast.error("يرجى موافقة على الشروط");
     }
@@ -903,10 +959,11 @@ export const useStore = create((set, get) => ({
       get().addActivity("إضــافة", "طبيب", get().doctorInfo?.email, "لم تتــم")
       toast.error("فشلت عملية تسجيل المستخدم", response);
     }
-    set({ doctorInfo: doctorDefault, isRulesChecked: { first: false, seconde: false } });
+    set({ doctorInfo: doctorDefault, isLoading: false, isRulesChecked: { first: false, seconde: false } });
   },
   handleSubmitDoctorUpdate: async (e, toast, id, router, type) => {
     e.preventDefault();
+    set({ isLoading: true })
     const response = await fetch(`/api/doctors/${id}`, {
       method: "PUT",
       headers: {
@@ -929,9 +986,11 @@ export const useStore = create((set, get) => ({
       get().addActivity("تعـديل", "طبيب", get().doctorInfo?.email, "لم تتــم")
       toast.error("فشلت عملية تعديل المستخدم");
     }
+    set({ isLoading: false })
   },
   handleSubmitDoctorLogin: async (e, toast, router, signIn) => {
     e.preventDefault();
+    set({ isLoading: true })
     switch (true) {
       case !get().userInfo?.password:
         set({ isLoading: false, errorInput: { ...get().errorInput, password: true } });
@@ -951,6 +1010,7 @@ export const useStore = create((set, get) => ({
       get().addActivity("دخول", "طبيب", get().userInfo?.email, "لم تتــم")
       toast.error(response?.error);
     }
+    set({ isLoading: false })
   },
   handleDoctorConfirmation: async (e, toast, id, email) => {
     e.preventDefault();
@@ -980,6 +1040,7 @@ export const useStore = create((set, get) => ({
   errorAdminKey: false,
   handleSubmitAdminLogin: async (e, toast, router, signIn) => {
     e.preventDefault();
+    set({ isLoading: true })
     switch (true) {
       case !get().adminInfo?.email:
         set({ isLoading: false, errorInput: { ...get().errorInput, email: true } });
@@ -999,9 +1060,11 @@ export const useStore = create((set, get) => ({
       get().addActivity("دخول", "مشرف", get().adminInfo?.email, "لم تتــم")
       toast.error(response?.error);
     }
+    set({ isLoading: false })
   },
   handleSubmitAdminSignup: async (e, toast, router, signIn) => {
     e.preventDefault();
+    set({ isLoading: true })
     switch (true) {
       case !get().adminInfo?.password:
         set({ isLoading: false, errorInput: { ...get().errorInput, password: true } });
@@ -1044,9 +1107,11 @@ export const useStore = create((set, get) => ({
     } else {
       toast.error("فشلت عملية تسجيل المستخدم");
     }
+    set({ isLoading: false })
   },
   handleSubmitAdminUpdate: async (e, toast, id) => {
     e.preventDefault();
+    set({ isLoading: true })
     const response = await fetch(`/api/admins/${id}`, {
       method: "PUT",
       headers: {
@@ -1062,18 +1127,17 @@ export const useStore = create((set, get) => ({
       get().addActivity("تعـديل", "مشرف", get().adminInfo?.email, "لم تتــم")
       toast.error("فشلت عملية تعديل المستخدم");
     }
+    set({ isLoading: false })
   },
   //************** Question Form *************/
   askQuestion: {
-    title: "",
-    text: "",
-    speciality: {},
-    response: "",
-    author: "",
-    details: { weight: 85, length: 180 },
+    name: "",
+    email: "",
+    phone: "",
   },
   handleSubmitQuestion: async (e, toast, router) => {
     e.preventDefault();
+    set({ isLoading: true })
     switch (true) {
       case !get().askQuestion?.speciality?.value:
         set({ isLoading: false, errorInput: { ...get().errorInput, speciality: true } });
@@ -1101,10 +1165,11 @@ export const useStore = create((set, get) => ({
       get().addActivity("إضــافة", "سؤال", get().askQuestion?.title, "لم تتــم")
       toast.error("حدث خطأ في تقديم سؤالك", response);
     }
+    set({ isLoading: false })
   },
-  handleUpdateQuestion: async (e, toast,router, id) => {
+  handleUpdateQuestion: async (e, toast, router, id) => {
     e.preventDefault();
-    // set({ isLoading: true })
+    set({ isLoading: true })
     const response = await fetch(`/api/questions/response-add/${id}`, {
       method: "PUT",
       headers: {
@@ -1120,28 +1185,28 @@ export const useStore = create((set, get) => ({
       get().addActivity("تعـديل", "سؤال", get().askQuestion?.title, "لم تتــم")
       toast.error("فشلت عملية سؤال المستخدم");
     }
-    set({ isLoading: false })
+    set({ isLoading: false, modal: get().modalClosed })
   },
   handleSumbitComment: async (e, toast, router, responseId, id) => {
-  e.preventDefault();
-  // set({ isLoading: true })
-  const response = await fetch(`/api/questions/comment-add/${id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ comment: { text: get().askQuestion.comment, author:get().session?._id }, responseId }),
-  });
-  if (response.ok) {
-    get().addActivity("تعـديل", "سؤال", get().askQuestion?.title, "تمت")
-    toast.success("تم تعديل سؤال بنجاح");
-    router.refresh()
-  } else {
-    get().addActivity("تعـديل", "سؤال", get().askQuestion?.title, "لم تتــم")
-    toast.error("فشلت عملية سؤال المستخدم");
-  }
-  set({ isLoading: false })
-},
+    e.preventDefault();
+    set({ isLoading: true })
+    const response = await fetch(`/api/questions/comment-add/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ comment: { text: get().askQuestion.comment, author: get().session?._id }, responseId }),
+    });
+    if (response.ok) {
+      get().addActivity("تعـديل", "سؤال", get().askQuestion?.title, "تمت")
+      toast.success("تم تعديل سؤال بنجاح");
+      router.refresh()
+    } else {
+      get().addActivity("تعـديل", "سؤال", get().askQuestion?.title, "لم تتــم")
+      toast.error("فشلت عملية سؤال المستخدم");
+    }
+    set({ isLoading: false })
+  },
   //************** User Form *************/  
   healthInfo: {
     chrnoDiseases: [],
@@ -1162,10 +1227,10 @@ export const useStore = create((set, get) => ({
   addedAlergy: "",
   addedVaccination: { text: "", time: new Date(), hosp: "" },
   addedsurgery: { text: "", time: new Date(), hosp: "" },
-  account: { isOpen: false },
   userInfo: userDefault,
   handleSubmitUserSignup: async (e, toast, router, signIn) => {
     e.preventDefault();
+    set({ isLoading: true })
     switch (true) {
       case !get().userInfo?.password:
         set({ isLoading: false, errorInput: { ...get().errorInput, password: true } });
@@ -1208,9 +1273,11 @@ export const useStore = create((set, get) => ({
       get().addActivity("تسجيل", "مستخدم", get().userInfo?.email, "لم تتــم")
       toast.error("فشلت عملية تسجيل المستخدم");
     }
+    set({ isLoading: false })
   },
   handleSubmitUserLogin: async (e, toast, router, signIn) => {
     e.preventDefault();
+    set({ isLoading: true })
     switch (true) {
       case !get().userInfo?.email:
         set({ isLoading: false, errorInput: { ...get().errorInput, email: true } });
@@ -1230,10 +1297,11 @@ export const useStore = create((set, get) => ({
       get().addActivity("دخول", "مستخدم", get().userInfo?.email, "لم تتــم")
       toast.error(response?.error);
     }
+    set({ isLoading: false })
   },
   handleSubmitUserUpdate: async (e, toast, id) => {
     e.preventDefault();
-    // set({ isLoading: true })
+    set({ isLoading: true })
     const response = await fetch(`/api/users/${id}`, {
       method: "PUT",
       headers: {
@@ -1253,7 +1321,7 @@ export const useStore = create((set, get) => ({
   },
   submitUserUpdateHealthInfo: async (e, toast, router, id) => {
     e.preventDefault();
-    // set({ isLoading: true })
+    set({ isLoading: true })
     const response = await fetch(`/api/users/${id}`, {
       method: "PUT",
       headers: {
@@ -1270,6 +1338,7 @@ export const useStore = create((set, get) => ({
       get().addActivity("تعـديل", "مستخدم", "الملف الطبي", "لم تتــم")
       toast.error("فشلت عملية تسجيل الملف الطبي");
     }
+    set({ isLoading: false })
   },
   //************** Pharm Form *************/
   pharmInfo: pharmDefault,
@@ -1375,7 +1444,7 @@ export const useStore = create((set, get) => ({
     );
     if (response.ok) {
       const data = await response.json();
-      get().addActivity("إضــافة", "موعد", get().appointInfo?.user?.email, "تمت", { id:get().appointInfo?.doctor } )
+      get().addActivity("إضــافة", "موعد", get().appointInfo?.user?.email, "تمت", { id: get().appointInfo?.doctor })
       toast.success("تم إضــافة موعد طبي بنجاح");
       set({
         modal: get().modalClosed,
@@ -1447,15 +1516,6 @@ export const useStore = create((set, get) => ({
     }
     set({ isLoading: false })
   },
-  //************** Session *************/
-  session: null,
-  currentUser: null,
-  currentDoctor: null,
-  currentAdmin: null,
-  selectedPost: {},
-  selectedDoctor: {},
-  selectedQuestion: {},
-  questions,
   //************** Fetch *************/
   users: [],
   doctors: [],
@@ -1482,7 +1542,7 @@ export const useStore = create((set, get) => ({
       set({ isLoading: true });
       const usersResponse = await fetch(`/api/admins/${id}`);
       const usersData = await usersResponse.json();
-      set({ currentAdmin: usersData });
+      set({ session: usersData });
       set({ isLoading: false });
     } catch (error) {
       console.error('🚀 ~Error fetching data:', error);
@@ -1490,9 +1550,10 @@ export const useStore = create((set, get) => ({
   },
   fetchUser: async (id) => {
     try {
-      const usersResponse = await fetch(`/api/Users/${id}`);
-      return await usersResponse.json();
-      set({ currentUser: usersData });
+      const usersResponse = await fetch(`/api/users/${id}`);
+      const usersData = await usersResponse.json();
+      // set({ currentUser: usersData });
+      return usersData
     } catch (error) {
       console.error('🚀 ~Error fetching data:', error);
     }
@@ -1589,7 +1650,6 @@ export const useStore = create((set, get) => ({
       console.error('🚀 ~ Error fetching data:', error);
     }
   },
-
   fetchPosts: async () => {
     try {
       set({ isLoading: true });

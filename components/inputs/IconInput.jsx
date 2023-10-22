@@ -6,7 +6,7 @@ function IconInput({ icon, label, type, name, id, error, placeholder, helper, ..
     <div className='w-full'>
       <label
         htmlFor={id}
-        className='block font-noto mb-2 text-sm font-medium text-gray-900 dark:text-white'>
+        className='block font-noto text-right mb-2 text-sm font-medium text-gray-900 dark:text-white'>
         {label}
       </label>
       <div className='relative'>

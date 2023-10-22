@@ -25,9 +25,24 @@ const messageSchema = new Schema({
             text: String
         }
     },
+    status: {
+        type: Boolean,
+        default: false
+    },
     // Other message fields
 });
-
+const notificationSchema = new Schema({
+    // action: String,
+    // type: String,
+    // source: String,
+    text: String,
+    title: String,
+    // id: {
+    //     type: Types.ObjectId,
+    //     default: Types.ObjectId,
+    // },
+    date: { type: Date, default: Date.now },
+})
 const userSchema = new Schema({
     name: String,
     birthDate: { type: Date, default: Date.now },

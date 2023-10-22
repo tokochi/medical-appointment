@@ -3,17 +3,38 @@ import { useStore } from "@context/store";
 import moment from "moment";
 import "moment/locale/ar-dz";
 import Image from "next/image";
-import { TextareaInput } from "@components/inputs";
+import { TextInput, TextareaInput } from "@components/inputs";
 import toast from "react-hot-toast";
+import { useEffect } from "react";
 moment().locale("ar-dz");
 
 function ShowAppoint({ data }) {
   const {appointment, doctor} = JSON.parse(data)
     const {
       messageToSend,
+      errorInput,
+      session,
       handleInputChange,
       handleSubmitMessage,
     } = useStore();
+ useEffect(
+         () =>
+          {if (session)
+            {useStore.setState({
+              messageToSend: {
+                title: "",
+                text: "",
+                from: {
+                  id: session?._id,
+                  name: session?.name,
+                  email: session?.email,
+                  title: session?.title,
+                  speciality: session?.speciality,
+                },
+              },
+            });}},
+         [session]
+       );
   return (
     <div id='doct-cards' className='p-4 card rounded-md flex flex-col  gap-6'>
       <div id='title' className='flex flex-col  gap-6'>
@@ -81,10 +102,20 @@ function ShowAppoint({ data }) {
       </div>
       <div>
         <h1 className='text-sky-500 my-4 text-lg font-semibold'>لا تتردد في الاتصال بطبيبك</h1>
+        <TextInput
+          name='title'
+          value={messageToSend?.title}
+          onChange={(e) => handleInputChange(e, "messageToSend")}
+          type='text'
+          error={errorInput.title}
+          label='السؤال:'
+          placeholder='عنوان لمشكلتك الصحية'
+        />
         <TextareaInput
           name='text'
           rows={5}
           value={messageToSend?.text}
+          error={errorInput.text}
           onChange={(e) => handleInputChange(e, "messageToSend")}
           type='text'
           placeholder='أكتب رسالتك هنا'

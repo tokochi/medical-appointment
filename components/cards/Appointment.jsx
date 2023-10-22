@@ -10,8 +10,8 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import LoadingComponent from "@components/utils/LoadingComponent";
 import { useState, useEffect } from "react";
+moment().locale("ar-dz");
 function Appointment({ doctor }) {
-  moment().locale("ar-dz");
   const {
     appointInfo,
     errorInput,
@@ -36,7 +36,7 @@ function Appointment({ doctor }) {
  Localization("اطباء");
   const disabledDate = (args) => {
     const dayOfWeek = args.date.getDay();
-    const matchingItem = doctor?.workTime.find((item) => item.id === dayOfWeek);
+    const matchingItem = doctor?.workTime?.find((item) => item.id === dayOfWeek);
     if (matchingItem && matchingItem.state === "close") {
       args.isDisabled = true;
     }
@@ -126,7 +126,8 @@ const maxDate = moment().add(8, "days").startOf("day").toISOString();
                 max={maxDate}
                 locale='ar-DZ'
                 renderDayCell={disabledDate}
-                change={onchange}></CalendarComponent>
+                change={onchange}
+              ></CalendarComponent>
             </div>
           </div>
         </div>
