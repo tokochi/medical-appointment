@@ -1,18 +1,18 @@
 "use client";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
-
+import { useStore } from "@context/store";
 function SidebarDoctor() {
   const router = useRouter();
   const path = usePathname();
-
+const {setDropDowns } = useStore();
   return (
     <div
       className={` min-w-[50px] m-1 md:m-2 rounded-xl bg-gray-100 shrink-0 overflow-x-hidden shadow-xl dark:bg-[#002130] transition-w duration-300`}>
       <div className='flex flex-col gap-4 p-2 list-none dark:text-gray-100'>
         <li className={`mt-4 ${path === "/doctor" && "dark:bg-primary bg-cyan-500 "} rounded p-2`}>
           <Link
-            onClick={() => router.refresh()}
+            onClick={() => { router.refresh();  setDropDowns("close");}}
             href='/doctor'
             className={`flex gap-2 font-semibold `}>
             <svg
@@ -29,7 +29,7 @@ function SidebarDoctor() {
             path === "/doctor/questions" && "dark:bg-primary bg-cyan-500"
           } rounded p-2`}>
           <Link
-            onClick={() => router.refresh()}
+            onClick={() => { router.refresh();  setDropDowns("close");}}
             href='/doctor/questions'
             className='flex gap-2 font-semibold'>
             <svg className='h-6 w-6 fill-gray-600 dark:fill-gray-400' viewBox='0 0 48 48'>
@@ -40,7 +40,7 @@ function SidebarDoctor() {
         </li>
         <li className={`${path === "/doctor/posts" && "dark:bg-primary bg-cyan-500"} rounded p-2`}>
           <Link
-            onClick={() => router.refresh()}
+            onClick={() => { router.refresh();  setDropDowns("close");}}
             href='/doctor/posts'
             className='flex gap-2 font-semibold'>
             <svg className='h-6 w-6 fill-gray-600 dark:fill-gray-400' viewBox='0 0 48 48'>
@@ -54,7 +54,7 @@ function SidebarDoctor() {
             path === "/doctor/appointment" && "dark:bg-primary bg-cyan-500"
           } rounded p-2`}>
           <Link
-            onClick={() => router.refresh()}
+            onClick={() => { router.refresh();  setDropDowns("close");}}
             href='/doctor/appointment'
             className='flex gap-2 font-semibold'>
             <svg
@@ -68,7 +68,7 @@ function SidebarDoctor() {
         </li>
         <li className={`${path === "/doctor/inbox" && "dark:bg-primary bg-cyan-500"} rounded p-2`}>
           <Link
-            onClick={() => router.refresh()}
+            onClick={() => { router.refresh();  setDropDowns("close");}}
             href='/doctor/inbox'
             className='flex gap-2 font-semibold'>
             <svg className='h-6 w-6 fill-gray-600 dark:fill-gray-400' viewBox='0 0 24 24'>
@@ -82,7 +82,7 @@ function SidebarDoctor() {
             path === "/doctor/subscription" && "dark:bg-primary bg-cyan-500"
           } rounded p-2`}>
           <Link
-            onClick={() => router.refresh()}
+            onClick={() => { router.refresh();  setDropDowns("close");}}
             href='/doctor/subscription'
             className='flex gap-2 font-semibold'>
             <svg

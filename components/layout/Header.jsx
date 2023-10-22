@@ -9,13 +9,13 @@ import HeaderButtons from "@components/buttons/HeaderButtons";
 
 function Header({ data }) {
   const session = JSON.parse(data)
-  const { isSidebarOpen, closeModelAnywhere, filterDefault } = useStore();
+  const { isSidebarOpen,setDropDowns, closeModelAnywhere, filterDefault } = useStore();
   return (
     <nav
       onClick={(e) => closeModelAnywhere(e)}
       className='bg-primary  border-gray-200 border-b-4 border-b-border transition-colors duration-300'>
       <div className='flex items-center  w-full py-2  px-4'>
-      <SidebarToggle />
+        <SidebarToggle />
         <Link className='' href='/'>
           <Image
             src='/images/logo.webp'
@@ -27,49 +27,63 @@ function Header({ data }) {
         </Link>
         <div className='hidden lg:flex gap-6 grow justify-center items-center'>
           <Link
-            onClick={() =>
+            onClick={() => {
               useStore.setState({
                 filterInfo: filterDefault,
-              })
-            }
+              });
+              setDropDowns("close");
+            }}
             className='links'
             href='/doctors'>
             الأطباء
           </Link>
           <Link
-            onClick={() =>
+            onClick={() => {
               useStore.setState({
                 filterInfo: filterDefault,
-              })
-            }
+              });
+              setDropDowns("close");
+            }}
             className='links'
             href='/labs'>
             مختبر
           </Link>
           <Link
-            onClick={() =>
+            onClick={() => {
               useStore.setState({
                 filterInfo: filterDefault,
-              })
-            }
+              });
+              setDropDowns("close");
+            }}
             className='links'
             href='/pharms'>
             صيدلية
           </Link>
           <Link
-            onClick={() =>
+            onClick={() => {
               useStore.setState({
                 filterInfo: filterDefault,
-              })
-            }
+              });
+              setDropDowns("close");
+            }}
             className='links'
             href='/hospitals'>
             العيادات
           </Link>
-          <Link className='links' href='/questions'>
+          <Link
+            className='links'
+            onClick={() => {
+              setDropDowns("close");
+            }}
+            href='/questions'>
             الأسئلة الطبية
           </Link>
-          <Link className='links' href='/blog'>
+          <Link
+            className='links'
+            onClick={() => {
+              setDropDowns("close");
+            }}
+            href='/blog'>
             مقالات طبية
           </Link>
           {/* <Link className='links' href='/contact-us'>
@@ -77,7 +91,12 @@ function Header({ data }) {
           </Link> */}
         </div>
         {!session ? (
-          <Link className='mx-2 mr-auto' href='/login'>
+          <Link
+            onClick={() => {
+              setDropDowns("close");
+            }}
+            className='mx-2 mr-auto'
+            href='/login'>
             <button type='button' className='btn px-4 py-2'>
               تسجيل
             </button>

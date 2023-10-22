@@ -9,7 +9,7 @@ async function page() {
   const { fetchAppointments } = useStore.getState();
    const session = await GetSession();
   const appointmentsList = await fetchAppointments();
-  const appointments = appointmentsList.filter((apoint) => apoint?.user?.id === session?._id);
+  const appointments = appointmentsList.filter((apoint) => apoint?._doc?.user?.id == session?._id);
   if (appointments?.length === 0)
       return (
         <div className='bg-sky-50 w-full dark:bg-primary m-1 md:m-4 rounded '>
@@ -47,8 +47,8 @@ async function page() {
                   </td>
                   <td className='p-2'>
                     <div className='flex gap-2 justify-center '>
-                      <p>{appoint?.visitArg || "زيارة طبية"}</p>
-                      <p className='truncate font-thin max-w-[120px]'>{appoint?.desc}</p>
+                      <p>{appoint?._doc?.visitArg?.text || "زيارة طبية"}</p>
+                      <p className='truncate font-thin max-w-[120px]'>{appoint?._doc?.desc}</p>
                     </div>
                   </td>
                   <td className='text-center p-2'>
@@ -59,7 +59,7 @@ async function page() {
                     </ShowAppointDetails>
                   </td>
                   <td className='text-center p-2 '>
-                    {moment(appoint?._doc.date).format("LL") + " 🕒 " + appoint?._doc.time}
+                    {moment(appoint?._doc?.date).format("LL") + " 🕒 " + appoint?._doc?.time}
                   </td>
                   <td className='text-center p-2'>
                     <div className=''>

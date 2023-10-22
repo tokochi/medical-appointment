@@ -1,16 +1,18 @@
 "use client";
 import Link from "next/link";
+import { useStore } from "@context/store";
 import { useRouter, usePathname } from "next/navigation";
 function SidebarUser() {
   const router = useRouter();
   const path = usePathname();
+  const { setDropDowns } = useStore();
   return (
     <div
       className={` min-w-[50px] m-1 md:m-2 rounded-xl bg-gray-100 shrink-0 overflow-x-hidden shadow-xl dark:bg-[#002130] transition-w duration-300`}>
       <div className='flex flex-col gap-4 p-2 list-none dark:text-gray-100'>
         <li className={`mt-4 ${path === "/user" && "dark:bg-primary bg-cyan-500 "} rounded p-2`}>
           <Link
-            onClick={() => router.refresh()}
+            onClick={() => { router.refresh();  setDropDowns("close");}}
             href='/user'
             className={`flex gap-2 font-semibold `}>
             <svg
@@ -24,7 +26,7 @@ function SidebarUser() {
         </li>
         <li className={`${path === "/user/health" && "dark:bg-primary bg-cyan-500"} rounded p-2`}>
           <Link
-            onClick={() => router.refresh()}
+            onClick={() => { router.refresh();  setDropDowns("close");}}
             href='/user/health'
             className='flex gap-2 font-semibold'>
             <svg
@@ -41,7 +43,7 @@ function SidebarUser() {
             path === "/user/appointment" && "dark:bg-primary bg-cyan-500"
           } rounded p-2`}>
           <Link
-            onClick={() => router.refresh()}
+            onClick={() => { router.refresh();  setDropDowns("close");}}
             href='/user/appointment'
             className='flex gap-2 font-semibold'>
             <svg
@@ -55,7 +57,7 @@ function SidebarUser() {
         </li>
         <li className={`${path === "/user/inbox" && "dark:bg-primary bg-cyan-500"} rounded p-2`}>
           <Link
-            onClick={() => router.refresh()}
+            onClick={() => { router.refresh();  setDropDowns("close");}}
             href='/user/inbox'
             className='flex gap-2 font-semibold'>
             <svg className='h-6 w-6 fill-gray-600 dark:fill-gray-400' viewBox='0 0 24 24'>
@@ -66,7 +68,7 @@ function SidebarUser() {
         </li>
         <li className={`${path === "/user/mycard" && "dark:bg-primary bg-cyan-500"} rounded p-2`}>
           <Link
-            onClick={() => router.refresh()}
+            onClick={() => { router.refresh();  setDropDowns("close");}}
             href='/user/mycard'
             className='flex gap-2 font-semibold'>
             <svg

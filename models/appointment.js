@@ -18,8 +18,8 @@ const appointmentSchema = new Schema({
     },
     status: "string",
     visitArg: {
-        text: String,
-        value: String
+        text: "string",
+        value: "string"
     },
     desc: "string",
     expiryDate: {

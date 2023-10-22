@@ -5,7 +5,7 @@ import "moment/locale/ar-dz";
 moment().locale("ar-dz");
 import { useRouter } from "next/navigation";
 function Inbox() {
-  const { dropDowns, session, clearMessageNotifaction, deleteNotifaction } = useStore();
+  const { dropDowns, session,setDropDowns, clearMessageNotifaction, deleteNotifaction } = useStore();
 const router = useRouter();
   return (
     <div
