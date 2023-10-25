@@ -76,8 +76,8 @@ function page() {
                 <td className='text-center p-2'>
                   <div className='flex gap-2'>
                     <button
-                      onClick={() => {
-                        useStore.setState({
+                      onClick={(e) => {
+                       { e.stopPropagation();useStore.setState({
                           messageToSend: {
                             title: `الرد على :${message?.title.replace("الرد على", "")}`,
                             text: "",
@@ -101,7 +101,7 @@ function page() {
                               <LoginOrSignup />
                             ),
                           },
-                        });
+                        });}
                       }}
                       className='flex z-50 justify-around bg-green-300/50 hover:bg-green-300 dark:bg-green-600/50 hover:dark:bg-green-600 p-1 text-xs rounded-md gap-1'>
                       الـرد
@@ -114,7 +114,8 @@ function page() {
                       </svg>
                     </button>
                     <button
-                      onClick={() =>
+                      onClick={(e) => {
+                        e.stopPropagation();
                         useStore.setState({
                           messageToSend: message,
                           modal: {
@@ -146,7 +147,7 @@ function page() {
                             },
                           },
                         })
-                      }
+                      }}
                       className='flex z-50 justify-around dark:bg-red-500/50 hover:dark:bg-red-500 hover:bg-red-300 bg-red-300/50 p-1 text-xs rounded-md gap-1'>
                       حـذف
                       <svg className='w-4 h-4' viewBox='0 0 48 48'>

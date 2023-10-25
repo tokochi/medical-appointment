@@ -7,7 +7,7 @@ function Modal() {
       name='modal'
       className={`fixed inset-0 flex ${
         !modal.isOpen && "hidden"
-      } items-center justify-center z-[500] w-full `}>
+      } items-center justify-center z-[500] w-full p-1`}>
       <div
         className='relative w-full max-w-screen-sm h-full overflow-hidden'
         style={{ maxHeight: "80vh" }}>
@@ -37,7 +37,7 @@ function Modal() {
           </div>
           <div
             style={{
-              maxHeight: "calc(80vh - 5rem)", // Adjust the max height as needed
+              maxHeight: "calc(80vh - 6rem)", // Adjust the max height as needed
               overflowY: "auto",
             }}
             className={`px-2 ${modal.content && "p-2"}`}>

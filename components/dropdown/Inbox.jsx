@@ -33,17 +33,18 @@ const router = useRouter();
                 if (session.isDoctor) {
                   router.push("/doctor/inbox");
                 }
-                if (session.isUser) {
-                  router.push("/user/inbox");
-                }
+                // if (session.isUser) {
+                //   router.push("/user/inbox");
+                // }
                 if (session.isAdmin) {
                   router.push("/admin/inbox");
                 }
               }}
               className={`card cursor-pointer flex flex-col gap-2 justify-center items-center rounded-lg  shadow p-1 mx-1 m-1`}>
               <h2 className={`font-semibold text-right`}>
-                <div
-                  onClick={() => {
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation()
                     if (session.isDoctor) {
                       useStore.setState((state) => ({
                         session: {
@@ -86,7 +87,7 @@ const router = useRouter();
                       fill='#7D7D7D'
                     />
                   </svg>
-                </div>
+                </button>
                 {message?.title}
               </h2>
               <div className='text-right'>

@@ -389,7 +389,7 @@ const { handleDoctorConfirmation,isLoading } = useStore();
             </svg>
           )}
         </button>
-        <button
+        {/* <button
           // onClick={(e) => handleDoctorConfirmation(e, toast, doctor._id)}
           className='bg-sky-400 rounded-xl hover:bg-sky-500  focus:ring-2 focus:ring-sky-700 flex mt-2 gap-2  justify-center items-center text-lg w-full pr-5 p-2.5  dark:border-gray-600  dark:text-black'>
           إرسال رسالة
@@ -406,7 +406,7 @@ const { handleDoctorConfirmation,isLoading } = useStore();
               <path d='M12,1C5.925,1,1,5.925,1,12s4.925,11,11,11s11-4.925,11-11S18.075,1,12,1z M12.198,20.806c-2.87,0-5.567-1.405-7.215-3.76c-0.316-0.452-0.207-1.075,0.246-1.393c0.455-0.316,1.077-0.206,1.393,0.246c1.274,1.819,3.359,2.906,5.577,2.906c3.75,0,6.802-3.051,6.802-6.802c0-3.525-2.749-6.504-6.259-6.781c-0.551-0.044-0.962-0.525-0.918-1.076c0.044-0.55,0.522-0.957,1.076-0.918C17.441,3.588,21,7.442,21,12.004C21,16.857,17.052,20.806,12.198,20.806z' />
             </svg>
           )}
-        </button>
+        </button> */}
       </div>
     </div>
   );

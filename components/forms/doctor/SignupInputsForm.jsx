@@ -53,7 +53,7 @@ function SignupInputsForm(props) {
   }, [personalInfo_ref, workInfo_ref, geoInfo_ref, workSchedule_ref, documentsUpload_ref]);
 
   return (
-    <div className={`${path === "/doctor" ? "flex-wrap" : "flex-col"} flex  gap-4`}>
+    <div className={`${path === "/doctor" ? "flex-wrap" : "flex-col"} flex p-4 gap-4`}>
       {/* {personal-info} */}
       <div
         id='personal-info'

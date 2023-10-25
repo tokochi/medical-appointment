@@ -27,10 +27,24 @@ function Notification() {
           .map((notification, index) => (
             <li
               key={index}
+              onClick={() => {
+                if (session.isDoctor) {
+                  if (notification?.type === "موعد") router.push("/doctor/appointment");
+                  if (notification?.type === "سؤال") router.push("/doctor/questions");
+                }
+                if (session.isUser) {
+                  if (notification?.type === "موعد") router.push("/user/appointment");
+            //      if (notification?.type === "سؤال") router.push("/user/questions");
+                }
+                if (session.isAdmin) {
+                  router.push("/admin/inbox");
+                }
+              }}
               className={`card flex flex-col gap-2 justify-center items-center rounded-lg  shadow p-1 mx-1 m-1`}>
               <h2 className={`font-semibold text-right`}>
-                <div
+                <button
                   onClick={(e) => {
+                    e.stopPropagation();
                     e.preventDefault();
                     if (session.isDoctor) {
                       useStore.setState((state) => ({
@@ -74,7 +88,7 @@ function Notification() {
                       fill='#7D7D7D'
                     />
                   </svg>
-                </div>
+                </button>
                 <p>
                   {`${
                     notification?.title ||

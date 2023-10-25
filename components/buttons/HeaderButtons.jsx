@@ -7,7 +7,7 @@ import Account from "@components/dropdown/Account";
 
 
 function HeaderButtons() {
-const { session, closeModelAnywhere, setDropDowns } = useStore();
+  const { session, closeModelAnywhere, setDropDowns } = useStore();
   return (
     <div
       onClick={(e) => closeModelAnywhere(e)}
