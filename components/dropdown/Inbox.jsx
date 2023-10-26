@@ -42,7 +42,7 @@ const router = useRouter();
               }}
               className={`card cursor-pointer flex flex-col gap-2 justify-center items-center rounded-lg  shadow p-1 mx-1 m-1`}>
               <h2 className={`font-semibold text-right`}>
-                <button
+                <div
                   onClick={(e) => {
                     e.stopPropagation()
                     if (session.isDoctor) {
@@ -87,7 +87,7 @@ const router = useRouter();
                       fill='#7D7D7D'
                     />
                   </svg>
-                </button>
+                </div>
                 {message?.title}
               </h2>
               <div className='text-right'>
@@ -102,13 +102,15 @@ const router = useRouter();
       {session?.notificationsList?.filter((not) => not.type === "رسالة").length > 0 && (
         <div className='p-1 sticky bottom-0 text-xs z-[100] bg-cyan-900'>
           <p
-            onClick={() => {
+            onClick={(e) => {
               e.preventDefault();
               if (session.isDoctor) {
                 useStore.setState((state) => ({
                   session: {
                     ...state.session,
-                    inbox: [],
+                    notificationsList: state.session.notificationsList.filter(
+                      (not) => not.type !== "رسالة"
+                    ),
                   },
                 }));
                 clearMessageNotifaction(session._id, "doctors");
@@ -117,7 +119,9 @@ const router = useRouter();
                 useStore.setState((state) => ({
                   session: {
                     ...state.session,
-                    inbox: [],
+                    notificationsList: state.session.notificationsList.filter(
+                      (not) => not.type !== "رسالة"
+                    ),
                   },
                 }));
                 clearMessageNotifaction(session._id, "users");
@@ -126,7 +130,9 @@ const router = useRouter();
                 useStore.setState((state) => ({
                   session: {
                     ...state.session,
-                    inbox: [],
+                    notificationsList: state.session.notificationsList.filter(
+                      (not) => not.type !== "رسالة"
+                    ),
                   },
                 }));
                 clearMessageNotifaction(session._id, "admins");

@@ -12,7 +12,7 @@ function UserSendMessage({ data }) {
       onClick={() => {
         useStore.setState({
           messageToSend: {
-            title: `الرد على :${message?.title.replace("الرد على","")}`,
+            title: "",
             text: "",
             from: {
               id: session?._id,

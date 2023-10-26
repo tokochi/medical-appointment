@@ -842,7 +842,7 @@ export const useStore = create((set, get) => ({
     }
   },
   clearMessageNotifaction: async (id, type) => {
-    const response = await fetch(`/api/${type}/notification-clear/${id}`);
+    const response = await fetch(`/api/${type}/notification-clear-message/${id}`);
     if (response.ok) {
       console.log("🚀 ~🚀 ~ تم إضــافة التنبيه بنجاح")
     } else {
@@ -961,6 +961,49 @@ export const useStore = create((set, get) => ({
     }
     set({ doctorInfo: doctorDefault, isLoading: false, isRulesChecked: { first: false, seconde: false } });
   },
+  handleMultipleSignups:async(files) => {
+  const signupPromises = [];
+  for(const file of files) {
+    if (file.type === 'application/json') {
+      const reader = new FileReader();
+      signupPromises.push(
+        new Promise((resolve, reject) => {
+          console.log("starting......")
+          reader.onload = async (e) => {
+            try {
+              const profileData = JSON.parse(e.target.result);
+              const response = await fetch("/api/doctors", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(profileData),
+              });
+
+              if (response.ok) {
+                console.log("تم تسجيل المستخدم بنجاح");
+              } else {
+                console.log("فشلت تسجيل المستخدم ");
+              }
+            } catch (error) {
+              console.log("فشلت تسجيل المستخدم ");
+            }
+          };
+          reader.readAsText(file);
+        })
+      );
+    } else {
+      console.log("فشلت تسجيل المستخدم ");
+    }
+  }
+  const results = await Promise.all(signupPromises);
+  // Handle the results, e.g., log errors or navigate to a different page
+  console.log("Signup results:", results);
+  // Example: If all signups were successful, navigate to the dashboard
+  if(results.every((result) => result.success)) {
+    console.log("تم تسجيل المستخدم بنجاح");
+  }
+},
   handleSubmitDoctorUpdate: async (e, toast, id, router, type) => {
     e.preventDefault();
     set({ isLoading: true })

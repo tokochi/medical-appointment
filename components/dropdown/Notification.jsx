@@ -42,7 +42,7 @@ function Notification() {
               }}
               className={`card flex flex-col gap-2 justify-center items-center rounded-lg  shadow p-1 mx-1 m-1`}>
               <h2 className={`font-semibold text-right`}>
-                <button
+                <div
                   onClick={(e) => {
                     e.stopPropagation();
                     e.preventDefault();
@@ -88,7 +88,7 @@ function Notification() {
                       fill='#7D7D7D'
                     />
                   </svg>
-                </button>
+                </div>
                 <p>
                   {`${
                     notification?.title ||

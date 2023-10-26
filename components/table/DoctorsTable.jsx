@@ -35,7 +35,7 @@ function DoctorsTable() {
   // ******** Grid Table  ********
   const [active, setActive] = useState({ all: true, sub: false });
   const gridRef = useRef(null);
-  const { doctors, handleAddGrid, handleDeleteGrid, handleEditGrid, handleSubGrid } = useStore();
+  const { doctors, handleAddGrid,handleMultipleSignups, handleDeleteGrid, handleEditGrid, handleSubGrid } = useStore();
   const doctorsData = useStore((state) => state.doctors)
     .filter((doctor) => filterDoctor(doctor))
     ;
@@ -58,6 +58,12 @@ function DoctorsTable() {
     "Search",
     "Print",
     "ExcelExport",
+    {
+      text: "Json",
+      tooltipText: "Import in Json fromat (multiple)",
+      prefixIcon: "e-copy",
+      id: "json",
+    },
   ];
 
   function filterDoctor(doctor) {
@@ -80,8 +86,51 @@ function DoctorsTable() {
         break;
       case args.item.id.includes("pdfexport"):
         break;
+      case args.item.id.includes("json"):
+          useStore.setState({
+            modal: {
+              isOpen: true,
+              title: "تعديل طبيب",
+              content: "",
+              children: (
+                <div>
+                  <label
+                    className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
+                    htmlFor='file_input'>
+                 
+                  </label>
+                  <input
+                    className='block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'
+                    id='file_input'
+                    lang="ar"
+                    onChange={(e) => {
+                      handleMultipleSignups(e.target.files);
+                    }}
+                    multiple
+                    type='file'
+                  />
+                </div>
+              ),
+              textBtn_1: "موافقة",
+              textBtn_2: "إلغـــــاء",
+              onClickBtn_1: (e) => {
+                handleEditGrid(
+                  e,
+                  toast,
+                  `/api/doctors/${gridRef?.current?.getSelectedRecords()[0]._id}`,
+                  "doctorInfo"
+                );
+                // gridRef?.current?.refresh();
+              },
+              onClickBtn_2: (e) => {
+                useStore.setState((state) => ({ modal: state.modalClosed }));
+              },
+            },
+          });
+        break;
       case args.item.id.includes("add"):
-        useStore.setState({
+        useStore.setState((state) => ({
+          doctorInfo: { ...state.doctorInfo, googleMap: { lat: 36.7539, lng: 3.0589 } },
           modal: {
             isOpen: true,
             title: "إضافة طبيب",
@@ -97,7 +146,7 @@ function DoctorsTable() {
               useStore.setState((state) => ({ modal: state.modalClosed }));
             },
           },
-        });
+        }));
         break;
       case args.item.id.includes("sub"):
         const selectedDoctor = gridRef?.current?.getSelectedRecords()[0];
@@ -146,7 +195,6 @@ function DoctorsTable() {
           });
         }
         break;
-
       case args.item.id.includes("edit"):
         if (gridRef?.current?.getSelectedRecords()?.length > 0) {
           useStore.setState({
@@ -227,6 +275,7 @@ function DoctorsTable() {
       .querySelector(".e-gridcontent .e-content tbody")
       .replaceChildren(...[].slice.call(arrOfChildren));
   }
+ 
   return (
     <div className='p-2 md:p-10'>
       <div className='mb-2 md:mb-4 md:mx-4 flex flex-wrap items-start justify-between'>
@@ -254,6 +303,7 @@ function DoctorsTable() {
           عـــدد الأطبــــاء: <span className='text-sky-500 mr-1'>{doctors.length}</span>
         </div>
       </div>
+
       <div className=''>
         <GridComponent
           ref={gridRef}

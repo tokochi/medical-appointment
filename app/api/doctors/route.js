@@ -20,8 +20,8 @@ export async function POST(req) {
     if (doctorExists) { return new Response(JSON.stringify("Doctor already exist"), { status: 500 }); }
     try {
         const hashedPassword = await bcrypt.hash(data?.password, 10);
-        const doctor = new Doctor({ ...data, password: hashedPassword });
-        await doctor.save();
+ const doctor = new Doctor({ ...data, password: hashedPassword });
+       const reponse =  await doctor.save();
         return new Response(JSON.stringify(doctor), { status: 201 })
     } catch (error) {
         return new Response(JSON.stringify("failed to insert doctor to DB", error), { status: 500 });

@@ -10,9 +10,9 @@ async function page({ params }) {
   const doctor = await fetchDoctor(params?.id);
   return (
     <div className='p-4 flex flex-wrap gap-4 bg-gray-300 dark:bg-slate-900'>
-      <div id='info' className='grow shrink basis-[60%] min-w-[300px]  '>
+      <div id='info' className='grow shrink basis-[60%] min-w-[300px] overflow-y-auto '>
         <div className=' p-2 card rounded-md'>
-          <div id='header' className='p-2 flex flex-wrap justify-center items-start'>
+          <div id='header' className='p-2 flex flex-wrap justify-center items-start '>
             <Link className='mb-1 grow shrink basis-[70%] min-w-[280px] flex gap-4' href='#'>
               <div id='avatar' className='flex flex-col gap-2'>
                 <Image
@@ -76,14 +76,14 @@ async function page({ params }) {
                     زيارة مزلية
                   </h2>
                 )}
-                <h2 className='flex gap-2 text-blue-300  text-sm'>
+                <h2 className='flex items-start gap-2 text-blue-300  text-sm'>
                   <Image src='/images/location-png.webp' width={18} height={15} alt='location' />
-                  {doctor?.address?.wilaya?.text + "، "}
-                  {doctor?.address?.daira?.text + "، "}
+                  {doctor?.address?.wilaya?.text && doctor?.address?.wilaya?.text + "، "}
+                  {doctor?.address?.daira?.text && doctor?.address?.daira?.text + "، "}
                   {doctor?.address?.commune?.text &&
                     doctor?.address?.commune?.text !== doctor?.address?.daira?.text &&
                     doctor?.address?.commune?.text + "، "}
-                  {doctor?.address?.street}
+                  {doctor?.address?.street && doctor?.address?.street}
                 </h2>
               </div>
             </Link>
@@ -208,8 +208,10 @@ async function page({ params }) {
           </div>
         </div>
       </div>
-      <div className='grow shrink basis-[25%] min-w-[400px] flex flex-col gap-2 items-center'>
-        <div id='calendar' className='w-full flex flex-col items-center p-4 card rounded-md '>
+      <div className='grow shrink basis-[25%] min-w-[280px] flex flex-col gap-2 items-center'>
+        <div
+          id='calendar'
+          className='w-full flex flex-col items-center p-4 card rounded-md overflow-y-auto'>
           <div className='p-2 rounded-xl bg-orange-100'>
             <h2 className='flex justify-center items-start gap-2 text-orange-500 text-sm'>
               <Image
@@ -222,8 +224,10 @@ async function page({ params }) {
               يستخدم هذا الطبيب نظام الطابور، سيكون عليك انتظار دورك.
             </h2>
           </div>
-          <h1 className='font-bold text-xl text-sky-500 my-2 text-center'>برنامج العمل اليومي</h1>
-          <table className='w-[400px]'>
+          <h1 className='font-bold text-xl text-sky-500 my-2  overflow-y-auto text-center'>
+            برنامج العمل اليومي
+          </h1>
+          <table className=''>
             <thead>
               <tr>
                 <th className='w-1/4 text-center text-yellow-600 p-2'>اليوم</th>
@@ -232,13 +236,16 @@ async function page({ params }) {
               </tr>
             </thead>
             <tbody>
-              {doctor?.workTime?.map((date, index) => (
-                <tr key={index} className='text-center p-2'>
-                  <td className='text-center p-2  rounded-md '>{date?.dayAR}</td>
-                  <td>🕒{date?.from}</td>
-                  <td>🕒{date?.to}</td>
-                </tr>
-              ))}
+              {doctor?.workTime?.map(
+                (date, index) =>
+                  date?.state === "open" && (
+                    <tr key={index} className='text-center p-2'>
+                      <td className='text-center p-2  rounded-md '>{date?.dayAR}</td>
+                      <td>🕒{date?.from}</td>
+                      <td>🕒{date?.to}</td>
+                    </tr>
+                  )
+              )}
             </tbody>
           </table>
         </div>
@@ -246,7 +253,7 @@ async function page({ params }) {
           id='location-map'
           className='w-full flex flex-col gap-2 items-center p-4 card rounded-md'>
           <h1 className='font-bold text-xl text-sky-500  text-center'>الموقع الجغرافي</h1>
-          <h2 className='flex gap-2 text-blue-400 text-sm'>
+          <h2 className='flex items-start gap-2 text-blue-400 text-sm'>
             <Image
               className='w-auto h-auto'
               src='/images/location-png.webp'
@@ -254,12 +261,12 @@ async function page({ params }) {
               height={15}
               alt='location'
             />
-            {doctor?.address?.wilaya?.text + "، "}
-            {doctor?.address?.daira?.text + "، "}
+            {doctor?.address?.wilaya?.text && doctor?.address?.wilaya?.text + "، "}
+            {doctor?.address?.daira?.text && doctor?.address?.daira?.text + "، "}
             {doctor?.address?.commune?.text &&
               doctor?.address?.commune?.text !== doctor?.address?.daira?.text &&
               doctor?.address?.commune?.text + "، "}
-            {doctor?.address?.street}
+            {doctor?.address?.street && doctor?.address?.street}
           </h2>
           <iframe
             className='w-full rounded-md'

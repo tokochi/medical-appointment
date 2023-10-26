@@ -53,6 +53,7 @@ const userSchema = new Schema({
     password: String,
     address: {
         street: String,
+        postCode: String,
         wilaya: {
             value: String,
             text: String

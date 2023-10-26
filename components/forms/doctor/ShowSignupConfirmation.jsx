@@ -75,14 +75,14 @@ const { handleDoctorConfirmation,isLoading } = useStore();
                     زيارة مزلية
                   </h2>
                 )}
-                <h2 className='flex gap-2 text-blue-300  text-sm'>
+                <h2 className='flex gap-2 items-start text-blue-300  text-sm'>
                   <Image src='/images/location-png.webp' width={18} height={15} alt='location' />
-                  {doctor?.address?.wilaya?.text + "، "}
-                  {doctor?.address?.daira?.text + "، "}
+                  {doctor?.address?.wilaya?.text && doctor?.address?.wilaya?.text + "، "}
+                  {doctor?.address?.daira?.text && doctor?.address?.daira?.text + "، "}
                   {doctor?.address?.commune?.text &&
                     doctor?.address?.commune?.text !== doctor?.address?.daira?.text &&
                     doctor?.address?.commune?.text + "، "}
-                  {doctor?.address?.street}
+                  {doctor?.address?.street&&doctor?.address?.street}
                 </h2>
               </div>
             </div>
@@ -326,7 +326,7 @@ const { handleDoctorConfirmation,isLoading } = useStore();
           id='location-map'
           className='w-full flex flex-col gap-2 items-center p-4 card rounded-md'>
           <h1 className='font-bold text-xl text-sky-500  text-center'>الموقع الجغرافي</h1>
-          <h2 className='flex gap-2 text-blue-400 text-sm'>
+          <h2 className='flex items-start gap-2 text-blue-400 text-sm'>
             <Image
               className='w-auto h-auto'
               src='/images/location-png.webp'

@@ -103,7 +103,7 @@ const maxDate = moment().add(8, "days").startOf("day").toISOString();
           <div className='font-semibold  flex gap-4  p-2 px-2 border-b-[1px] border-gray-300 dark:border-gray-700'>
             <p>تحديد الوقت</p>
           </div>
-          <div className='flex justify-between '>
+          <div className='flex flex-wrap justify-center md:justify-between'>
             <div className='p-4 flex gap-2 flex-wrap justify-center items-center'>
               {times.map((time, index) => (
                 <button

@@ -16015,6 +16015,11 @@ export const wilaya = [
   { value: "Tindouf", text: "تندوف", longitude: 27.683300, latitude: -8.116700 },
   { value: "Tissemsilt", text: "تسمسيلت", longitude: 35.533300, latitude: 1.583300 },
   { value: "El Oued", text: "الوادي", longitude: 33.366700, latitude: 6.850000 },
+  { value: "Oran", text: "وهران", longitude: -0.641732, latitude: 35.705005 },
+  { value: "Aïn Beïda", text: "عين البيضاء", longitude: 35.792222, latitude: 7.389444 },
+  { value: "Bir El Ater", text: "بئر العاتر", longitude: 7.625000, latitude: 34.800000 },
+  { value: "Aflou", text: "عفلو", longitude: 32.810556, latitude: 2.456111 },
+
 ];
 export const visitArg = [
   { value: "Medical examination", text: "فحص طبي", nameFR: "Examen clinique" },
@@ -17288,7 +17293,6 @@ export const doctorDefault = {
     insurance: false,
     homeVisits: false,
   },
-  googleMap: { lat: 36.7539, lng: 3.0589 },
   specialities: [],
   services: [],
   officePics: [],
@@ -17329,7 +17333,6 @@ export const titles = (gender) => [
     value: "practitioner",
   },
 ]
-
 export const filterDefault = {
   name: "",
   speciality: { text: "", value: "" },

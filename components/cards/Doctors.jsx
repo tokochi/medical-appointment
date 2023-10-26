@@ -86,12 +86,12 @@ function Doctors({ data }) {
                       height={15}
                       alt='location'
                     />
-                    {item?.address?.wilaya?.text + "، "}
-                    {item?.address?.daira?.text + "، "}
+                    {item?.address?.wilaya?.text && item?.address?.wilaya?.text + "، "}
+                    {item?.address?.daira?.text && item?.address?.daira?.text + "، "}
                     {item?.address?.commune?.text &&
                       item?.address?.commune?.text !== item?.address?.daira?.text &&
                       item?.address?.commune?.text + "، "}
-                    {item?.address?.street}
+                    {item?.address?.street && item?.address?.street}
                   </h2>
                 </div>
               </Link>

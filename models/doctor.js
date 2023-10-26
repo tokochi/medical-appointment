@@ -46,8 +46,8 @@ const doctorSchema = new Schema({
     },
     email: {
         type: String,
-        unique: [true, 'Email already exists!'],
-        required: [true, 'Email is required!']
+        // unique: [true, 'Email already exists!'],
+        // required: [true, 'Email is required!']
     },
     name: String,
     birthDate: { type: Date, default: Date.now },
@@ -68,6 +68,7 @@ const doctorSchema = new Schema({
     },
     address: {
         street: String,
+        postCode: String,
         wilaya: {
             value: String,
             text: String
@@ -115,16 +116,7 @@ const doctorSchema = new Schema({
     facebook: String,
     instagram: String,
     whatsapp: String,
-    workTime: [
-        {
-            id: Number,
-            state: String,
-            dayAR: String,
-            day: String,
-            from: String,
-            to: String
-        }
-    ],
+    workTime: [],
     password: String,
     isDoctor: {
         type: Boolean,
