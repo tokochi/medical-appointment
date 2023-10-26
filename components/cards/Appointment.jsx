@@ -23,7 +23,6 @@ function Appointment({ doctor }) {
     handleSelectInput,
     handleInputChange,
   } = useStore();
-    console.log("🚀 ~ appointInfo:", appointInfo)
     const [timer, setTimer] = useState(0); 
   useEffect(() => {
     const interval = setInterval(() => {

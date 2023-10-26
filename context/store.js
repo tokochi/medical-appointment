@@ -65,6 +65,7 @@ export const useStore = create((set, get) => ({
     }
   },
   closeModelAnywhere: (e) => {
+    console.log("🚀 ~ e:", e.target.getAttribute("name"))
     const D = get().dropDowns
     const name = e.target.getAttribute("name")
     if (get().modal.isOpen === true && name == "modal") { set(({ modal: get().modalClosed })) }

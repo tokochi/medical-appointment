@@ -5,10 +5,11 @@ function Modal() {
   return (
     <div
       name='modal'
-      className={`fixed inset-0 flex items-center justify-center z-50 w-screen h-screen p-1 lg:p-0 ${
+      className={`fixed inset-0 flex items-center  justify-center z-50 w-screen h-screen p-1 lg:p-0 ${
         !modal.isOpen && "hidden"
       }`}>
       <div
+        name='modal'
         className='relative w-full max-w-screen-sm h-full overflow-hidden'
         style={{ maxHeight: "80vh" }}>
         <div className='relative bg-white rounded-lg shadow  dark:bg-slate-800'>
