@@ -1,7 +1,6 @@
 "use client"
 import { useStore } from "@context/store";
 import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
 function Posts({ data }) {
   const { handleFilterInfo } = useStore();
@@ -25,7 +24,7 @@ function Posts({ data }) {
                   </h2>
                 </Link>
                 <Link className='mx-auto shrink' href={`/blog/post/${post._id}`}>
-                  <Image
+                  <img
                     src={post?.image}
                     className='rounded-xl h-auto w-auto'
                     width={450}
