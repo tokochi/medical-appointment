@@ -5,14 +5,16 @@ import Image from "next/image";
 import SlicerServices from "@components/utils/SlicerServices";
 import ShowPhoneNum from "../buttons/ShowPhoneNum";
 import NothingFound from "./NothingFound";
+import { useState } from "react";
 function Hosps({ data }) {
   const { handleFilterInfo } = useStore();
   const hospsList = JSON.parse(data);
   const hosps = handleFilterInfo(hospsList);
+  const [slicer, setSlicer] = useState(10);
   return (
     <div className='flex flex-col gap-4'>
       {hosps.length === 0 && <NothingFound />}
-      {hosps.map((item, index) => (
+      {hosps.slice(0, slicer).map((item, index) => (
         <div key={index} className='p-4 card rounded-md'>
           <div
             id='header'
@@ -20,7 +22,7 @@ function Hosps({ data }) {
             <div className='mb-1 grow shrink basis-[70%] min-w-[280px] flex gap-4'>
               <div>
                 <Image
-                  className='rounded-xl w-auto h-auto min-w-[50px]'
+                  className='rounded-xl w-auto h-auto min-w-[50px] max-w-[80px]'
                   src={item?.avatar?.[0]}
                   width={80}
                   height={80}
@@ -110,6 +112,16 @@ function Hosps({ data }) {
           </div>
         </div>
       ))}
+      {slicer < hosps?.length && (
+        <button
+          className='btn3 p-2'
+          onClick={(e) => {
+            e.preventDefault();
+            setSlicer(slicer + 10);
+          }}>
+          عرض المزيد
+        </button>
+      )}
     </div>
   );
 }

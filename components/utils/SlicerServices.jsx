@@ -9,13 +9,11 @@ const doctor = JSON.parse(data);
     <div id='works' className='flex flex-wrap gap-2'>
       {doctor?.services?.slice(0, doctor?._id == slicer ? doctor?.services?.length : 5)
         .map((service, index) => (
-          <Link key={index} href='#'>
-            <button
+            <div
               key={index}
               className='p-1 px-2 bg-slate-200 text-sm rounded-[163px] text-gray-900 dark:text-gray-300 dark:bg-slate-700 hover:bg-slate-400 font-medium'>
               <p>{service.text}</p>
-            </button>
-          </Link>
+            </div>
         ))}
       {doctor?.services?.length > 5 && doctor?._id != slicer && (
         <button

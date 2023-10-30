@@ -169,6 +169,7 @@ export const useStore = create((set, get) => ({
 
         if (question) {
           const responsePromises = question.responses.map(async (response) => {
+            if (response.doctor != null) { return response }
             const responseDoctorData = await Doctor.findOne({ _id: response.doctorID });
             return { ...response._doc, doctor: responseDoctorData };
           });
@@ -221,6 +222,7 @@ export const useStore = create((set, get) => ({
       const doctorPromises = response.map(async (question) => {
         // Map responses and fetch doctor objects for each response concurrently
         const responsePromises = question.responses.map(async (response) => {
+          if (response.doctor) { return response }
           const responseDoctorData = await fetchDoctorById(response.doctorID);
           return { ...response._doc, doctor: responseDoctorData };
         });

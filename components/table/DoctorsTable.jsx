@@ -104,7 +104,7 @@ function DoctorsTable() {
                     id='file_input'
                     lang="ar"
                     onChange={(e) => {
-                      handleMultipleSignups(e.target.files);
+                      handleMultipleSignups(e.target.files,"doctors");
                     }}
                     multiple
                     type='file'

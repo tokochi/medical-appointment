@@ -8,7 +8,7 @@ import ShowPost from "@components/cards/ShowPost";
 import { usePathname } from "next/navigation";
 function PostsTable() {
   const path = usePathname();
-  const { posts, handlePostUpdate, handlePostDelete, handleAddPost } = useStore();
+  const { posts, handlePostUpdate,handleMultipleSignups, handlePostDelete, handleAddPost } = useStore();
   return (
     <div className=''>
       <div className='p-4 flex flex-wrap gap-4'>
@@ -40,6 +40,22 @@ function PostsTable() {
           className='btn2 p-1 grow md:grow-0'>
           إضـــــــــافة مقال ➕{" "}
         </button>
+        <label
+          htmlFor='dropzone-file'
+          className='p-1 flex flex-col items-center justify-center font-roboto cursor-pointer select-none btn2'>
+          JSON
+          <input
+            id='dropzone-file'
+            type='file'
+            className='hidden'
+            lang='ar'
+            onChange={(e) => {
+              handleMultipleSignups(e.target.files, "posts");
+            }}
+            multiple
+          />
+        </label>
+
         <div className='card   rounded-xl mx-auto grow md:grow-0 p-2 flex justify-center items-center'>
           عـــدد المقــــــــالات: <span className='text-sky-500 mr-1'>{posts?.length}</span>
         </div>
@@ -58,7 +74,7 @@ function PostsTable() {
               <div
                 key={index}
                 className='relative card p-4 max-w-[270px] rounded-md flex flex-col gap-2'>
-                <div className='absolute top-[-10px] z-50 flex gap-4'>
+                <div className='absolute top-[-10px]  flex gap-4'>
                   <button
                     onClick={() =>
                       useStore.setState({
@@ -142,7 +158,7 @@ function PostsTable() {
               <div
                 key={index}
                 className='relative card p-4 max-w-[270px] rounded-md flex flex-col gap-2'>
-                <div className='absolute top-[-10px] z-50 flex gap-4'>
+                <div className='absolute top-[-10px]  flex gap-4'>
                   <button
                     onClick={() =>
                       useStore.setState({

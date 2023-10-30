@@ -1,14 +1,14 @@
+"use client";
+import { useState } from "react";
+import DoctorQuestion from "./DoctorQuestion";
 import Link from "next/link";
 import Image from "next/image";
-import { useStore } from "@context/serverStore";
-import DoctorQuestion from "./DoctorQuestion";
-
-async function Questions() {
-  const { fetchQuestions } = useStore.getState();
-  const questions = await fetchQuestions();
+function Questions({ data }) {
+  const questions = JSON.parse(data);
+  const [slicer, setSlicer] = useState(10);
   return (
     <div className='flex flex-col gap-4'>
-      {questions.map((question, index) => (
+      {questions?.map((question, index) => (
         <div key={index} className=' p-4 card rounded-md'>
           <div
             id='header'
@@ -30,7 +30,7 @@ async function Questions() {
                 السؤال في انتظار إجابات:
               </h2>
             )}
-            {question.responses.map((response,index) => (
+            {question.responses.map((response, index) => (
               <div key={index} className='flex flex-wrap justify-between'>
                 <DoctorQuestion doctor={response?.doctor} />
                 <Link href={`/questions/show-response/${question._id}`} className=''>
@@ -52,6 +52,16 @@ async function Questions() {
           </div>
         </div>
       ))}
+      {slicer < questions?.length && (
+        <button
+          className='btn3 p-2'
+          onClick={(e) => {
+            e.preventDefault();
+            setSlicer(slicer + 10);
+          }}>
+          عرض المزيد
+        </button>
+      )}
     </div>
   );
 }

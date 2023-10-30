@@ -1,6 +1,5 @@
 "use client"
 import { create } from "zustand";
-import { useRouter } from "next/navigation";
 import { wilaya, daira, commune, filterDefault, userDefault, bloodTypes, chronicDiseases, doctorDefault, pharmDefault, hospDefault, labDefault, relatedWorks, medicalSpecialties, specialities, titles, labs, pharms, hosp, visitArg, worksPharms, worksLabs, searchTabs, questions, specilatiyHosp, sectionWork } from "@utils/data.js";
 export const useStore = create((set, get) => ({
   //************** General *************/
@@ -65,7 +64,6 @@ export const useStore = create((set, get) => ({
     }
   },
   closeModelAnywhere: (e) => {
-    console.log("🚀 ~ e:", e.target.getAttribute("name"))
     const D = get().dropDowns
     const name = e.target.getAttribute("name")
     if (get().modal.isOpen === true && name == "modal") { set(({ modal: get().modalClosed })) }
@@ -180,6 +178,7 @@ export const useStore = create((set, get) => ({
       return array
         .filter(item => fil?.gender?.text !== "" ? item.gender?.text === fil?.gender?.text : item)
         .filter(item => fil?.name !== "" ? item?.name === fil?.name : item)
+        .filter(item => fil?.section?.length > 0 ? fil?.section?.some(tag => [...item.tags, ...item?.title.split(" ")]?.includes(tag)) : item )
         // .filter(item => fil?.speciality?.text === "" ? item.speciality?.text === fil?.specialty?.text : item)
         .filter(item => fil?.speciality?.text !== "" ? [...item.specialities, item.speciality]?.some(specialty => specialty?.text === fil?.speciality?.text) : item)
         .filter(item => fil?.wilaya?.text !== "" ? item.address?.wilaya?.text === fil?.wilaya.text : item)
@@ -962,7 +961,8 @@ export const useStore = create((set, get) => ({
     }
     set({ doctorInfo: doctorDefault, isLoading: false, isRulesChecked: { first: false, seconde: false } });
   },
-  handleMultipleSignups:async(files) => {
+  handleMultipleSignups: async (files, keyValue) => {
+    set({ isLoading: true })
   const signupPromises = [];
   for(const file of files) {
     if (file.type === 'application/json') {
@@ -973,7 +973,7 @@ export const useStore = create((set, get) => ({
           reader.onload = async (e) => {
             try {
               const profileData = JSON.parse(e.target.result);
-              const response = await fetch("/api/doctors", {
+              const response = await fetch(`/api/${keyValue}`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
@@ -1003,7 +1003,9 @@ export const useStore = create((set, get) => ({
   // Example: If all signups were successful, navigate to the dashboard
   if(results.every((result) => result.success)) {
     console.log("تم تسجيل المستخدم بنجاح");
-  }
+    set({ isLoading: false })
+    }
+    set({ isLoading: false })
 },
   handleSubmitDoctorUpdate: async (e, toast, id, router, type) => {
     e.preventDefault();
@@ -1674,6 +1676,7 @@ export const useStore = create((set, get) => ({
 
           // Fetch doctors for each response
           const responsePromises = questionCopy.responses.map(async (response) => {
+            
             const doctorResponse = await fetch(`/api/doctors/${response.doctorID}`);
             const doctorData = await doctorResponse.json();
             response.doctor = doctorData; // Attach the doctor object to the response

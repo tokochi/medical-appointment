@@ -5,17 +5,19 @@ import Image from "next/image";
 import SlicerServices from "@components/utils/SlicerServices";
 import TakeAppointment from "@components/buttons/TakeAppointment";
 import NothingFound from "./NothingFound";
+import { useState } from "react";
 
 function Doctors({ data }) {
   const { handleFilterInfo } = useStore();
   const doctorsList = JSON.parse(data);
   const doctors = handleFilterInfo(doctorsList);
-
+  const [slicer, setSlicer] = useState(10);
   return (
     <div className='flex flex-col gap-4'>
       {doctors.length === 0 && <NothingFound />}
-      {doctors.map((item, index) => (
+      {doctors.slice(0, slicer).map((item, index) => (
         <div key={index} className=' p-2 card rounded-md'>
+          {/* {index} */}
           <div
             id='header'
             className='p-2 flex flex-wrap justify-center items-start border-b-[1px] border-gray-600'>
@@ -28,7 +30,7 @@ function Doctors({ data }) {
                 href={`/doctors/profile/${item?._id}`}>
                 <div id={item?._id}>
                   <Image
-                    className='rounded-xl w-auto h-auto min-w-[70px]'
+                    className='rounded-xl w-auto h-auto min-w-[70px] max-w-[80px]'
                     src={item?.avatar?.[0]}
                     width={80}
                     height={80}
@@ -128,6 +130,15 @@ function Doctors({ data }) {
           </div>
         </div>
       ))}
+      {slicer < doctors?.length && 
+      <button
+        className='btn3 p-2'
+        onClick={(e) => {
+          e.preventDefault();
+          setSlicer(slicer + 10);
+        }}>
+        عرض المزيد
+      </button>}
     </div>
   );
 }

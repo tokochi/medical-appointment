@@ -8,9 +8,9 @@ function Header() {
       <div className='container flex items-center gap-2 justify-between  w-full py-2  px-4'>
         <SidebarToggle />
         <div className='mx-auto'>
-          <SearchInput />
+          <SearchInput placeholder='إبحث ...' />
         </div>
-      <HeaderButtons />
+        <HeaderButtons />
       </div>
     </div>
   );

@@ -1,19 +1,19 @@
 "use client"
 import React from 'react'
-
-function SearchInput({ onClick, placeholder }) {
+import { useStore } from "@context/store";
+function SearchInputPosts() {
   return (
     <div>
       <form>
         <label
           htmlFor='default-search'
           className='mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white'>
-          إبحث ...
+          الكلمات الدالة
         </label>
         <div className='relative'>
-          <div className='absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none'>
+          <div className='absolute  inset-y-0 left-0 flex items-center pl-3 pointer-events-none'>
             <svg
-              className='w-4 h-4 text-gray-500 dark:text-gray-400'
+              className='w-4 h-4 text-gray-500 cursor-pointer dark:text-gray-400'
               aria-hidden='true'
               xmlns='http://www.w3.org/2000/svg'
               fill='none'
@@ -31,8 +31,15 @@ function SearchInput({ onClick, placeholder }) {
             type='search'
             id='default-search'
             className='block w-full shadow-md border-[1px] p-2 pl-10 text-sm text-gray-900  border-gray-300 rounded-xl bg-gray-50 focus:ring-gray-500 focus:border-gray-500 dark:bg-inputDark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500'
-            placeholder={placeholder}
-            onClick={onClick}
+            placeholder='الكلمات الدالة'
+            onChange={(e) => {
+              useStore.setState((state) => ({
+                filterInfo: {
+                  ...state.filterInfo,
+                  section: [e.target.value],
+                },
+              }));
+            }}
           />
         </div>
       </form>
@@ -40,4 +47,4 @@ function SearchInput({ onClick, placeholder }) {
   );
 }
 
-export default SearchInput
+export default SearchInputPosts;

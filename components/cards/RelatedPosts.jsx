@@ -11,7 +11,7 @@ async  function RelatedPosts() {
       <h1 id='title' className='font-bold text-clamp-2xl mx-2 p-2'>
         مقالات طبية
       </h1>
-      {posts.map((post, index) => (
+      {posts?.slice(0,5)?.map((post, index) => (
         <div key={index} className=''>
           <Link href={`/blog/post/${post._id}`}>
             <Image className='rounded-xl' src={post.image} width={300} height={300} alt='avatar' />

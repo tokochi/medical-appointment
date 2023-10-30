@@ -11,6 +11,7 @@ const questionSchema = new Schema({
         },
         date: { type: Date, default: Date.now },
         text: String,
+        doctor: {},
         likes: Number,
         comments: [{
             id: {
@@ -29,6 +30,7 @@ const questionSchema = new Schema({
     },
     details: {},
     files: [],
+    doctor:{},
     doctorID: {
         type: Schema.ObjectId,
         ref: 'Doctor',

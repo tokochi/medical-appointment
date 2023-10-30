@@ -5,15 +5,16 @@ import Image from "next/image";
 import SlicerServices from "@components/utils/SlicerServices";
 import ShowPhoneNum from "../buttons/ShowPhoneNum";
 import NothingFound from "./NothingFound";
-
+import { useState } from "react";
 function Pharms({ data }) {
   const { handleFilterInfo } = useStore();
   const pharmsList = JSON.parse(data);
   const pharms = handleFilterInfo(pharmsList);
+  const [slicer, setSlicer] = useState(10);
   return (
     <div className='flex flex-col gap-4'>
       {pharms.length === 0 && <NothingFound />}
-      {pharms.map((item, index) => (
+      {pharms.slice(0, slicer).map((item, index) => (
         <div key={index} className='p-4 card rounded-md'>
           <div
             id='header'
@@ -21,7 +22,7 @@ function Pharms({ data }) {
             <div className='mb-1 grow shrink basis-[70%] min-w-[280px] flex gap-4'>
               <div>
                 <Image
-                  className='rounded-xl w-auto h-auto min-w-[50px]'
+                  className='rounded-xl w-auto h-auto min-w-[50px] max-w-[80px]'
                   src={item?.avatar?.[0]}
                   width={80}
                   height={80}
@@ -111,6 +112,16 @@ function Pharms({ data }) {
           </div>
         </div>
       ))}
+      {slicer < pharms?.length && (
+        <button
+          className='btn3 p-2'
+          onClick={(e) => {
+            e.preventDefault();
+            setSlicer(slicer + 10);
+          }}>
+          عرض المزيد
+        </button>
+      )}
     </div>
   );
 }
