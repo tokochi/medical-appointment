@@ -1,7 +1,6 @@
 import React from 'react'
 import moment from "moment";
 import "moment/locale/ar-dz";
-import Image from 'next/image';
 moment().locale("ar-dz");
 function ShowPost({post}) {
 
@@ -13,7 +12,7 @@ function ShowPost({post}) {
           <div className='w-full text-sm flex gap-4 border-b-[1px] border-t-[1px] p-2 border-gray-600'>
             <div className='flex gap-2 justify-center items-start ml-auto'>
               <div id='avatar'>
-                <Image
+                <img
                   className='rounded-xl'
                   src={post?.doctor?.avatar?.[0] || "/images/heart.webp"}
                   width={50}

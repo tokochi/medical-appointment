@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+
 
 
 function DoctorQuestion({ doctor }) {
@@ -10,7 +10,7 @@ function DoctorQuestion({ doctor }) {
         className='my-1 grow shrink basis-[70%] min-w-[280px] flex gap-4'
         href={`${doctor?._id ? "/doctors/profile/"+doctor?._id:"#"}`}>
         <div id='avatar'>
-          <Image
+          <img
             className='rounded-xl w-auto h-auto max-w-[80px]'
             src={doctor?.avatar?.[0] || "/images/heart.webp"}
             width={80}
