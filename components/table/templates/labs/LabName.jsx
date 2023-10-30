@@ -15,10 +15,9 @@ export default function LabName(props) {
       </div>
       <div id='title' className='flex flex-col'>
         <h1 className='font-bold text-clamp-xl text-sky-500  '>
-          {props?.title?.text + " "}
           {props?.name}
         </h1>
-        <h2 className='font-semibold'>{props?.speciality?.text}</h2>
+        <h2 className='font-semibold'>{props?.title?.text}</h2>
       </div>
     </div>
   );

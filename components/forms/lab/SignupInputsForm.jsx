@@ -346,7 +346,7 @@ function SignupInputsForm(props) {
         <div className='p-2 flex flex-col gap-2 justify-center'>
           <div id='wilaya' className=''>
             <SelectInput
-              name='address?.wilaya'
+              name='address.wilaya'
               value={labInfo?.address?.wilaya?.value}
               onChange={(e) => handleSelectInput(e, "labInfo")}
               options={wilaya}
@@ -358,10 +358,12 @@ function SignupInputsForm(props) {
           </div>
           <div id='daira' className=''>
             <SelectInput
-              name='address?.daira'
+              name='address.daira'
               value={labInfo?.address?.daira?.value}
               onChange={(e) => handleSelectInput(e, "labInfo")}
-              options={daira.filter((region) => region?.wilaya === labInfo?.address?.wilaya?.value)}
+              options={daira?.filter(
+                (region) => region?.wilaya === labInfo?.address?.wilaya?.value
+              )}
               option_value='value'
               option_text='text'
               placeholder='الدائرة'
@@ -370,10 +372,12 @@ function SignupInputsForm(props) {
           </div>
           <div id='commune' className=''>
             <SelectInput
-              name='address?.commune'
+              name='address.commune'
               value={labInfo?.address?.commune?.value}
               onChange={(e) => handleSelectInput(e, "labInfo")}
-              options={commune.filter((region) => region?.daira === labInfo?.address?.daira?.value)}
+              options={commune.filter(
+                (region) => region?.daira === labInfo?.address?.daira?.value
+              )}
               option_value='value'
               option_text='text'
               placeholder='البلدية'
@@ -383,39 +387,13 @@ function SignupInputsForm(props) {
           <div id='street' className=''>
             <IconInput
               icon='/images/map.webp'
-              name='address?.street'
+              name='address.street'
               value={labInfo?.address?.street}
               onChange={(e) => handleInputChange(e, "labInfo")}
               type='text'
               placeholder='الشارع، الحي'
               label='الشارع، الحي:'
             />
-          </div>
-          <h3 className='text-sm'>علِّم موقعك الجغرافي على الخريطة ليتم تحديد الوجهة :</h3>
-          <div id='map' className='min-w-[260px] h-[300px] lg:h-[500px]'>
-            <LeafletMap />
-          </div>
-          <div id='coordinates' className='flex flex-wrap gap-2'>
-            <div className='flex gap-2 items-center'>
-              <h3 className='text-sm whitespace-nowrap'>خطوط الطول:</h3>
-              <input
-                className="className='bg-gray-50  border border-gray-300 text-gray-900 text-sm  placeholder:font-semibold  block w-1/2  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white '"
-                name='latitude'
-                readOnly
-                value={labInfo?.googleMap?.lat}
-                type='text'
-              />
-            </div>
-            <div className='flex gap-2 items-center'>
-              <h3 className='text-sm whitespace-nowrap'>خطوط العرض:</h3>
-              <input
-                className="className='bg-gray-50  border border-gray-300 text-gray-900 text-sm  placeholder:font-semibold  block w-1/2  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white '"
-                name='longitude'
-                readOnly
-                value={labInfo?.googleMap?.lng}
-                type='text'
-              />
-            </div>
           </div>
         </div>
       </div>

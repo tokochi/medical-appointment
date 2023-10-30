@@ -104,28 +104,14 @@ function DoctorsTable() {
                     id='file_input'
                     lang="ar"
                     onChange={(e) => {
-                      handleMultipleSignups(e.target.files,"doctors");
+                      handleMultipleSignups(e.target.files, "doctors");
                     }}
                     multiple
                     type='file'
                   />
                 </div>
               ),
-              textBtn_1: "موافقة",
-              textBtn_2: "إلغـــــاء",
-              onClickBtn_1: (e) => {
-                handleEditGrid(
-                  e,
-                  toast,
-                  `/api/doctors/${gridRef?.current?.getSelectedRecords()[0]._id}`,
-                  "doctorInfo"
-                );
-                // gridRef?.current?.refresh();
-              },
-              onClickBtn_2: (e) => {
-                useStore.setState((state) => ({ modal: state.modalClosed }));
-              },
-            },
+            }
           });
         break;
       case args.item.id.includes("add"):

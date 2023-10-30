@@ -33,6 +33,17 @@ export const useStore = create((set, get) => ({
   worksPharms,
   worksLabs,
   session: null,
+  randomizer: (array, number) => {
+    const copyArray = array.slice();
+    if (number >= copyArray.length) {
+      return copyArray;
+    }
+    for (let i = copyArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copyArray[i], copyArray[j]] = [copyArray[j], copyArray[i]];
+    }
+    return copyArray.slice(0, number);
+  },
   //************** Fetch *************/
   users: [],
   doctors: [],

@@ -390,32 +390,6 @@ const filtredservices = worksPharms?.filter(
               label='الشارع، الحي:'
             />
           </div>
-          {/* <h3 className='text-sm'>علِّم موقعك الجغرافي على الخريطة ليتم تحديد الوجهة :</h3>
-          <div id='map' className='min-w-[260px] h-[300px] lg:h-[500px]'>
-            <LeafletMap />
-          </div>
-          <div id='coordinates' className='flex flex-wrap gap-2'>
-            <div className='flex gap-2 items-center'>
-              <h3 className='text-sm whitespace-nowrap'>خطوط الطول:</h3>
-              <input
-                className="className='bg-gray-50  border border-gray-300 text-gray-900 text-sm  placeholder:font-semibold  block w-1/2  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white '"
-                name='latitude'
-                readOnly
-                value={pharmInfo?.googleMap?.lat}
-                type='text'
-              />
-            </div>
-            <div className='flex gap-2 items-center'>
-              <h3 className='text-sm whitespace-nowrap'>خطوط العرض:</h3>
-              <input
-                className="className='bg-gray-50  border border-gray-300 text-gray-900 text-sm  placeholder:font-semibold  block w-1/2  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white '"
-                name='longitude'
-                readOnly
-                value={pharmInfo?.googleMap?.lng}
-                type='text'
-              />
-            </div>
-          </div> */}
         </div>
       </div>
     </div>

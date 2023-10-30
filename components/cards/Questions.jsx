@@ -8,7 +8,7 @@ function Questions({ data }) {
   const [slicer, setSlicer] = useState(10);
   return (
     <div className='flex flex-col gap-4'>
-      {questions?.map((question, index) => (
+      {questions?.slice(0, slicer)?.map((question, index) => (
         <div key={index} className=' p-4 card rounded-md'>
           <div
             id='header'

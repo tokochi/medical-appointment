@@ -30,11 +30,8 @@ function Labs({ data }) {
                 />
               </div>
               <div id='title' className='flex flex-col'>
-                <h1 className='font-bold text-clamp-xl text-sky-500  '>
-                  {item?.title?.text + " "}
-                  {item?.name}
-                </h1>
-                <h2 className='font-semibold'>{item?.speciality?.text}</h2>
+                <h1 className='font-bold text-clamp-xl text-sky-500  '>{item?.name}</h1>
+                <h2 className='font-semibold'> {item?.title?.text}</h2>
                 <div className='border-b-[1px] border-gray-400 dark:border-gray-100 w-[80%] m-1' />
                 {item?.otherServices?.isFullTimeOpen && (
                   <h2 className='flex items-start gap-2 pt-1 text-cyan-400 text-sm'>
@@ -80,12 +77,12 @@ function Labs({ data }) {
                     height={15}
                     alt='location'
                   />
-                  {item?.address?.wilaya?.text + "، "}
-                  {item?.address?.daira?.text + "، "}
+                  {item?.address?.wilaya?.text && item?.address?.wilaya?.text + "، "}
+                  {item?.address?.daira?.text && item?.address?.daira?.text + "، "}
                   {item?.address?.commune?.text &&
                     item?.address?.commune?.text !== item?.address?.daira?.text &&
                     item?.address?.commune?.text + "، "}
-                  {item?.address?.street}
+                  {item?.address?.street && item?.address?.street}
                 </h2>
               </div>
             </div>
