@@ -15,6 +15,7 @@ export const dynamic = 'force-dynamic'
   };
 export default async function RootLayout({ children }) {
   const session = await GetSession()
+  
   const cookieStore = cookies()
   const { dir, fetchUser, fetchAdmin, fetchDoctor } = useStore.getState()
   const getCookie = cookieStore?.get('darkTheme')

@@ -12,7 +12,7 @@ async function page({ params }) {
         مقالات طبية
       </h1>
       <div className='flex flex-wrap gap-2 p-2'>
-        <div className='grow shrink basis-[20%] min-w-[280px] p-2'>
+        <div className='grow shrink basis-[20%] hidden md:inline-block min-w-[280px] p-2'>
           <FindYourAnswer />
           <RelatedWoks />
         </div>

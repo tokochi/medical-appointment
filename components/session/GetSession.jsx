@@ -7,8 +7,7 @@ async function GetSession() {
   const maxRetries = 3; // Maximum number of retries
   while (retryCount < maxRetries && session === null) {
     try {
-      session = await getServerSession(options);
-      
+      session = await getServerSession(options); 
     } catch (error) {
         // Handle any errors if needed
         console.error("Error fetching session:", error);
@@ -22,7 +21,7 @@ async function GetSession() {
 
     retryCount++;
   }
-  return session?.user?._doc;
+  return session?.user?._doc
 }
 
 export default GetSession;

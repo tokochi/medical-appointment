@@ -19,7 +19,7 @@ function Posts({ data }) {
                 <Link href={`/blog/post/${post._id}`}>
                   <h2
                     id='title'
-                    className='font-bold md:text-xl truncate whitespace-nowrap max-w-[250px] md:max-w-[400px] mx-2 p-2 text-sky-500'>
+                    className='font-bold lg:text-xl truncate whitespace-nowrap max-w-[250px] lg:max-w-[350px] mx-2 p-2 text-sky-500'>
                     {post?.title}
                   </h2>
                 </Link>
@@ -32,7 +32,7 @@ function Posts({ data }) {
                     alt='image'
                   />
                 </Link>
-                <div className='p-1 px-1 rounded-xl text-xs ml-auto bg-purple-700'>
+                <div className='p-1 px-1 rounded-xl text-white text-xs ml-auto bg-purple-700'>
                   {post?.section}
                 </div>
                 {post?.desc && (

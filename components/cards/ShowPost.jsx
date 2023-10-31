@@ -8,8 +8,8 @@ function ShowPost({post}) {
     <div id='doct-cards' className='p-4 card rounded-md'>
       <div id='title' className='flex flex-col gap-6'>
         <div className='w-full'>
-          <h1 className='font-bold p-1 text-xl text-sky-500'>{post?.title}</h1>
-          <div className='w-full text-sm flex gap-4 border-b-[1px] border-t-[1px] p-2 border-gray-600'>
+          <h1 className='font-bold p-1 md:text-xl text-sky-500'>{post?.title}</h1>
+          <div className='w-full text-xs md:text-sm flex flex-wrap gap-4 border-b-[1px] border-t-[1px] p-2 border-gray-600'>
             <div className='flex gap-2 justify-center items-start ml-auto'>
               <div id='avatar'>
                 <img
@@ -21,7 +21,7 @@ function ShowPost({post}) {
                 />
               </div>
               <div id='title' className='flex flex-col'>
-                <h1 className='font-bold text-clamp-xl text-sky-500  '>
+                <h1 className='font-bold md:text-clamp-xl text-sky-500  '>
                   {post?.doctor?.title?.text && post?.doctor?.title?.text + " "}
                   {post?.doctor?.name}
                 </h1>
@@ -49,7 +49,7 @@ function ShowPost({post}) {
           </div>
         </div>
         {post?.text && (
-          <div className='text-justify' dangerouslySetInnerHTML={{ __html: post?.text }} />
+          <div className='text-justify text-xs md:text-sm' dangerouslySetInnerHTML={{ __html: post?.text }} />
         )}
       </div>
     </div>

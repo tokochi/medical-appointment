@@ -14,7 +14,7 @@ function Modal() {
         style={{ maxHeight: "80vh" }}>
         <div className='relative bg-white rounded-lg shadow  dark:bg-slate-800'>
           <div className='sticky top-0 z-[9900] bg-inherit flex items-start justify-between p-2 border-b rounded-t dark:border-gray-600'>
-            <h3 className=' text-xl font-semibold text-gray-900 dark:text-white'>{modal.title}</h3>
+            <h3 className=' md:text-xl font-semibold text-gray-900 dark:text-white'>{modal.title}</h3>
             <button
               type='button'
               onClick={() => useStore.setState((state) => ({ modal: state.modalClosed }))}

@@ -73,7 +73,7 @@ const maxDate = moment().add(8, "days").startOf("day").toISOString();
   // }
   return (
     <div id='time'>
-      <div className='flex flex-wrap gap-2 justify-start  p-2 sticky top-0 z-[1000] border-b-[1px] border-gray-300 dark:border-gray-700 bg-white rounded-xl shadow  dark:bg-slate-800'>
+      <div className='flex flex-wrap gap-2 justify-start text-sm md:text-base p-1 md:p-2 sticky top-0 z-[1000] border-b-[1px] border-gray-300 dark:border-gray-700 bg-white rounded-xl shadow  dark:bg-slate-800'>
         <div className=''>
           <Image
             className='rounded-xl w-auto h-auto'
@@ -84,15 +84,15 @@ const maxDate = moment().add(8, "days").startOf("day").toISOString();
           />
         </div>
         <div id='title' className='flex flex-col'>
-          <h1 className='font-bold text-sky-500'>
+          <h1 className='font-bold  text-sky-500'>
             {doctor?.title?.text + " "}
             {doctor?.name}
           </h1>
-          <h2 className='font-semibold text-sm'>{doctor?.speciality?.text}</h2>
+          <h2 className='font-semibold text-xs md:text-sm'>{doctor?.speciality?.text}</h2>
         </div>
-        <div className='md:mx-auto'>
+        <div className='mr-auto'>
           <p>موعدك على:</p>
-          <p className='mx-auto text-sky-500 font-semibold'>
+          <p className='mx-auto btn4 text-sky-500 text-xs md:text-sm font-semibold'>
             {moment(appointInfo?.date).format("LL") + " 🕒 " + appointInfo?.time}
           </p>
         </div>
@@ -102,8 +102,8 @@ const maxDate = moment().add(8, "days").startOf("day").toISOString();
           <div className='font-semibold  flex gap-4  p-2 px-2 border-b-[1px] border-gray-300 dark:border-gray-700'>
             <p>تحديد الوقت</p>
           </div>
-          <div className='flex flex-wrap justify-center md:justify-between'>
-            <div className='p-4 flex gap-2 flex-wrap justify-center items-center'>
+          <div className='flex flex-wrap md:flex-nowrap justify-center md:justify-between'>
+            <div className='p-4 flex gap-2 flex-wrap  justify-center items-center'>
               {times.map((time, index) => (
                 <button
                   key={index}
@@ -126,8 +126,7 @@ const maxDate = moment().add(8, "days").startOf("day").toISOString();
                 max={maxDate}
                 locale='ar-DZ'
                 renderDayCell={disabledDate}
-                change={onchange}
-              ></CalendarComponent>
+                change={onchange}></CalendarComponent>
             </div>
           </div>
         </div>

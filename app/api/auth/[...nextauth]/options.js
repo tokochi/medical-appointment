@@ -7,6 +7,8 @@ import bcrypt from 'bcrypt'
 import Doctor from '@models/doctor';
 import Admin from '@models/admin';
 
+
+
 export const options = {
     site: 'http://localhost:3000',
     basePath: '/p/api/auth',
@@ -35,7 +37,7 @@ export const options = {
             },
             async authorize(credentials, req) {
                 await connectToDB();
-                const user = await User.findOne({ email: credentials?.email });
+                const user = await User.findOne({ email: credentials?.email }).select('-notificationsList  -inbox');
                 if (!user || !user?.password) {
                     throw new Error('لايوجد مستخدم يوافق المعلومات المسجلة', { duration: 5000 })
                 }
@@ -47,7 +49,6 @@ export const options = {
                     throw new Error('معلومات التسجيل خاطأة', { duration: 5000 });
                 }
                 await User.updateOne({ email: credentials?.email }, { $set: { lastLogin: Date.now() } })
-
                 return user
             }
         }),
@@ -60,7 +61,7 @@ export const options = {
             },
             async authorize(credentials, req) {
                 await connectToDB();
-                const user = await Admin.findOne({ email: credentials?.email }).select('-notificationsList -inbox');;
+                const user = await Admin.findOne({ email: credentials?.email }).select('-notificationsList  -inbox');;
                 if (!user || !user?.password) {
                     throw new Error('لايوجد مشرف يوافق المعلومات المسجلة', { duration: 5000 })
                 }
@@ -72,7 +73,7 @@ export const options = {
                     throw new Error('معلومات التسجيل خاطأة', { duration: 5000 });
                 }
                 await Admin.updateOne({ email: credentials?.email }, { $set: { lastLogin: Date.now() } })
-     return user
+                return user
             }
         }),
         CredentialsProvider({
@@ -96,7 +97,7 @@ export const options = {
                     throw new Error('معلومات التسجيل خاطأة', { duration: 5000 });
                 }
                 await Doctor.updateOne({ email: credentials?.email }, { $set: { lastLogin: Date.now() } })
-             
+
                 return user
             }
         }),
@@ -116,27 +117,29 @@ export const options = {
                     return p
                 }
             }, {})
-            return { ...session, user: sanitizedToken, apiToken: token.apiToken }
+            return { ...session, user: sanitizedToken, apiToken: token }
         },
-        async jwt({ token, user, account, profile }) {
+        async jwt({ token, user, }) {
+            await connectToDB();
+            const userExists = await User.findOne({ email: token?.email }).select('-notificationsList -password -inbox');
             if (typeof user !== "undefined") {
                 // user has just signed in so the user object is populated
-                return { ...token, ...user }
+                return { ...token, ...userExists }
             }
             return token
         },
-        async signIn({ profile, user, credentials }) {
+        async signIn({ account, profile, credentials }) {
             await connectToDB();
-            if (profile) {
+            if (account.provider === "google") {
                 try {
                     // check if user already exists
                     const userExists = await User.findOne({ email: profile.email });
                     // if not, create a new document and save user in MongoDB
                     if (!userExists) {
-                        await User.create({
+                        const response = await User.create({
                             email: profile.email,
-                            username: profile.name.replace(" ", "").toLowerCase(),
-                            image: profile.picture,
+                            name: profile.name.replace(" ", "").toLowerCase(),
+                            avatar: [profile.picture, "/images/user-logo.webp"],
                         });
                     }
                     return true
@@ -146,9 +149,7 @@ export const options = {
                 }
             }
             if (credentials) {
-
-
-                return credentials
+                return true
             }
         },
     },
