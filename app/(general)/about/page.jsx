@@ -1,5 +1,10 @@
 import Image from "next/image";
 
+export const Metadata = {
+  title: "من نحن",
+  description: "صحتي تاجي",
+};
+
 function page() {
 
   return (

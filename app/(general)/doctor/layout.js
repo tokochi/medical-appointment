@@ -2,6 +2,13 @@ import SidebarDoctor from "@components/layout/SidebarDoctor";
 import GetSession from '@components/session/GetSession';
 import { redirect } from "next/navigation";
 import { useStore } from "@context/serverStore";
+
+export const Metadata = {
+  title: "حسابي",
+  description: "صحتي تاجي",
+};
+
+
 export default async function RootLayout({ children }) {
   const session = await GetSession()
   const { fetchDoctor } = useStore.getState()

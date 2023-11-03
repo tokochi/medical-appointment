@@ -7,6 +7,20 @@ import moment from "moment";
 import "moment/locale/ar-dz";
 import Comment from "@components/cards/Comment";
 moment().locale("ar-dz");
+
+export async function generateMetadata({ params }) {
+ const { fetchQuestion } = useStore.getState();
+ const selectedQuestion = await fetchQuestion(params?.id);
+  return {
+    title: "أسئلة طبية",
+    desciption: selectedQuestion?.title,
+  };
+}
+
+
+
+
+
 async function page({ params }) {
   const { fetchQuestion } = useStore.getState();
   const selectedQuestion = await fetchQuestion(params?.id);

@@ -27,7 +27,8 @@ function Doctors({ data }) {
               <Link
                 className='mb-1 grow shrink basis-[70%] min-w-[280px] flex gap-4'
                 id={item?._id}
-                href={`/doctors/profile/${item?._id}`}>
+                href={`/doctors/profile/${item?._id}`}
+               >
                 <div id={item?._id}>
                   <Image
                     className='rounded-xl w-auto h-auto min-w-[70px] max-w-[80px]'
@@ -130,15 +131,16 @@ function Doctors({ data }) {
           </div>
         </div>
       ))}
-      {slicer < doctors?.length && 
-      <button
-        className='btn3 p-2'
-        onClick={(e) => {
-          e.preventDefault();
-          setSlicer(slicer + 10);
-        }}>
-        عرض المزيد
-      </button>}
+      {slicer < doctors?.length && (
+        <button
+          className='btn3 p-2'
+          onClick={(e) => {
+            e.preventDefault();
+            setSlicer(slicer + 10);
+          }}>
+          عرض المزيد
+        </button>
+      )}
     </div>
   );
 }

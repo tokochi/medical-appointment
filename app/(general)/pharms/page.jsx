@@ -3,6 +3,12 @@ import Provinces from "@components/cards/Provinces";
 import SearchPharmInPage from "@components/forms/searchs/SearchPharmInPage";
 import SearchFaqInPage from "@components/forms/searchs/SearchFaqInPage";
 import { useStore } from "@context/serverStore";
+
+export const Metadata = {
+  title: "قائمة الصيديلات",
+  description: "صحتي تاجي",
+};
+
 async function page() {
     const { fetchPharms } = useStore.getState();
   const pharms = await fetchPharms();

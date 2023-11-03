@@ -5,6 +5,17 @@ import ShowPhoneNum from "@components/buttons/ShowPhoneNum";
 import TakeAppointment from "@components/buttons/TakeAppointment";
 import UserSendMessage from "@components/buttons/UserSendMessage";
 
+
+
+export async function generateMetadata({ params }) {
+  const { fetchDoctor } = useStore.getState();
+  const doctor = await fetchDoctor(params?.id);
+  return {
+    title: doctor?.title?.text + " " + doctor?.name,
+    desciption: doctor?.speciality?.text,
+  };
+}
+
 async function page({ params }) {
   const { fetchDoctor } = useStore.getState();
   const doctor = await fetchDoctor(params?.id);

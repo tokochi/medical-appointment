@@ -3,6 +3,10 @@ import RelatedWoks from "@components/cards/RelatedWoks";
 import FindYourAnswer from "@components/cards/FindYourAnswer";
 import RelatedPosts from "@components/cards/RelatedPosts";
 
+export const Metadata = {
+  title: "أسئلة طبية",
+  description: "صحتي تاجي",
+};
 
 export default function RootLayout({ children }) {
   return (

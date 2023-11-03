@@ -3,6 +3,12 @@ import Provinces from "@components/cards/Provinces";
 import SearchHospInPage from "@components/forms/searchs/SearchHospInPage";
 import SearchFaqInPage from "@components/forms/searchs/SearchFaqInPage";
 import { useStore } from "@context/serverStore";
+
+export const Metadata = {
+  title: "قائمة المصحات",
+  description: "صحتي تاجي",
+};
+
 async function page() {
         const { fetchHosps } = useStore.getState();
   const hosps = await fetchHosps();

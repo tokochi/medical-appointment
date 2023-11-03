@@ -5,6 +5,14 @@ import { useStore } from "@context/serverStore";
 import Posts from "@components/cards/Posts";
 import PostCategory from "@components/buttons/PostCategory";
 import SearchInputPosts from "@components/inputs/SearchInputPosts";
+
+export const Metadata = {
+  title: "مقالات طبية",
+  description: "صحتي تاجي",
+};
+
+
+
 async function page() {
   const { fetchPosts } = useStore.getState();
   const posts = await fetchPosts();

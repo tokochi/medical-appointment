@@ -4,6 +4,12 @@ import Provinces from "@components/cards/Provinces";
 import RelatedPosts from "@components/cards/RelatedPosts";
 import RelatedSections from "@components/cards/RelatedSections";
 import SearchDoctInPage from "@components/forms/searchs/SearchDoctInPage";
+import SearchFaqInPage from "@components/forms/searchs/SearchFaqInPage";
+
+export const Metadata = {
+  title: "قائمة  الأطباء",
+  description: "صحتي تاجي",
+};
 
 async function page() {
   const { fetchDoctors} = useStore.getState();
@@ -26,7 +32,12 @@ async function page() {
           </div>
         </div>
         <div className='grow shrink basis-[20%] min-w-[280px] p-2'>
-          <RelatedSections />
+          <div>
+            <h1 id='title' className='font-bold text-clamp-2xl mx-2 p-2'>
+              أسئلة طبية
+            </h1>
+            <SearchFaqInPage />
+          </div>
           <RelatedPosts />
         </div>
       </div>

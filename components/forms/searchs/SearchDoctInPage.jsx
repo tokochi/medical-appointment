@@ -11,7 +11,9 @@ function SearchDoctInPage() {
   const {filterDefault} = useStore()
   return (
     <div className='card rounded-md'>
+
       <div className='font-semibold p-2 px-2 border-b-[1px] border-gray-300 dark:border-gray-700'>
+        
         سجلّ البحث
       </div>
       <div className='p-2 flex flex-col gap-2 justify-center'>

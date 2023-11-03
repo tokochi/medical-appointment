@@ -5,6 +5,13 @@ import ShowAppoint from "@components/cards/ShowAppoint";
 import RelatedSections from "@components/cards/RelatedSections";
 import RelatedPosts from "@components/cards/RelatedPosts";
 
+export const Metadata = {
+  title: "موعدك الطبي",
+  description: "صحتي تاجي",
+};
+
+
+
 async function page({ params }) {
   const { fetchAppointment, fetchDoctor } = useStore.getState();
   const appointment = await fetchAppointment(params?.id);

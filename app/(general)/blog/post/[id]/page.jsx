@@ -3,6 +3,16 @@ import FindYourAnswer from "@components/cards/FindYourAnswer";
 import { useStore } from "@context/serverStore";
 import ShowPost from "@components/cards/ShowPost";
 
+export async function generateMetadata({ params }) {
+ const { fetchPost } = useStore.getState();
+ const post = await fetchPost(params?.id);
+  return {
+    title: post?.title,
+    desciption: post?.desc,
+  };
+}
+
+
 async function page({ params }) {
   const { fetchPost } = useStore.getState();
   const post = await fetchPost(params?.id);
