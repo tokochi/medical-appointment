@@ -185,7 +185,7 @@ function AccountForm() {
          </div>
          <div id='wilaya' className=''>
            <SelectInput
-             name='address?.wilaya'
+             name='address.wilaya'
              value={companyInfo?.address?.wilaya?.value}
              onChange={(e) => handleSelectInput(e, "companyInfo")}
              options={wilaya}
@@ -197,7 +197,7 @@ function AccountForm() {
          </div>
          <div id='daira' className=''>
            <SelectInput
-             name='address?.daira'
+             name='address.daira'
              value={companyInfo?.address?.daira?.value}
              onChange={(e) => handleSelectInput(e, "companyInfo")}
              options={daira.filter(
@@ -211,7 +211,7 @@ function AccountForm() {
          </div>
          <div id='commune' className=''>
            <SelectInput
-             name='address?.commune'
+             name='address.commune'
              value={companyInfo?.address?.commune?.value}
              onChange={(e) => handleSelectInput(e, "companyInfo")}
              options={commune.filter(
@@ -226,7 +226,7 @@ function AccountForm() {
          <div id='street' className=''>
            <IconInput
              icon='/images/map.webp'
-             name='address?.street'
+             name='address.street'
              value={companyInfo?.address?.street}
              onChange={(e) => handleInputChange(e, "companyInfo")}
              type='text'

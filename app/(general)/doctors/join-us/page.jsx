@@ -23,6 +23,9 @@ function page() {
     if (!isRulesChecked) {
       return toast.error("يرجى موافقة على الإنظمام  ");
     }
+          useStore.setState((state) => ({
+            doctorInfo: { ...state.doctorInfo, googleMap: { lat: 36.7539, lng: 3.0589 } },
+          }));
     router.push("/doctors/signup");
   };  
   return (
@@ -93,7 +96,7 @@ function page() {
             </div>
             <div className=''>
               <SelectInput
-                name='address?.wilaya'
+                name='address.wilaya'
                 value={doctorInfo?.address?.wilaya?.value}
                 onChange={(e) => handleSelectInput(e, "doctorInfo")}
                 options={wilaya}

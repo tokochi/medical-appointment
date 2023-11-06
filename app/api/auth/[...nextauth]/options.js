@@ -61,7 +61,7 @@ export const options = {
             },
             async authorize(credentials, req) {
                 await connectToDB();
-                const user = await Admin.findOne({ email: credentials?.email }).select('-notificationsList  -inbox');;
+                const user = await Admin.findOne({ email: credentials?.email }).select('-notificationsList  -inbox');
                 if (!user || !user?.password) {
                     throw new Error('لايوجد مشرف يوافق المعلومات المسجلة', { duration: 5000 })
                 }
@@ -119,12 +119,14 @@ export const options = {
             }, {})
             return { ...session, user: sanitizedToken, apiToken: token }
         },
-        async jwt({ token, user, }) {
-            await connectToDB();
-            const userExists = await User.findOne({ email: token?.email }).select('-notificationsList -password -inbox');
+        async jwt({ token, user, profile }) {
+            if (typeof profile !== "undefined") {
+                const userExists = await User.findOne({ email: profile?.email }).select('-notificationsList -password -inbox');
+                    return { ...token, ...userExists }
+            }
             if (typeof user !== "undefined") {
                 // user has just signed in so the user object is populated
-                return { ...token, ...userExists }
+                return { ...token, ...user }
             }
             return token
         },
@@ -142,14 +144,14 @@ export const options = {
                             avatar: [profile.picture, "/images/user-logo.webp"],
                         });
                     }
-                    return true
+                    return userExists
                 } catch (error) {
                     console.log("🚀 ~Error checking if user exists: ", error.message);
                     return false
                 }
             }
             if (credentials) {
-                return true
+                return credentials
             }
         },
     },

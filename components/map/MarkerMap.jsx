@@ -9,16 +9,16 @@ function MarkerMap() {
   const wilaya = useStore((state) => state.wilaya);
   const doctorInfo = useStore((state) => state.doctorInfo);
   const map = useMap();
-  // useEffect(() => {
-  //   const coordinate = wilaya.find((wilaya) => wilaya.text === doctorInfo.address?.wilaya?.text);
-  //   useStore.setState((state) => ({
-  //     doctorInfo: {
-  //       ...state.doctorInfo,
-  //       googleMap: { lat: coordinate.longitude, lng: coordinate.latitude },
-  //     },
-  //   }));
-  //   map.panTo({ lat: coordinate.longitude, lng: coordinate.latitude });
-  // }, [doctorInfo.address?.street]);
+  useEffect(() => {
+    const coordinate = wilaya.find((wilaya) => wilaya.text === doctorInfo.address?.wilaya?.text);
+    useStore.setState((state) => ({
+      doctorInfo: {
+        ...state.doctorInfo,
+        googleMap: { lat: coordinate.longitude, lng: coordinate.latitude },
+      },
+    }));
+    map.panTo({ lat: coordinate.longitude, lng: coordinate.latitude });
+  }, [doctorInfo.address?.wilaya?.text]);
 
   return (
     <div>

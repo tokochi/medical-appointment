@@ -419,7 +419,7 @@ function SignupInputsForm(props) {
         <div className='p-2 flex flex-col gap-2 justify-center'>
           <div id='wilaya' className=''>
             <SelectInput
-              name='address?.wilaya'
+              name='address.wilaya'
               value={doctorInfo?.address?.wilaya?.value}
               onChange={(e) => handleSelectInput(e, "doctorInfo")}
               options={wilaya}
@@ -431,7 +431,7 @@ function SignupInputsForm(props) {
           </div>
           <div id='daira' className=''>
             <SelectInput
-              name='address?.daira'
+              name='address.daira'
               value={doctorInfo?.address?.daira?.value}
               onChange={(e) => handleSelectInput(e, "doctorInfo")}
               options={daira.filter(
@@ -445,7 +445,7 @@ function SignupInputsForm(props) {
           </div>
           <div id='commune' className=''>
             <SelectInput
-              name='address?.commune'
+              name='address.commune'
               value={doctorInfo?.address?.commune?.value}
               onChange={(e) => handleSelectInput(e, "doctorInfo")}
               options={commune.filter(
@@ -460,7 +460,7 @@ function SignupInputsForm(props) {
           <div id='street' className=''>
             <IconInput
               icon='/images/map.webp'
-              name='address?.street'
+              name='address.street'
               value={doctorInfo?.address?.street}
               onChange={(e) => handleInputChange(e, "doctorInfo")}
               type='text'

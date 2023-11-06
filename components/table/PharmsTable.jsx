@@ -238,7 +238,7 @@ function PharmsTable() {
               width='100'
             />
             <ColumnDirective
-              field='address?.wilaya?.text'
+              field='address.wilaya.text'
               headerText='الولاية'
               textAlign='center'
               headerTextAlign='center'

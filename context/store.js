@@ -313,6 +313,7 @@ return copyArray.slice(0, number);
       }));
   },
   handleSelectInput: (event, keyValue) => {
+    console.log("🚀 ~ event:", event)
     set({ errorInput: { speciality: false } })
     const selectedIndex = event.target?.selectedIndex;
     const selectedText = event.target?.options[selectedIndex]?.text;
